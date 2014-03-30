@@ -1,8 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.awt.CardLayout;
-
-import javax.swing.JPanel;
 
 
 /*
@@ -68,12 +65,10 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         gameTree = new GamesListPanel();
         jSplitPane3.setLeftComponent(gameTree);
         
-        descriptionPanel = new JPanel();
-        jSplitPane3.setRightComponent(descriptionPanel);
-        descriptionPanel.setLayout(new CardLayout(0, 0));
+        RequirementDescriptionPanel panel = new RequirementDescriptionPanel();
+        jSplitPane3.setRightComponent(panel);
     }// </editor-fold>//GEN-END:initComponents
     
     private javax.swing.JSplitPane jSplitPane3;
     private GamesListPanel gameTree;
-    private JPanel descriptionPanel;
 }
