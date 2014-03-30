@@ -90,6 +90,7 @@ public class GameModel extends AbstractModel {
      * @param estimates
      */
     public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates) {
+        this.id = -1;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
