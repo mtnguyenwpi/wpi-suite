@@ -11,8 +11,8 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 
 /**
  * The requirements panel of the planning poker GUI
@@ -34,13 +34,13 @@ public class RequirementsPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    private Game game;
+    private GameModel game;
     
-    public Game getGame() {
+    public GameModel getGame() {
         return game;
     }
     
-    public void setGame(Game game) {
+    public void setGame(GameModel game) {
         this.game = game;
         nameField.setText(game.getName());
         descriptionPane.setText(game.getDescription());

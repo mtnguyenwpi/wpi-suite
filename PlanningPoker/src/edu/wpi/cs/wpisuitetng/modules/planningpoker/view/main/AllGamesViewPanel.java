@@ -5,9 +5,9 @@ import java.util.Date;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,10 +41,10 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                     }
                 });
         gamesListPanel1.getGameList().addGame(
-                new Game("test game", "test description", null, new Date(),
+                new GameModel(1, "test game", "test description", null, new Date(),
                         null, GameStatus.PENDING));
         gamesListPanel1.getGameList().addGame(
-                new Game("test game2", "test description2", null, new Date(),
+                new GameModel(2, "test game2", "test description2", null, new Date(),
                         null, GameStatus.COMPLETE));
     }
     
@@ -67,7 +67,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         
         jSplitPane3 = new javax.swing.JSplitPane();
         gamesListPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GamesListPanel(
-                new GameModel());
+                new GameListModel());
         jSplitPane4 = new javax.swing.JSplitPane();
         requirementsPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.RequirementsPanel();
         jPanel1 = new javax.swing.JPanel();

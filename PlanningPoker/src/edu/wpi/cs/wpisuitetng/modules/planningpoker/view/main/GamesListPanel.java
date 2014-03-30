@@ -9,8 +9,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class GamesListPanel extends javax.swing.JPanel {
     /**
      * Creates new form GamesListPanel
      */
-    public GamesListPanel(GameModel gameList) {
+    public GamesListPanel(GameListModel gameList) {
         initComponents();
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
         
@@ -40,13 +40,13 @@ public class GamesListPanel extends javax.swing.JPanel {
         });
     }
     
-    private GameModel gameList;
+    private GameListModel gameList;
     
-    public GameModel getGameList() {
+    public GameListModel getGameList() {
         return gameList;
     }
     
-    public void setGameList(GameModel gameList) {
+    public void setGameList(GameListModel gameList) {
         this.gameList = gameList;
     }
     
@@ -54,12 +54,12 @@ public class GamesListPanel extends javax.swing.JPanel {
         return jTable1;
     }
     
-    private void updateTable(GameModel gameList) {
+    private void updateTable(GameListModel gameList) {
         DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
         for (int i = m.getRowCount() - 1; i >= 0; i--) {
             m.removeRow(i);
         }
-        for (Game g : gameList.getGames()) {
+        for (GameModel g : gameList.getGames()) {
             m.addRow(new Object[] { g.isEnded(), g.getName() });
         }
     }

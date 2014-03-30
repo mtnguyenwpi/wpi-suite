@@ -6,7 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -79,7 +79,7 @@ public class GetGamesController implements ActionListener {
      * @param games
      *        array of games received from the server
      */
-    public void receivedGames(GameModel[] games) {
+    public void receivedGames(GameListModel[] games) {
         // Empty the local model to eliminate duplications
         // GameModel.getInstance().emptyModel();
         

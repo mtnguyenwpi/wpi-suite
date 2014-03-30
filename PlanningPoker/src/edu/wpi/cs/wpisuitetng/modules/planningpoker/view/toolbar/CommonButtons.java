@@ -12,9 +12,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -25,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 
 /**
  * this is an example of buttons
@@ -59,10 +59,11 @@ public class CommonButtons extends ToolbarGroupView {
         setPreferredWidth(350);
         // Adding functionality to new game button, not sure if this is where
         // this should go --nfbrown
-        newGameButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
+        newGameButton.addActionListener(new ActionListener(){
+        	@Override
+        	public void actionPerformed(ActionEvent e){
+        		PlanningPoker.getViewController().addNewGame();
+        	}
         });
         
         newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
