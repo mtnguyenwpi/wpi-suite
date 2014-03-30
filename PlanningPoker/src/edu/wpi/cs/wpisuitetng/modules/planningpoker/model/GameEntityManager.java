@@ -13,7 +13,6 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 
 public class GameEntityManager implements EntityManager<GameModel> {
@@ -103,7 +102,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
      */
     @Override
     public GameModel[] getAll(Session s) throws WPISuiteException {
-        return db.retrieveAll(new GameModel(), s.getProject()).toArray(new GameModel[0]);
+        return db.retrieveAll(new GameModel(), s.getProject()).toArray(
+                new GameModel[0]);
     }
     
     /**
@@ -115,8 +115,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         if (intId < 1) { throw new NotFoundException(); }
         GameModel[] GameModels = null;
         try {
-            GameModels = db.retrieve(GameModel.class, "id", intId, s.getProject())
-                    .toArray(new GameModel[0]);
+            GameModels = db.retrieve(GameModel.class, "id", intId,
+                    s.getProject()).toArray(new GameModel[0]);
         }
         catch (WPISuiteException e) {
             e.printStackTrace();
@@ -129,7 +129,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * {@inheritDoc}
      */
     @Override
-    public GameModel makeEntity(Session s, String content) throws WPISuiteException {
+    public GameModel makeEntity(Session s, String content)
+            throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
         newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }

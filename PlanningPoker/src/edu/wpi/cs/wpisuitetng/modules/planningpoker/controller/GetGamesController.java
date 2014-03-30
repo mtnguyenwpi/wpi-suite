@@ -66,6 +66,7 @@ public class GetGamesController implements ActionListener {
      * Sends an HTTP request to retrieve all games
      */
     public void retrieveGames() {
+        System.out.println("Hi again");
         final Request request = Network.getInstance().makeRequest(
                 "planningpokermanager/planningpoker", HttpMethod.GET); // GET == read
         request.addObserver(observer); // add an observer to process the response
@@ -88,7 +89,7 @@ public class GetGamesController implements ActionListener {
         if (games != null) {
             if (games[0].getID() != -1) {
                 // add the games to the local model
-                for(GameModel singleGame:games){
+                for (GameModel singleGame : games) {
                     GameListModel.getInstance().addGame(singleGame);
                 }
             }
