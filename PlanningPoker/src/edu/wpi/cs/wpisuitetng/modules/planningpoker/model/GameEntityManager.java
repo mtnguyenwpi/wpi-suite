@@ -1,4 +1,4 @@
-package entitymanagers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.List;
 

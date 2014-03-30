@@ -19,13 +19,13 @@ public class GameTest {
     
     @Test
     public void TestRequirementEndsAfterDeadline() {
-        GameModel testgame = new GameModel("Test Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);
+        GameModel testgame = new GameModel(0, "Test Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING);
         assertTrue(testgame.isEnded());
     }
     
     @Test
     public void TestRequirementNotCompleteBeforeDeadline() {
-        GameModel testgame = new GameModel("Test Game", "something", null, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING);
+        GameModel testgame = new GameModel(0, "Test Game", "something", null, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING);
         assertFalse(testgame.isEnded());
     }
     
