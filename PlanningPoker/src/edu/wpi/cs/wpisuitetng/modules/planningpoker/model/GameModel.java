@@ -72,18 +72,19 @@ public class GameModel extends AbstractModel {
      * @param end
      * @param type
      * @param status
+     * @param userList list of users in the game
      */
-    public GameModel(int id, String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status) {
+    public GameModel(int id, String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         this.endDate = end;
         this.type = type;
-        this.status = status; 
+        this.status = status;
+        this.userList = userList;
         estimateList = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
-        userList = new ArrayList<>();	//Needs to be initialized from somewhere
     }
     
     /**
@@ -93,8 +94,9 @@ public class GameModel extends AbstractModel {
      * @param type
      * @param status
      * @param estimates
+     * @param userList list of users in the game
      */
-    public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates) {
+    public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
         this.id = -1;
         this.name = name;
         this.description = description;
@@ -103,9 +105,8 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         this.estimateList = estimates;
-        
+        this.userList = userList;
         observers = new ArrayList<SimpleListObserver>();
-        userList = new ArrayList<>();	//Needs to be initialized from somewhere
     }
     
     /**
