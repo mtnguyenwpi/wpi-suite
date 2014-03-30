@@ -109,6 +109,12 @@ public class GameModel extends AbstractModel {
         return name;
     }
     
+    public void setID(int id) {
+        this.id = id;
+    }
+
+
+
     /**
      * 
      * @return the name of this game

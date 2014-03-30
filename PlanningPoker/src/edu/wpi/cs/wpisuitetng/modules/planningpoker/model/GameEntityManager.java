@@ -131,6 +131,7 @@ public class GameEntityManager implements EntityManager<GameModel> {
     @Override
     public GameModel makeEntity(Session s, String content) throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
+        newGameModel.setID(getNextID(s));
         if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
         return newGameModel;
     }
@@ -172,8 +173,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         return existingGameModel;
     }
     
-    public int getNextID(Session s) throws WPISuiteException {
-        int max = -1;
+    private int getNextID(Session s) throws WPISuiteException {
+        int max = 0;
         for (GameModel g : getAll(s)) {
             if (g.getID() > max) {
                 max = g.getID();
