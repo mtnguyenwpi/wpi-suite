@@ -13,6 +13,7 @@ String coreuserpath = "core/user";
 String[] coreuser = {
 		"username",
 		"name",
+		"email",
 		"password",
 		"idNum"
 };
