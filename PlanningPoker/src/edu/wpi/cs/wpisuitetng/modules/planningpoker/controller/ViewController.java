@@ -2,7 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.EditGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameEditPanel;
 
 public class ViewController {
 	
@@ -15,7 +15,7 @@ public class ViewController {
 	}
 	
 	public void addNewGame(){
-		EditGamePanel editGame = new EditGamePanel();
+		NewGameEditPanel editGame = new NewGameEditPanel();
 		mainView.addTab("New Game", editGame);
 		mainView.setSelectedComponent(editGame);
 	}

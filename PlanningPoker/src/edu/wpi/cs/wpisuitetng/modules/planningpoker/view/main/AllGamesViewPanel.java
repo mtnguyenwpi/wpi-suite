@@ -1,5 +1,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.CardLayout;
+
+import javax.swing.JPanel;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,23 +45,8 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         jSplitPane3 = new javax.swing.JSplitPane();
-        jSplitPane4 = new javax.swing.JSplitPane();
-        jPanel1 = new javax.swing.JPanel();
-        votePanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel();
-        detailPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DetailPanel();
         
         jSplitPane3.setDividerLocation(190);
-        
-        jSplitPane4.setDividerLocation(250);
-        jSplitPane4.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        
-        jPanel1.setLayout(new java.awt.CardLayout());
-        jPanel1.add(votePanel1, "card2");
-        jPanel1.add(detailPanel1, "card3");
-        
-        jSplitPane4.setRightComponent(jPanel1);
-        
-        jSplitPane3.setRightComponent(jSplitPane4);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
@@ -76,15 +65,15 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                                 javax.swing.GroupLayout.DEFAULT_SIZE, 394,
                                 Short.MAX_VALUE).addContainerGap()));
         
-        panel = new GamesListPanel();
-        jSplitPane3.setLeftComponent(panel);
+        gameTree = new GamesListPanel();
+        jSplitPane3.setLeftComponent(gameTree);
+        
+        descriptionPanel = new JPanel();
+        jSplitPane3.setRightComponent(descriptionPanel);
+        descriptionPanel.setLayout(new CardLayout(0, 0));
     }// </editor-fold>//GEN-END:initComponents
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DetailPanel detailPanel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSplitPane jSplitPane3;
-    private javax.swing.JSplitPane jSplitPane4;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel votePanel1;
-    private GamesListPanel panel;
+    private GamesListPanel gameTree;
+    private JPanel descriptionPanel;
 }

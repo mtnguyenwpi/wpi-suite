@@ -4,7 +4,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
  * 
  * @author Sam Carlberg <slcarlberg@wpi.edu>
  */
-public class DetailPanel extends javax.swing.JPanel {
+public class CompletedRequirementPanel extends javax.swing.JPanel {
     
     /**
      * 
@@ -14,7 +14,7 @@ public class DetailPanel extends javax.swing.JPanel {
     /**
      * Creates new form DetailPanel
      */
-    public DetailPanel() {
+    public CompletedRequirementPanel() {
         initComponents();
     }
     
