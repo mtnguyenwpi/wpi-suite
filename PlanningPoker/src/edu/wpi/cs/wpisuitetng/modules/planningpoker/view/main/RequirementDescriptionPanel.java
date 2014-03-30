@@ -30,10 +30,10 @@ public class RequirementDescriptionPanel extends JPanel {
     public void showPanel(Requirement req) {
         switch (req.getStatus()) {
             case COMPLETE:
-                ((CardLayout) getLayout()).show(getParent(), "complete");
+                ((CardLayout) getLayout()).show(this, "complete");
                 break;
             case INPROGRESS:
-                ((CardLayout) getLayout()).show(getParent(), "vote");
+                ((CardLayout) getLayout()).show(this, "vote");
                 break;
             default:
                 break;

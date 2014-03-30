@@ -7,6 +7,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.util.Date;
 
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -64,13 +65,15 @@ public class GamesListPanel extends javax.swing.JPanel {
                         
                         {
                             for (GameModel gm : gameList.getGames()) {
-                                DefaultMutableTreeNode game_node = new DefaultMutableTreeNode(
-                                        gm.getName());
+                                DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
+                                game_node.setUserObject(gm);
+                                
                                 if (gm.getRequirements() != null) {
                                     for (Requirement r : gm.getRequirements()) {
-                                        game_node
-                                                .add(new DefaultMutableTreeNode(
-                                                        r.getName()));
+                                        DefaultMutableTreeNode req_node = new DefaultMutableTreeNode();
+                                        req_node.setUserObject(r);
+                                        
+                                        game_node.add(req_node);
                                     }
                                 }
                                 add(game_node);
@@ -78,6 +81,10 @@ public class GamesListPanel extends javax.swing.JPanel {
                         }
                     }));
         }
+    }
+    
+    public JTree getTree() {
+        return gameTree;
     }
     
     /**
