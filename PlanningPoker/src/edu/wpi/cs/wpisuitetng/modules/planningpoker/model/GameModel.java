@@ -284,7 +284,10 @@ public class GameModel extends AbstractModel {
         return parser.fromJson(json, GameModel.class);
     }
 
-
+    public static GameModel[] fromJSONArray(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, GameModel[].class);
+    }
 
 
     public int getID() {

@@ -1,9 +1,13 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
+import javax.swing.Timer;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
@@ -27,12 +31,23 @@ public class GameListModel extends AbstractListModel<GameModel> {
 	
 	private ArrayList<GameModel> games;
 	private ArrayList<SimpleListObserver> observers;
+	private GetGamesController gameRetrievalController;
 
 	public GameListModel(){
 		games = new ArrayList<>();
 		observers = new ArrayList<SimpleListObserver>();
+		gameRetrievalController = GetGamesController.getInstance();
+	      int timerDelay = 15000; //milliseconds
+	        ActionListener checkDB = new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                    gameRetrievalController.retrieveGames();
+	                    updated();
+	            }
+	        };
+	        new Timer(timerDelay, checkDB).start();
 	}
-
+	
 	/**
 	 * Add a SimpleListObserver that is notified when the list of games is changed
 	 * @param slo The SimpleListObsrever to add
@@ -52,7 +67,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
 		games.add(g);	
 		updated();
 	}
-
+	
 	/**
 	 * Removes a game from the list. Doesn't do anything if the game is not in the list
 	 * @param req The game to remove
