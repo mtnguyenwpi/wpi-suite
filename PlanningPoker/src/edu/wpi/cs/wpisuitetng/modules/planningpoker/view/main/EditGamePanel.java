@@ -5,12 +5,14 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -30,9 +32,9 @@ public class EditGamePanel extends JPanel {
         gameRequirements.setEditGamePanel(this);
         
         // dummy requirements for test
-        gameRequirements.addRequirement(new Requirement(0, "Test Requirement 1", "The cow"));
-        gameRequirements.addRequirement(new Requirement(1, "Test Requirement 2", "elepahnt"));
-        gameRequirements.addRequirement(new Requirement(2, "Test Requirement 5", "queso"));
+        gameRequirements.addRequirement(new GameRequirementModel(0, "Test Requirement 1", "The cow", "User story"));
+        gameRequirements.addRequirement(new GameRequirementModel(1, "Test Requirement 2", "elepahnt", "User story"));
+        gameRequirements.addRequirement(new GameRequirementModel(2, "Test Requirement 5", "queso", "User story"));
         
 
         
@@ -127,7 +129,7 @@ public class EditGamePanel extends JPanel {
         return gameDescription.getDate();
     }
     
-    public Requirement[] getRequirements(){
+    public ArrayList<GameRequirementModel> getRequirements(){
         return gameRequirements.getRequirementsFromTable();
     }
     

@@ -5,8 +5,12 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+
+import java.util.ArrayList;
 import java.util.Vector;
+
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -116,21 +120,21 @@ public class GameRequirementsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
-    public void addRequirement(Requirement r){
+    public void addRequirement(GameRequirementModel r){
     	System.out.println("added requirement "+r.toString());
         DefaultTableModel model = (DefaultTableModel)requirementsTable.getModel();
-        model.addRow(new Object[]{false, r, r.getDescription().toString(), r.getType().toString()});
+        model.addRow(new Object[]{false, r.getName().toString(), r.getDescription().toString(), r.getType().toString()});
         requirementsTable.setModel(model);
         validateForm();
         parent.check();
     }
 
-    public Requirement[] getRequirementsFromTable(){
+    public ArrayList<GameRequirementModel> getRequirementsFromTable(){
         DefaultTableModel model = (DefaultTableModel)requirementsTable.getModel();
-        Requirement[] requirements = new Requirement[model.getRowCount()];
+        ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for(int i = 0; i < model.getRowCount(); i++){
-            requirements[i] = (Requirement)model.getValueAt(i, 1);
-            System.out.println("found "+requirements[i].toString()+" in table");
+            requirements.set(i, (GameRequirementModel)model.getValueAt(i, 1));
+            System.out.println("found "+requirements.get(i).toString()+" in table");
         }
         return requirements;
     }
