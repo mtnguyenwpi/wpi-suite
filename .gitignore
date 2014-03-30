@@ -44,3 +44,6 @@ Janeway/janeway.conf
 
 RequirementManager/build
 RequirementManager/bin
+PlanningPoker/build
+/PlanningPoker/src/nbproject/private/
+/PlanningPoker/nbproject/private/

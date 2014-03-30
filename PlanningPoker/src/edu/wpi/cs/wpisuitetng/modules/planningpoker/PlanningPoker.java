@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 
@@ -31,9 +32,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  */
 public class PlanningPoker implements IJanewayModule {
     
+    static ViewController viewController;
+    
+    public static ViewController getViewController(){
+    	return viewController;
+    }
+    
+
     List<JanewayTabModel> tabs;
     
     public PlanningPoker() {
+    	
+    	
         tabs = new ArrayList<JanewayTabModel>();
         
         // setup toolbar
@@ -41,6 +51,9 @@ public class PlanningPoker implements IJanewayModule {
         
         // setup main panel
         MainView mainPanel = new MainView();
+        
+
+    	viewController = new ViewController(mainPanel, toolbar);
         
         // Create a tab model that contains the toolbar panel and the main
         // content panel

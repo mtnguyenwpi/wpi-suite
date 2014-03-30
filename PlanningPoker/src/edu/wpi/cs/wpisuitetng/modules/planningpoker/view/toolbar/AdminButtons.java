@@ -12,9 +12,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
 
-import java.awt.Color;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -32,20 +34,28 @@ public class AdminButtons extends ToolbarGroupView {
      * 
      */
     private static final long serialVersionUID = 312905811728893535L;
-    private JButton newGameButton = new JButton(
-            "<html>End<br/>Estimation</html>");
+    private JButton endGameButton;
     
     private final JPanel contentPanel = new JPanel();
     
     public AdminButtons() {
         super("");
         
+        endGameButton = new JButton("<html>End<br/>Estimation</html>"); 
+		try {
+			ImageIcon icon = new ImageIcon(ImageIO.read(getClass().getResource("EndGame.png")));
+			endGameButton.setIcon(icon);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);
         
-        newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+        endGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         
-        contentPanel.add(newGameButton);
+        contentPanel.add(endGameButton);
         contentPanel.setOpaque(false);
         
         this.add(contentPanel);
