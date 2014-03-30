@@ -12,7 +12,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 
 /**
- * @author Lukas
+ * @author Lukas, Dan
  *
  */
 public class GameTest {
