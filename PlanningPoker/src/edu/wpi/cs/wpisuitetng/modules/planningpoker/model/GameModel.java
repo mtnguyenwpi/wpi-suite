@@ -39,13 +39,27 @@ public class GameModel extends AbstractModel {
     
 	private ArrayList<Estimate> estimateList;
     private ArrayList<SimpleListObserver> observers;
-
+    
+    private int id;
     private String name;
     private String description;
     private Requirement[] requirements;
     private Date endDate;
     private GameType type;
     private GameStatus status;
+    
+    public GameModel() {
+        this.id = -1;
+        this.name = null;
+        this.description = null;
+        this.requirements = null;
+        this.endDate = null;
+        this.type = null;
+        this.status = null;   
+        estimateList = null;
+        observers = null;
+    }
+
     
 
     /**
@@ -55,14 +69,14 @@ public class GameModel extends AbstractModel {
      * @param type
      * @param status
      */
-    public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status) {
+    public GameModel(int id, String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         this.endDate = end;
         this.type = type;
-        this.status = status;
-        
+        this.status = status; 
         estimateList = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
     }
@@ -255,5 +269,33 @@ public class GameModel extends AbstractModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+    public static GameModel fromJSON(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, GameModel.class);
+    }
+
+
+
+
+    public int getID() {
+        return this.id;
+    }
+
+
+
+    public void copyFrom(GameModel g) {
+        this.id = g.id;
+        this.name = g.name;
+        this.description = g.description;
+        this.requirements = g.requirements;
+        this.endDate = g.endDate;
+        this.type = g.type;
+        this.status = g.status; 
+        estimateList = g.estimateList;
+        observers = g.observers;
+    }
     
 }

@@ -13,10 +13,10 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 
-public class GameEntityManager implements EntityManager<Game> {
+public class GameEntityManager implements EntityManager<GameModel> {
     
     Data db;
     
@@ -50,7 +50,7 @@ public class GameEntityManager implements EntityManager<Game> {
      */
     @Override
     public int Count() throws WPISuiteException {
-        return db.retrieveAll(new Game()).size();
+        return db.retrieveAll(new GameModel()).size();
     }
     
     /**
@@ -86,7 +86,7 @@ public class GameEntityManager implements EntityManager<Game> {
     @Override
     public void deleteAll(Session s) throws WPISuiteException {
         ensureRole(s, Role.ADMIN);
-        db.deleteAll(new Game(), s.getProject());
+        db.deleteAll(new GameModel(), s.getProject());
     }
     
     /**
@@ -102,45 +102,45 @@ public class GameEntityManager implements EntityManager<Game> {
      * {@inheritDoc}
      */
     @Override
-    public Game[] getAll(Session s) throws WPISuiteException {
-        return db.retrieveAll(new Game(), s.getProject()).toArray(new Game[0]);
+    public GameModel[] getAll(Session s) throws WPISuiteException {
+        return db.retrieveAll(new GameModel(), s.getProject()).toArray(new GameModel[0]);
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public Game[] getEntity(Session s, String id) throws NotFoundException {
+    public GameModel[] getEntity(Session s, String id) throws NotFoundException {
         final int intId = Integer.parseInt(id);
         if (intId < 1) { throw new NotFoundException(); }
-        Game[] games = null;
+        GameModel[] GameModels = null;
         try {
-            games = db.retrieve(Game.class, "id", intId, s.getProject())
-                    .toArray(new Game[0]);
+            GameModels = db.retrieve(GameModel.class, "id", intId, s.getProject())
+                    .toArray(new GameModel[0]);
         }
         catch (WPISuiteException e) {
             e.printStackTrace();
         }
-        if (games.length < 1 || games[0] == null) { throw new NotFoundException(); }
-        return games;
+        if (GameModels.length < 1 || GameModels[0] == null) { throw new NotFoundException(); }
+        return GameModels;
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public Game makeEntity(Session s, String content) throws WPISuiteException {
-        final Game newGame = Game.fromJSON(content);
-        if (!db.save(newGame, s.getProject())) { throw new WPISuiteException(); }
-        return newGame;
+    public GameModel makeEntity(Session s, String content) throws WPISuiteException {
+        final GameModel newGameModel = GameModel.fromJSON(content);
+        if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
+        return newGameModel;
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(Session s, Game game) throws WPISuiteException {
-        db.save(game, s.getProject());
+    public void save(Session s, GameModel GameModel) throws WPISuiteException {
+        db.save(GameModel, s.getProject());
         
     }
     
@@ -148,33 +148,33 @@ public class GameEntityManager implements EntityManager<Game> {
      * {@inheritDoc}
      */
     @Override
-    public Game update(Session s, String content) throws WPISuiteException {
-        Game updatedGame = Game.fromJSON(content);
+    public GameModel update(Session s, String content) throws WPISuiteException {
+        GameModel updatedGameModel = GameModel.fromJSON(content);
         /*
          * Because of the disconnected objects problem in db4o, we can't just
-         * save Games.
-         * We have to get the original game from db4o, copy properties from
-         * updatedGame,
-         * then save the original Game again.
+         * save GameModels.
+         * We have to get the original GameModel from db4o, copy properties from
+         * updatedGameModel,
+         * then save the original GameModel again.
          */
-        List<Model> oldGames = db.retrieve(Game.class, "id",
-                updatedGame.getID(), s.getProject());
-        if (oldGames.size() < 1 || oldGames.get(0) == null) { throw new BadRequestException(
-                "Game with ID does not exist."); }
+        List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
+                updatedGameModel.getID(), s.getProject());
+        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) { throw new BadRequestException(
+                "GameModel with ID does not exist."); }
         
-        Game existingGame = (Game) oldGames.get(0);
+        GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
-        // copy values to old game
-        existingGame.copyFrom(updatedGame);
+        // copy values to old GameModel
+        existingGameModel.copyFrom(updatedGameModel);
         
-        if (!db.save(existingGame, s.getProject())) { throw new WPISuiteException(); }
+        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
         
-        return existingGame;
+        return existingGameModel;
     }
     
     public int getNextID(Session s) throws WPISuiteException {
         int max = -1;
-        for (Game g : getAll(s)) {
+        for (GameModel g : getAll(s)) {
             if (g.getID() > max) {
                 max = g.getID();
             }
