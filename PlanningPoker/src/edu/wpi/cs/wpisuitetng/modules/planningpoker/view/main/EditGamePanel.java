@@ -58,7 +58,7 @@ public class EditGamePanel extends JPanel {
         gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel();
 
         try {
-        	ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource("NewGame.png")));
+        	ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource("save-icon.png")));
         	
 			saveButton.setIcon(img);
 		} catch (IOException e) {
