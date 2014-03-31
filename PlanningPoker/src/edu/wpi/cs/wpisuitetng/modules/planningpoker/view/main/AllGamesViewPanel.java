@@ -9,7 +9,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 
 /*
@@ -48,7 +48,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
                     setGameOrReqView(true);
-                } else if (nodeInfo instanceof Requirement) {
+                } else if (nodeInfo instanceof GameRequirementModel) {
                     setGameOrReqView(false);
                 }
             }
@@ -57,9 +57,11 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     
     private void setGameOrReqView(boolean is_game) {
         if (is_game) {
-            ((CardLayout) selectedItemPanel.getLayout()).show(selectedItemPanel, "game");
+            ((CardLayout) selectedItemPanel.getLayout()).show(
+                    selectedItemPanel, "game");
         } else {
-            ((CardLayout) selectedItemPanel.getLayout()).show(selectedItemPanel, "req");
+            ((CardLayout) selectedItemPanel.getLayout()).show(
+                    selectedItemPanel, "req");
         }
     }
     

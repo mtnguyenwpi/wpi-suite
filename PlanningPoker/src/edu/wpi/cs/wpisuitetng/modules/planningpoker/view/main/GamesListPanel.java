@@ -5,17 +5,19 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * 
@@ -33,54 +35,52 @@ public class GamesListPanel extends javax.swing.JPanel {
      */
     public GamesListPanel() {
         initComponents();
-        gameList = null;
         
-        GameListModel model = new GameListModel();
-        model.addGame(new GameModel(23, "Test Game", "This game is a test",
-                new Requirement[] { new Requirement(367432, "Requirement 1",
-                        "THis is required!") }, new Date(), GameType.LIVE,
-                GameStatus.PENDING));
-        model.addGame(new GameModel(25, "Test Game 2",
-                "This game is also a test", new Requirement[] {
-                        new Requirement(15, "Requirement A",
-                                "THis is required!"),
-                        new Requirement(51, "Requirement B",
-                                "THis is definitely required!") }, new Date(),
-                GameType.DISTRIBUTED, GameStatus.COMPLETE));
-        setGameList(model);
-    }
-    
-    private GameListModel gameList;
-    
-    public GameListModel getGameList() {
-        return gameList;
-    }
-    
-    public void setGameList(final GameListModel gameList) {
-        this.gameList = gameList;
-        if (gameList != null) {
-            gameTree.setModel(new DefaultTreeModel(
-                    new DefaultMutableTreeNode() {
-                        private static final long serialVersionUID = 8933074607488306596L;
-                        
-                        {
-                            for (GameModel gm : gameList.getGames()) {
-                                DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
-                                game_node.setUserObject(gm);
-                                
-                                if (gm.getRequirements() != null) {
-                                    for (Requirement r : gm.getRequirements()) {
-                                        DefaultMutableTreeNode req_node = new DefaultMutableTreeNode();
-                                        req_node.setUserObject(r);
-                                        
-                                        game_node.add(req_node);
+        GameListModel.getInstance().addListListener(new SimpleListObserver() {
+            
+            @Override
+            public void listUpdated() {
+                gameTree.setModel(new DefaultTreeModel(
+                        new DefaultMutableTreeNode() {
+                            private static final long serialVersionUID = 8933074607488306596L;
+                            
+                            {
+                                for (GameModel gm : GameListModel.getInstance()
+                                        .getGames()) {
+                                    DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
+                                    game_node.setUserObject(gm);
+                                    
+                                    if (gm.getRequirements() != null) {
+                                        for (GameRequirementModel r : gm
+                                                .getRequirements()) {
+                                            DefaultMutableTreeNode req_node = new DefaultMutableTreeNode();
+                                            req_node.setUserObject(r);
+                                            
+                                            game_node.add(req_node);
+                                        }
                                     }
+                                    add(game_node);
                                 }
-                                add(game_node);
                             }
-                        }
-                    }));
-        }
+                        }));
+            }
+        });
+        
+        ArrayList<GameRequirementModel> reqs = new ArrayList<>();
+        reqs.add(new GameRequirementModel(367432, "Requirement 1",
+                "THis is required!", "its type"));
+        GameListModel.getInstance().addGame(
+                new GameModel(23, "Test Game", "This game is a test", reqs,
+                        new Date(), GameType.LIVE, GameStatus.PENDING));
+        reqs = new ArrayList<>();
+        reqs.add(new GameRequirementModel(15, "Requirement A",
+                "THis is required!", "user story"));
+        reqs.add(new GameRequirementModel(51, "Requirement B",
+                "THis is definitely required!", "doofus story"));
+        GameListModel.getInstance().addGame(
+                new GameModel(25, "Test Game 2", "This game is also a test",
+                        reqs, new Date(), GameType.DISTRIBUTED,
+                        GameStatus.COMPLETE));
     }
     
     public JTree getTree() {

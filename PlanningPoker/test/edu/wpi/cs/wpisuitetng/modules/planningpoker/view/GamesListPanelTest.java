@@ -3,7 +3,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.util.Date;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -25,11 +24,6 @@ public class GamesListPanelTest {
                 "This game is also a test", null, new Date(),
                 GameType.DISTRIBUTED, GameStatus.COMPLETE));
         panel = new GamesListPanel();
-    }
-    
-    @Test
-    public void testSetGameList() {
-        panel.setGameList(model);
     }
     
 }

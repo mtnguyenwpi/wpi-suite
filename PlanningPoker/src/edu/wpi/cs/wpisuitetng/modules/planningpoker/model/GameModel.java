@@ -20,6 +20,7 @@ public class GameModel extends AbstractModel {
 	 * 
 	 */
     private static final long serialVersionUID = -2777122181981150898L;
+    
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete");
         
@@ -66,8 +67,8 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, Date end,
+            GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -88,8 +89,8 @@ public class GameModel extends AbstractModel {
      * @param estimates
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, Date end,
+            GameType type, GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
@@ -128,7 +129,7 @@ public class GameModel extends AbstractModel {
      * changed
      * 
      * @param slo
-     *        The SimpleListObsrever to add
+     *            The SimpleListObsrever to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
