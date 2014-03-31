@@ -56,6 +56,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="saveButton">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/edu/wpi/cs/wpisuitetng/modules/planningpoker/view/main/save-icon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
       <Events>
@@ -64,6 +67,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/edu/wpi/cs/wpisuitetng/modules/planningpoker/view/main/delete-icon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
       <Events>

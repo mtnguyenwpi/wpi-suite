@@ -73,24 +73,6 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
                 parent.check();
             }
         });
-
-        distributed.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isTypeValid = true;
-                typeError.setVisible(false);
-                parent.check();
-            }
-        });
-
-        live.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isTypeValid = true;
-                typeError.setVisible(false);
-                parent.check();
-            }
-        });
     }
 
     /**
@@ -112,15 +94,10 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         comboMonth = new javax.swing.JComboBox();
         comboDay = new javax.swing.JComboBox();
         comboYear = new javax.swing.JComboBox();
-        notifyEmail = new javax.swing.JCheckBox();
-        notifySMS = new javax.swing.JCheckBox();
         distributed = new javax.swing.JRadioButton();
         live = new javax.swing.JRadioButton();
         nameError = new javax.swing.JLabel();
         descriptionError = new javax.swing.JLabel();
-        typeError = new javax.swing.JLabel();
-
-        setPreferredSize(null);
 
         nameLabel.setText("Name:");
 
@@ -137,11 +114,8 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         comboYear.setEditable(true);
         comboYear.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2014", "2015", "2016", "2017", "2018", "2019", "2020" }));
 
-        notifyEmail.setText("Notify by Email");
-
-        notifySMS.setText("Notify by SMS");
-
         gameType.add(distributed);
+        distributed.setSelected(true);
         distributed.setText("Distributed Game");
 
         gameType.add(live);
@@ -154,9 +128,6 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         descriptionError.setText("Required field!");
         descriptionError.setFocusable(false);
 
-        typeError.setForeground(new java.awt.Color(255, 0, 0));
-        typeError.setText("Required field!");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,19 +135,13 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(selectDeadline)
                             .addComponent(distributed)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(typeError)
-                                .addComponent(live)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(notifyEmail)
-                            .addComponent(notifySMS))
-                        .addGap(58, 58, 58))
+                            .addComponent(live))
+                        .addGap(62, 62, 62))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(nameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -209,16 +174,10 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
                     .addComponent(descriptionError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(notifyEmail)
-                    .addComponent(distributed))
+                .addComponent(distributed)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(notifySMS)
-                    .addComponent(live))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(typeError)
-                .addGap(10, 10, 10)
+                .addComponent(live)
+                .addGap(26, 26, 26)
                 .addComponent(selectDeadline)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -237,7 +196,7 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
     }
 
     public boolean validateForm() {
-        boolean valid =  isNameValid && isDescriptionValid && isTypeValid;
+        boolean valid =  isNameValid && isDescriptionValid ;
         return valid;
     }
 
@@ -246,7 +205,6 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
     }
     private boolean isNameValid = false;
     private boolean isDescriptionValid = false;
-    private boolean isTypeValid = false;
 
     private EditGamePanel parent;
     
@@ -264,9 +222,6 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
     private javax.swing.JLabel nameError;
     public javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
-    public javax.swing.JCheckBox notifyEmail;
-    public javax.swing.JCheckBox notifySMS;
     public javax.swing.JCheckBox selectDeadline;
-    private javax.swing.JLabel typeError;
     // End of variables declaration//GEN-END:variables
 }
