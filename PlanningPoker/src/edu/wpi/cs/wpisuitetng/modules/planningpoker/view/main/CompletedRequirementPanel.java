@@ -1,5 +1,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import javax.swing.table.DefaultTableModel;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
 /**
  * 
  * @author Sam Carlberg <slcarlberg@wpi.edu>
@@ -12,10 +17,41 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private static final long serialVersionUID = -7702704328142908459L;
     
     /**
+     * the requirement who's details are being displayed
+     */
+    private GameRequirementModel req;
+    
+    private DefaultTableModel tableModel;
+    
+    /**
      * Creates new form DetailPanel
      */
-    public CompletedRequirementPanel() {
+    public CompletedRequirementPanel(GameRequirementModel r) {
+        req = r;
+        //setup tablemodel (using autogenerted netbeans code)
+        tableModel = new javax.swing.table.DefaultTableModel(new String[][] {
+        
+        }, new String[] { "User", "Vote" }) {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -7096581768469572698L;
+            Class[] types = new Class[] { java.lang.Object.class,
+                    java.lang.Double.class };
+            boolean[] canEdit = new boolean[] { false, false };
+            
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+            
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
         initComponents();
+        initData();
     }
     
     /**
@@ -42,28 +78,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
         
-        voteResultTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                
-                }, new String[] { "User", "Vote" }) {
-            /**
-             * 
-             */
-            private static final long serialVersionUID = -7096581768469572698L;
-            Class[] types = new Class[] { java.lang.Object.class,
-                    java.lang.Double.class };
-            boolean[] canEdit = new boolean[] { false, false };
-            
-            @Override
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-            
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
+        voteResultTable.setModel(tableModel);
         tableScrollPane.setViewportView(voteResultTable);
         
         meanValueLabel.setText("XYZ");
@@ -143,6 +158,20 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                                 .addComponent(medianValueLabel))
                                 .addGap(13, 13, 13)));
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void initData() {
+        for (Estimate e : req.getEstimates()) {
+            String row[] = new String[2];
+            row[0] = e.getUser().getName();
+            Float f = new Float(e.getEstimate());
+            row[1] = f.toString();
+            tableModel.addRow(row);
+        }
+        Float mean = new Float(req.getEstimateMean());
+        meanValueLabel.setText(mean.toString());
+        Float median = new Float(req.getEstimateMedian());
+        medianValueLabel.setText(median.toString());
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
