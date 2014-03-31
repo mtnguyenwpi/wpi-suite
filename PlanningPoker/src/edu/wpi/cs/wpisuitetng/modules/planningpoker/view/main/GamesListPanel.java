@@ -29,6 +29,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtons;
  */
 public class GamesListPanel extends javax.swing.JPanel {
     
+     // TODO: organize games into completed and uncompleted folders
+    
     /**
      *
      */

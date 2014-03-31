@@ -25,17 +25,14 @@ public class Estimate extends AbstractModel {
 	
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public Boolean identify(Object arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public void save() {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override

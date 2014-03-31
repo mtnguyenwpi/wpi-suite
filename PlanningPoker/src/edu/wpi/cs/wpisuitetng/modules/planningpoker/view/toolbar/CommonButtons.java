@@ -51,7 +51,6 @@ public class CommonButtons extends ToolbarGroupView {
 			ImageIcon icon = new ImageIcon(ImageIO.read(getClass().getResource("NewGame.png")));
 			newGameButton.setIcon(icon);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         
