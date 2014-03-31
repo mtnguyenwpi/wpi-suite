@@ -23,10 +23,15 @@ public class EditGamePanel extends javax.swing.JPanel {
     public EditGamePanel() {
         initComponents();
         
+        gameDescription.setEditGamePanel(this);
+        gameRequirements.setEditGamePanel(this);
+        
         // dummy requirements for test
-        gameRequirements1.addRequirement(new Requirement(0, "Test Requirement 1", "The cow"));
-        gameRequirements1.addRequirement(new Requirement(1, "Test Requirement 2", "elepahnt"));
-        gameRequirements1.addRequirement(new Requirement(2, "Test Requirement 5", "queso"));
+        gameRequirements.addRequirement(new Requirement(0, "Test Requirement 1", "The cow"));
+        gameRequirements.addRequirement(new Requirement(1, "Test Requirement 2", "elepahnt"));
+        gameRequirements.addRequirement(new Requirement(2, "Test Requirement 5", "queso"));
+        
+
         
         
     }
@@ -42,8 +47,8 @@ public class EditGamePanel extends javax.swing.JPanel {
 
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        gameRequirements1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel();
-        gameDescription1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel();
+        gameRequirements = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel();
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -70,19 +75,19 @@ public class EditGamePanel extends javax.swing.JPanel {
                         .addComponent(saveButton)
                         .addGap(16, 16, 16)
                         .addComponent(cancelButton))
-                    .addComponent(gameDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(gameRequirements1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(gameDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(gameRequirements, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(gameRequirements1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(gameRequirements, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(21, 21, 21))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(gameDescription1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(gameDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(saveButton)
@@ -92,7 +97,7 @@ public class EditGamePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-    	PlanningPoker.getViewController().saveNewGame(this);
+        PlanningPoker.getViewController().saveNewGame(this);      
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -100,15 +105,15 @@ public class EditGamePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     public String getName(){
-        return gameDescription1.nameField.getText();
+        return gameDescription.nameField.getText();
     }
     
     public String getDescription(){
-        return gameDescription1.descriptionField.getText();
+        return gameDescription.descriptionField.getText();
     }
     
     public GameType getGameType(){
-        if(gameDescription1.distributed.isSelected()){
+        if(gameDescription.distributed.isSelected()){
             return GameType.DISTRIBUTED;
         } else {
             return GameType.LIVE;            
@@ -116,17 +121,21 @@ public class EditGamePanel extends javax.swing.JPanel {
     }
     
     public Date getEndDate(){
-        return gameDescription1.getDate();
+        return gameDescription.getDate();
     }
     
     public Requirement[] getRequirements(){
-        return gameRequirements1.getRequirementsFromTable();
+        return gameRequirements.getRequirementsFromTable();
+    }
+    
+    public void check(){
+        saveButton.setEnabled((gameDescription.validateForm() && gameRequirements.validateForm()));
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel gameDescription1;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel gameRequirements1;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel gameDescription;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel gameRequirements;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
