@@ -5,22 +5,25 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.util.Date;
+
+import javax.swing.JPanel;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-
-import java.util.Date;
 
 /**
  *
  * @author Lukas
  */
-public class EditGamePanel extends javax.swing.JPanel {
+public class EditGamePanel extends JPanel {
 
     /**
      * Creates new form EditGame
      */
     public EditGamePanel() {
+    	    	
         initComponents();
         
         gameDescription.setEditGamePanel(this);

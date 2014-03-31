@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -8,7 +9,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.EditGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
 public class ViewController {
 
@@ -21,9 +22,17 @@ public class ViewController {
 	}
 
 	public void addNewGameTab() {
-		EditGamePanel editGame = new EditGamePanel();
+		final EditGamePanel editGame = new EditGamePanel();
 		mainView.addTab("New Game", editGame);
 		mainView.setSelectedComponent(editGame);
+		
+		mainView.setTabComponentAt(mainView.indexOfComponent(editGame), new ClosableTabComponent(mainView){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				cancelNewGame(editGame);
+			}
+		});
+		
 	}
 
 	public void saveNewGame(EditGamePanel e) {
@@ -39,10 +48,10 @@ public class ViewController {
 	}
 	
 	public void cancelNewGame(EditGamePanel e){
-		int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?");
-		if(result == JOptionPane.OK_OPTION) {
+		//int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?");
+		//if(result == JOptionPane.OK_OPTION) {
 			mainView.removeTabAt(mainView.indexOfComponent(e));	
-		}
+		//}
 	}
 
 }
