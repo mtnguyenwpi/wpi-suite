@@ -5,9 +5,12 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -18,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtons;
 
 /**
  * 
@@ -35,6 +39,13 @@ public class GamesListPanel extends javax.swing.JPanel {
      */
     public GamesListPanel() {
         initComponents();
+        try {
+            gameTree.setCellRenderer(new GamesListTreeCellRenderer(
+                    new ImageIcon(ImageIO.read(AdminButtons.class
+                            .getResource("EndGame.png")))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
         GameListModel.getInstance().addListListener(new SimpleListObserver() {
             
