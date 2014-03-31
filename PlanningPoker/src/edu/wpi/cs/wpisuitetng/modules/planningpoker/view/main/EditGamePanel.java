@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  *
@@ -57,13 +58,6 @@ public class EditGamePanel extends JPanel {
         gameRequirements = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel();
         gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel();
 
-        try {
-        	ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource("save-icon.png")));
-        	
-			saveButton.setIcon(img);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} // NOI18N
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,17 +65,15 @@ public class EditGamePanel extends JPanel {
             }
         });
 
-        try {
-			cancelButton.setIcon(new javax.swing.ImageIcon(ImageIO.read(getClass().getResource("delete-icon.png"))));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} // NOI18N
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
+        
+        saveButton.setIcon(ImageLoader.getIcon("Save.png"));
+        cancelButton.setIcon(ImageLoader.getIcon("Delete.png"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
