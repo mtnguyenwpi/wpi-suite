@@ -61,14 +61,17 @@ public class GameModel extends AbstractModel {
     /**
      * Constructor
      * 
+     * @param id
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type
      * @param status
      */
     public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, Date end,
+            GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -82,27 +85,27 @@ public class GameModel extends AbstractModel {
     /**
      * Constructor
      * 
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type
      * @param status
-     * @param estimates
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, Date end,
+            GameType type, GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         endDate = end;
         this.type = type;
-        this.status = status; 
+        this.status = status;
         observers = new ArrayList<SimpleListObserver>();
     }
     
     /**
-     * 
      * @return the name of this game
      */
     public String getName() {
@@ -113,7 +116,6 @@ public class GameModel extends AbstractModel {
         this.id = id;
     }
     
-    
     /**
      * 
      * @return the name of this game
@@ -121,7 +123,6 @@ public class GameModel extends AbstractModel {
     public String getDescription() {
         return description;
     }
-    
     
     /**
      * Add a SimpleListObserver that is notified when the list of estimates is
@@ -140,7 +141,7 @@ public class GameModel extends AbstractModel {
      * Add a user's estimate to the list
      * 
      * @param user
-     * @param estoimate
+     * @param estimate
      */
     public void addEstimate(Estimate e, int reqIndex) {
         requirements.get(reqIndex).addEstimate(e);
@@ -155,7 +156,6 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * 
      * @return The Requirement for this game
      */
     public ArrayList<GameRequirementModel> getRequirements() {
@@ -163,7 +163,6 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * 
      * @return The end time for this game
      */
     public Date getEndTime() {
@@ -183,6 +182,7 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
+     *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;

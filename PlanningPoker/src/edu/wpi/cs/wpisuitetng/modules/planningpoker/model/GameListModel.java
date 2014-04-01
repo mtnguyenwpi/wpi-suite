@@ -22,6 +22,7 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     /**
      * Retrieves the singleton GameListModel
+     * 
      * @return Only GameListModel instance
      */
     public static GameListModel getInstance() {
@@ -33,14 +34,14 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     private static final long serialVersionUID = -4216338772150454616L;
     
-    
     private ArrayList<GameModel> games;
     private ArrayList<SimpleListObserver> observers;
     private GetGamesController gameRetrievalController;
     private Timer autoRefresh;
     
     /**
-     * Constructor that initializes list of games, list of observers, a controller to service DB retrieval requests,
+     * Constructor that initializes list of games, list of observers, a
+     * controller to service DB retrieval requests,
      * and a timer to periodically refresh the list of games.
      */
     public GameListModel() {
@@ -129,11 +130,19 @@ public class GameListModel extends AbstractListModel<GameModel> {
     }
     
     @Override
+    /**
+     * @return the size of the list of games
+     */
     public int getSize() {
         return games.size();
     }
     
     @Override
+    /**
+     * @param index
+     *      the index of the element to retrieve in the list of games
+     * @return the game in the list at index
+     */
     public GameModel getElementAt(int index) {
         return games.get(index);
     }
