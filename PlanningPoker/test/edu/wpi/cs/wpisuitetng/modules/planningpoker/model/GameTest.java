@@ -42,14 +42,20 @@ public class GameTest {
     	ArrayList<User> users = new ArrayList<User>();
     	User kevin = new User("Kevin", "kpmartin", "password", 1);
     	users.add(kevin);
-    	GameModel testgame = new GameModel(3, "Test Game", "something", null, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
+    	ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
+    	GameModel testgame = new GameModel(3, "Test Game", "something", requirements, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
     	assertFalse(testgame.isEnded());
     }
     
     @Test
     public void TestAllUsersVoted() {
     	ArrayList<User> users = new ArrayList<User>();
-    	GameModel testgame = new GameModel(3, "Test Game", "something", null, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
+    	User kevin = new User("Kevin", "kpmartin", "password", 1);
+    	users.add(kevin);
+    	Estimate estimate1 = new Estimate(kevin, 5);
+    	ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
+    	requirements.get(0).addEstimate(estimate1);
+    	GameModel testgame = new GameModel(3, "Test Game", "something", requirements, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
     	assertFalse(testgame.isEnded());
     }
 }
