@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Represents a planning poker game
@@ -18,77 +17,79 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  */
 public class GameModel extends AbstractModel {
     
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -2777122181981150898L;
-
-	public static enum GameStatus {
-		PENDING("Pending"), COMPLETE("Complete");
-		
-		public String name;
-		
-		GameStatus(String stat){
-			name = stat;
-		}		
-	};
-
-	
+    private static final long serialVersionUID = -2777122181981150898L;
+    
+    public static enum GameStatus {
+        PENDING("Pending"), COMPLETE("Complete");
+        
+        public String name;
+        
+        GameStatus(String stat) {
+            name = stat;
+        }
+    };
+    
+    
     public static enum GameType {
         LIVE, DISTRIBUTED
     };
     
-	private ArrayList<Estimate> estimateList;
     private ArrayList<SimpleListObserver> observers;
     private ArrayList<User> userList;
+    private ArrayList<ArrayList<Estimate>> estimates;
     
     private int id;
     private String name;
     private String description;
-    private Requirement[] requirements;
+    private ArrayList<GameRequirementModel> requirements;
     private Date endDate;
     private GameType type;
     private GameStatus status;
     
     public GameModel() {
-        this.id = -1;
-        this.name = null;
-        this.description = null;
-        this.requirements = null;
-        this.endDate = null;
-        this.type = null;
-        this.status = null;   
-        estimateList = null;
+        id = -1;
+        name = null;
+        description = null;
+        requirements = null;
+        endDate = null;
+        type = null;
+        status = null;
         observers = null;
     }
-
     
-
+    
     /**
      * Constructor
-     * @param id
-     * @param name
      * @param requirements
      * @param end
      * @param type
      * @param status
      * @param userList list of users in the game
      */
-    public GameModel(int id, String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
+    public GameModel(int id, String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
-        this.endDate = end;
+        endDate = end;
         this.type = type;
         this.status = status;
         this.userList = userList;
-        estimateList = new ArrayList<>();
-        observers = new ArrayList<SimpleListObserver>();
+        ArrayList<Estimate> innerList;
+        
+        for(int i = 0; i < requirements.size(); i++){
+        	innerList = requirements.get(i).getEstimates();
+        	this.estimates.add(innerList);
+        }
+   		observers = new ArrayList<SimpleListObserver>();
     }
     
     /**
      * Constructor
+     * 
      * @param requirements
      * @param end
      * @param type
@@ -96,16 +97,21 @@ public class GameModel extends AbstractModel {
      * @param estimates
      * @param userList list of users in the game
      */
-    public GameModel(String name, String description, Requirement[] requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
-        this.id = -1;
+    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
+        id = -1;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
-        this.endDate = end;
+        endDate = end;
         this.type = type;
         this.status = status;
-        this.estimateList = estimates;
         this.userList = userList;
+        ArrayList<Estimate> innerList;
+        
+        for(int i = 0; i < requirements.size(); i++){
+        	innerList = requirements.get(i).getEstimates();
+        	this.estimates.add(innerList);
+        }
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -120,9 +126,8 @@ public class GameModel extends AbstractModel {
     public void setID(int id) {
         this.id = id;
     }
-
-
-
+    
+    
     /**
      * 
      * @return the name of this game
@@ -132,12 +137,12 @@ public class GameModel extends AbstractModel {
     }
     
     
-    
     /**
      * Add a SimpleListObserver that is notified when the list of estimates is
      * changed
      * 
-     * @param slo The SimpleListObsrever to add
+     * @param slo
+     *        The SimpleListObsrever to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -149,37 +154,23 @@ public class GameModel extends AbstractModel {
      * Add a user's estimate to the list 
      * @param e the estimate to add
      */
-    public void addEstimate(Estimate e) {
-        estimateList.add(e);
+    public void addEstimate(Estimate e, int reqIndex) {
+        requirements.get(reqIndex).addEstimate(e);
         updated();
     }
     
-   
-    /**
-     * Removes a user's estimate from the list. Doesn't do anything if
-     * the estimate is not in the list
-     * 
-     * @param e the estimate to remove
-     */
-    public void removeEstimate(Estimate e) {
-        if (estimateList.contains(e)) {
-            estimateList.remove(e);
-            updated();
-        }
-    }
-
     /**
      * @return an array containing all of the estimates
      */
-    public ArrayList<Estimate> getEstimates() {
-        return estimateList;
+    public ArrayList<Estimate> getEstimates(int reqIndex) {
+        return requirements.get(reqIndex).getEstimates();
     }
     
     /**
      * 
      * @return The Requirement for this game
      */
-    public Requirement[] getRequirements() {
+    public ArrayList<GameRequirementModel> getRequirements() {
         return requirements;
     }
     
@@ -206,11 +197,27 @@ public class GameModel extends AbstractModel {
      * @param fin
      */
     public void setEnded(boolean fin) {
-        status = fin?GameStatus.COMPLETE:GameStatus.PENDING;
+        status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
+    /**
+     * Determines if all users have voted
+     * @return boolean
+     */
+    public boolean allVoted(){
+    	for(int i = 0; i < estimates.size(); i++){
+    		if(estimates.get(i).size() == userList.size()){
+    			return true;
+    		}
+    		else return false;
+    	}
+		return false;
+    }
+    /**
+     * Determines if the game should be ended, and ends the game
+     */
     public boolean isEnded() {
-        if (estimateList.size() == userList.size()){
+        if (allVoted() == true){
         	setEnded(true);
         }
     	else if((endDate.before(new Date(System.currentTimeMillis())))){
@@ -219,33 +226,7 @@ public class GameModel extends AbstractModel {
         return (status == GameStatus.COMPLETE);
     }
     
-    /**
-     * Computes the numerical average of all of the estimates
-     * 
-     * @return the mean (average)
-     */
-    public float getEstimateMean() {
-        float mean = 0;
-        for (Estimate e:estimateList) {
-            mean += e.getEstimate() / (estimateList.size());
-        }
-        return mean;
-    }
     
-    /**
-     * Computes the median of all of the estimates
-     * 
-     * @return the median
-     */
-    public float getEstimateMedian() {
-    	int count = estimateList.size();
-        if (estimateList.size() % 2 == 1) {
-        	return estimateList.get(count/2).getEstimate();
-        } else {
-        	return (estimateList.get(count/2).getEstimate() + estimateList.get(count/2 -1).getEstimate())/2;
-        }
-    }
-
     /**
      * Notifies all observers when that the list has changed
      */
@@ -254,64 +235,54 @@ public class GameModel extends AbstractModel {
             observer.listUpdated();
         }
     }
+
     
-	public int getSize() {
-		return estimateList.size();
-	}
-	
-	public Estimate getElementAt(int index) {
-		return estimateList.get(index);
-	}
-
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String toJSON() {
-		return new Gson().toJson(this, GameModel.class);
-	}
-
-	@Override
-	public Boolean identify(Object o) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
+    @Override
+    public void save() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public void delete() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public String toJSON() {
+        return new Gson().toJson(this, GameModel.class);
+    }
+    
+    @Override
+    public Boolean identify(Object o) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    
     public static GameModel fromJSON(String json) {
         final Gson parser = new Gson();
         return parser.fromJson(json, GameModel.class);
     }
-
-
-
-
+    
+    
     public int getID() {
-        return this.id;
+        return id;
     }
-
-
-
+    
+    
     public void copyFrom(GameModel g) {
-        this.id = g.id;
-        this.name = g.name;
-        this.description = g.description;
-        this.requirements = g.requirements;
-        this.endDate = g.endDate;
-        this.type = g.type;
-        this.status = g.status; 
-        estimateList = g.estimateList;
+        id = g.id;
+        name = g.name;
+        description = g.description;
+        requirements = g.requirements;
+        endDate = g.endDate;
+        type = g.type;
+        status = g.status;
         observers = g.observers;
+        estimates = g.estimates;
+        userList = g.userList;
     }
     
 }
