@@ -61,6 +61,9 @@ public class GameModel extends AbstractModel {
     /**
      * Constructor
      * 
+     * @param id
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type

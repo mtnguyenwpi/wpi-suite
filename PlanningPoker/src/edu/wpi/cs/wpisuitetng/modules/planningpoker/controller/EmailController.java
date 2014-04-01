@@ -78,7 +78,7 @@ public class EmailController implements ActionListener {
     }
     
     private void requestUsers() {
-        final Request request = Network.getInstance().makeRequest("core/coreuser", HttpMethod.GET);
+        final Request request = Network.getInstance().makeRequest("core/user", HttpMethod.GET);
         request.addObserver(observer); // add an observer to process the response
         request.send(); // send the request
     }
