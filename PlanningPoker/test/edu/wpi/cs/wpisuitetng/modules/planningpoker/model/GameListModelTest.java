@@ -9,13 +9,17 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GamesListPanel;
 
+/**
+ * 
+ * @author Andrew
+ *
+ */
 public class GameListModelTest {
     static GameListModel instance;
     
     @BeforeClass
-    static public void setUpBefore(){
+    static public void setUpBeforeClass(){
         instance = GameListModel.getInstance();
     }
     

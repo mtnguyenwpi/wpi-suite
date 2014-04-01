@@ -46,6 +46,9 @@ public class GameModel extends AbstractModel {
     private GameType type;
     private GameStatus status;
     
+    /**
+     * Default constructor creates instance with invalid id and null fields
+     */
     public GameModel() {
         id = -1;
         name = null;
@@ -56,7 +59,6 @@ public class GameModel extends AbstractModel {
         status = null;
         observers = null;
     }
-    
     
     /**
      * Constructor
@@ -129,7 +131,7 @@ public class GameModel extends AbstractModel {
      * changed
      * 
      * @param slo
-     *        The SimpleListObsrever to add
+     *        The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -156,7 +158,7 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * @return The Requirement for this game
+     * @return The Requirements for this game
      */
     public ArrayList<GameRequirementModel> getRequirements() {
         return requirements;
@@ -188,6 +190,11 @@ public class GameModel extends AbstractModel {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
+    /**
+     * If the current time is past the end date of the game, set the game as ended.
+     * 
+     * @return whether the game has ended
+     */
     public boolean isEnded() {
         if ((endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
@@ -242,6 +249,10 @@ public class GameModel extends AbstractModel {
         return id;
     }
     
+    public GameStatus getStatus() {
+        return status;
+    }
+    
     public void copyFrom(GameModel g) {
         id = g.id;
         name = g.name;
@@ -251,6 +262,14 @@ public class GameModel extends AbstractModel {
         type = g.type;
         status = g.status;
         observers = g.observers;
+    }
+    
+    /**
+     * 
+     * @return the simplelistobservers for the list of games
+     */
+    public ArrayList<SimpleListObserver> getObservers(){
+        return observers;
     }
     
 }
