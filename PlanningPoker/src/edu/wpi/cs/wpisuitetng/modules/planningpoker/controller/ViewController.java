@@ -41,6 +41,9 @@ public class ViewController {
         
         AddGameController adder = new AddGameController();
         adder.addGame(newGame);
+        
+        EmailController email = new EmailController();
+        email.send();
     }
     
     public void cancelNewGame(EditGamePanel e) {

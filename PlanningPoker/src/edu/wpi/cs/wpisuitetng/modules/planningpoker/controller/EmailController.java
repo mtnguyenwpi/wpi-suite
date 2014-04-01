@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController implements ActionListener {
+public class EmailController {
     
     private UserRequestObserver observer;
     private User[] users;
@@ -128,11 +128,6 @@ public class EmailController implements ActionListener {
             s += users[i].getEmail();
         }
         to = s;
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        send();
     }
     
 }
