@@ -147,4 +147,8 @@ public class GameListModel extends AbstractListModel<GameModel> {
         return games.get(index);
     }
     
+    public ArrayList<SimpleListObserver> getObservers(){
+        return observers;
+    }
+    
 }
