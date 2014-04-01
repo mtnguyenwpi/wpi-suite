@@ -39,8 +39,7 @@ public class ViewController {
                 e.getRequirements(), e.getEndDate(), e.getGameType(),
                 GameStatus.PENDING);
         
-        AddGameController adder = new AddGameController();
-        adder.addGame(newGame);
+        AddGameController.getInstance().addGame(newGame);
     }
     
     public void cancelNewGame(EditGamePanel e) {
