@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * Buttons for new game and delete game
@@ -42,13 +43,7 @@ public class AdminButtons extends ToolbarGroupView {
         super("");
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>"); 
-		try {
-			ImageIcon icon = new ImageIcon(ImageIO.read(getClass().getResource("EndGame.png")));
-			endGameButton.setIcon(icon);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);

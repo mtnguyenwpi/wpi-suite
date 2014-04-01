@@ -46,7 +46,7 @@ public class UpdateGamesController {
      */
     public void updateGame(GameListModel newGame) {
         Request request = Network.getInstance().makeRequest(
-                "planningpokermanager/planningpoker", HttpMethod.POST); // POST == update
+                "planningpoker/game", HttpMethod.POST); // POST == update
         // request.setBody(newGame.toJSON()); // put the new game in the body of the request
         request.addObserver(observer); // add an observer to process the response
         request.send();

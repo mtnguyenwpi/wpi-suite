@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import com.google.gson.Gson;
 
+
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
