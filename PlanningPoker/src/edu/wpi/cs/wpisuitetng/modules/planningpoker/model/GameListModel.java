@@ -13,7 +13,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
 /**
  * Stores a list of games and their statuses
  * 
+<<<<<<< HEAD
  * @author Akshay, Andrew
+=======
+ * @author Akshay
+>>>>>>> team9dev
  * 
  */
 public class GameListModel extends AbstractListModel<GameModel> {

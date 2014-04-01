@@ -5,23 +5,20 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtons;
 
 /**
  * 
@@ -29,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar.AdminButtons;
  */
 public class GamesListPanel extends javax.swing.JPanel {
     
-     // TODO: organize games into completed and uncompleted folders
+    // TODO: organize games into completed and uncompleted folders
     
     /**
      *
@@ -41,13 +38,7 @@ public class GamesListPanel extends javax.swing.JPanel {
      */
     public GamesListPanel() {
         initComponents();
-        try {
-            gameTree.setCellRenderer(new GamesListTreeCellRenderer(
-                    new ImageIcon(ImageIO.read(AdminButtons.class
-                            .getResource("EndGame.png")))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        gameTree.setCellRenderer(new GamesListTreeCellRenderer());
         
         GameListModel.getInstance().addListListener(new SimpleListObserver() {
             
@@ -79,17 +70,28 @@ public class GamesListPanel extends javax.swing.JPanel {
             }
         });
         
+        ArrayList<Estimate> estimates = new ArrayList<>();
         ArrayList<GameRequirementModel> reqs = new ArrayList<>();
+        estimates.add(new Estimate(null, 0.5f));
+        estimates.add(new Estimate(null, 1f));
+        estimates.add(new Estimate(null, 2f));
+        estimates.add(new Estimate(null, 5f));
+        estimates.add(new Estimate(null, 10f));
         reqs.add(new GameRequirementModel(367432, "Requirement 1",
-                "THis is required!", "its type"));
+                "THis is required!", "its type", estimates));
         GameListModel.getInstance().addGame(
                 new GameModel(23, "Test Game", "This game is a test", reqs,
                         new Date(), GameType.LIVE, GameStatus.PENDING));
         reqs = new ArrayList<>();
         reqs.add(new GameRequirementModel(15, "Requirement A",
-                "THis is required!", "user story"));
+                "THis is required!", "user story", estimates));
+        estimates = new ArrayList<>();
+        estimates.add(new Estimate(null, 1f));
+        estimates.add(new Estimate(null, 7f));
+        estimates.add(new Estimate(null, 8f));
+        estimates.add(new Estimate(null, 15f));
         reqs.add(new GameRequirementModel(51, "Requirement B",
-                "THis is definitely required!", "doofus story"));
+                "THis is definitely required!", "doofus story", estimates));
         GameListModel.getInstance().addGame(
                 new GameModel(25, "Test Game 2", "This game is also a test",
                         reqs, new Date(), GameType.DISTRIBUTED,

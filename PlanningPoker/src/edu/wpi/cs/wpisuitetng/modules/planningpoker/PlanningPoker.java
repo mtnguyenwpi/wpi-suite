@@ -34,16 +34,16 @@ public class PlanningPoker implements IJanewayModule {
     
     static ViewController viewController;
     
-    public static ViewController getViewController(){
-    	return viewController;
+    public static ViewController getViewController() {
+        return PlanningPoker.viewController;
     }
     
-
+    
     List<JanewayTabModel> tabs;
     
     public PlanningPoker() {
-    	
-    	
+        
+        
         tabs = new ArrayList<JanewayTabModel>();
         
         // setup toolbar
@@ -52,8 +52,8 @@ public class PlanningPoker implements IJanewayModule {
         // setup main panel
         MainView mainPanel = new MainView();
         
-
-    	viewController = new ViewController(mainPanel, toolbar);
+        
+        PlanningPoker.viewController = new ViewController(mainPanel, toolbar);
         
         // Create a tab model that contains the toolbar panel and the main
         // content panel

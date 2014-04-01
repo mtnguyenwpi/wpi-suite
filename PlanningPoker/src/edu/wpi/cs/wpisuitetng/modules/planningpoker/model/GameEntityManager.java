@@ -30,18 +30,20 @@ public class GameEntityManager implements EntityManager<GameModel> {
      * Ensures that a user is of the specified role
      * 
      * @param session
-     *        the session
+     *            the session
      * @param role
-     *        the role being verified
+     *            the role being verified
      * 
      * @throws WPISuiteException
-     *         user isn't authorized for the given role
+     *             user isn't authorized for the given role
      */
     private void ensureRole(Session session, Role role)
             throws WPISuiteException {
         User user = (User) db.retrieve(User.class, "username",
                 session.getUsername()).get(0);
-        if (!user.getRole().equals(role)) { throw new UnauthorizedException(); }
+        if (!user.getRole().equals(role)) {
+            throw new UnauthorizedException();
+        }
     }
     
     /**
@@ -112,7 +114,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
     @Override
     public GameModel[] getEntity(Session s, String id) throws NotFoundException {
         final int intId = Integer.parseInt(id);
-        if (intId < 1) { throw new NotFoundException(); }
+        if (intId < 1) {
+            throw new NotFoundException();
+        }
         GameModel[] GameModels = null;
         try {
             GameModels = db.retrieve(GameModel.class, "id", intId,
@@ -121,7 +125,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
         catch (WPISuiteException e) {
             e.printStackTrace();
         }
-        if (GameModels.length < 1 || GameModels[0] == null) { throw new NotFoundException(); }
+        if (GameModels.length < 1 || GameModels[0] == null) {
+            throw new NotFoundException();
+        }
         return GameModels;
     }
     
@@ -133,7 +139,9 @@ public class GameEntityManager implements EntityManager<GameModel> {
             throws WPISuiteException {
         final GameModel newGameModel = GameModel.fromJSON(content);
         newGameModel.setID(getNextID(s));
-        if (!db.save(newGameModel, s.getProject())) { throw new WPISuiteException(); }
+        if (!db.save(newGameModel, s.getProject())) {
+            throw new WPISuiteException();
+        }
         return newGameModel;
     }
     
@@ -154,22 +162,24 @@ public class GameEntityManager implements EntityManager<GameModel> {
         GameModel updatedGameModel = GameModel.fromJSON(content);
         /*
          * Because of the disconnected objects problem in db4o, we can't just
-         * save GameModels.
-         * We have to get the original GameModel from db4o, copy properties from
-         * updatedGameModel,
-         * then save the original GameModel again.
+         * save GameModels. We have to get the original GameModel from db4o,
+         * copy properties from updatedGameModel, then save the original
+         * GameModel again.
          */
         List<Model> oldGameModels = db.retrieve(GameModel.class, "id",
                 updatedGameModel.getID(), s.getProject());
-        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) { throw new BadRequestException(
-                "GameModel with ID does not exist."); }
+        if (oldGameModels.size() < 1 || oldGameModels.get(0) == null) {
+            throw new BadRequestException("GameModel with ID does not exist.");
+        }
         
         GameModel existingGameModel = (GameModel) oldGameModels.get(0);
         
         // copy values to old GameModel
         existingGameModel.copyFrom(updatedGameModel);
         
-        if (!db.save(existingGameModel, s.getProject())) { throw new WPISuiteException(); }
+        if (!db.save(existingGameModel, s.getProject())) {
+            throw new WPISuiteException();
+        }
         
         return existingGameModel;
     }

@@ -31,8 +31,7 @@ public class GetGamesController implements ActionListener {
     
     /**
      * @return the instance of the GetGameController or creates one if it does
-     *         not
-     *         exist.
+     *         not exist.
      */
     public static GetGamesController getInstance() {
         if (GetGamesController.instance == null) {
@@ -43,11 +42,10 @@ public class GetGamesController implements ActionListener {
     }
     
     /**
-     * Sends an HTTP request to store a game when the
-     * update button is pressed
+     * Sends an HTTP request to store a game when the update button is pressed
      * 
      * @param e
-     *        ActionEvent
+     *            ActionEvent
      * 
      * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
      */
@@ -56,7 +54,8 @@ public class GetGamesController implements ActionListener {
         // Send a request to the core to save this game
         final Request request = Network.getInstance().makeRequest(
                 "planningpoker/game", HttpMethod.GET); // GET == read
-        request.addObserver(observer); // add an observer to process the response
+        request.addObserver(observer); // add an observer to process the
+                                       // response
         request.send(); // send the request
     }
     
@@ -66,17 +65,17 @@ public class GetGamesController implements ActionListener {
     public void retrieveGames() {
         final Request request = Network.getInstance().makeRequest(
                 "planningpoker/game", HttpMethod.GET); // GET == read
-        request.addObserver(observer); // add an observer to process the response
+        request.addObserver(observer); // add an observer to process the
+                                       // response
         request.send(); // send the request
     }
     
     /**
      * Add the given games to the local model (they were received from the
-     * core).
-     * This method is called by the GetGamesRequestObserver
+     * core). This method is called by the GetGamesRequestObserver
      * 
      * @param games
-     *        array of games received from the server
+     *            array of games received from the server
      */
     public void receivedGames(GameModel[] games) {
         // Empty the local model to eliminate duplications

@@ -16,11 +16,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  */
 public class GameModel extends AbstractModel {
     
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = -2777122181981150898L;
-    
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete");
         
