@@ -37,6 +37,9 @@ public class EmailController implements ActionListener {
     private String subject;
     private String to;
     
+    /**
+     * Creates a new EmailController class
+     */
     public EmailController() {
         body = ConfigManager.getConfig().getUserName()
                 + " has created a new Planning Poker game. Please open Janeway and make your estimates!";
@@ -46,6 +49,9 @@ public class EmailController implements ActionListener {
         parseEmails();
     }
     
+    /**
+     * Sends an email to all users that are not the creator of the game
+     */
     public void send() {
         
         Properties props = new Properties();
@@ -81,6 +87,9 @@ public class EmailController implements ActionListener {
         }
     }
     
+    /**
+     * Requests query of all users related to the project
+     */
     private void requestUsers() {
         final Request request = Network.getInstance().makeRequest("core/user",
                 HttpMethod.GET);
@@ -88,6 +97,10 @@ public class EmailController implements ActionListener {
         request.send(); // send the request
     }
     
+    /**
+     * Sets the users list to the users received by the network
+     * @param users The list of users received by UserRequestController
+     */
     public void receivedUsers(User[] users) {
         if (users != null) {
             this.users = users;
@@ -97,6 +110,10 @@ public class EmailController implements ActionListener {
         }
     }
     
+    /**
+     * Sets the "to" field for the notification email with
+     * the email addresses of all users that are not the creator of the game
+     */
     private void parseEmails() {
         String s = "";
         int i;

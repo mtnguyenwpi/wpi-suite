@@ -6,10 +6,20 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
+/**
+ * This class waits for response from the server based on the
+ * request sent by its EmailController
+ * @author nfbrown, szhou, dcwethern
+ *
+ */
 public class UserRequestObserver implements RequestObserver {
     
     private EmailController controller;
     
+    /**
+     * Creates a new UserRequestController
+     * @param controller The EmailController that will be used to call receivedUsers()
+     */
     public UserRequestObserver(EmailController controller) {
         this.controller = controller;
     }
