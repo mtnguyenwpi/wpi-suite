@@ -213,13 +213,11 @@ public class GameModel extends AbstractModel {
     
     @Override
     public void save() {
-        // TODO Auto-generated method stub
         
     }
     
     @Override
     public void delete() {
-        // TODO Auto-generated method stub
         
     }
     
@@ -230,7 +228,6 @@ public class GameModel extends AbstractModel {
     
     @Override
     public Boolean identify(Object o) {
-        // TODO Auto-generated method stub
         return null;
     }
     
@@ -270,6 +267,11 @@ public class GameModel extends AbstractModel {
      */
     public ArrayList<SimpleListObserver> getObservers(){
         return observers;
+    }
+        
+    @Override
+    public String toString() {
+        return getName();
     }
     
 }

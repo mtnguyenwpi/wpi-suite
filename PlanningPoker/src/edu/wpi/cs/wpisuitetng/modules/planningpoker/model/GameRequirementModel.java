@@ -4,6 +4,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.google.gson.Gson;
 
@@ -39,6 +40,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         this.estimates = estimates;
+        Collections.sort(this.estimates);
     }
     
     /**
@@ -110,6 +112,7 @@ public class GameRequirementModel extends AbstractModel {
     
     public void addEstimate(Estimate e) {
         estimates.add(e);
+        Collections.sort(estimates);
     }
     
     /**
@@ -149,7 +152,6 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public void delete() {
-        // TODO Auto-generated method stub  
     }
     
     /*
@@ -159,7 +161,6 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public Boolean identify(Object arg0) {
-        // TODO Auto-generated method stub
         return null;
     }
     
@@ -170,7 +171,6 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public void save() {
-        // TODO Auto-generated method stub
         
     }
     
@@ -182,6 +182,11 @@ public class GameRequirementModel extends AbstractModel {
     @Override
     public String toJSON() {
         return new Gson().toJson(this, Requirement.class);
+    }
+    
+    @Override
+    public String toString() {
+        return getName();
     }
     
 }
