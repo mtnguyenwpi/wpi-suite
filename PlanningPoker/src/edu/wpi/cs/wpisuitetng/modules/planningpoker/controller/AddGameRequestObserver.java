@@ -9,6 +9,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
  * This handles all game creation requests
+ * 
  * @author Brett Ammeson
  * 
  */
@@ -19,7 +20,7 @@ public class AddGameRequestObserver implements RequestObserver {
      * Constructs the observer given an AddRequirementController
      * 
      * @param controller
-     *        the controller used to add requirements
+     *            the controller used to add requirements
      */
     public AddGameRequestObserver(AddGameController controller) {
         setController(controller);
@@ -37,15 +38,15 @@ public class AddGameRequestObserver implements RequestObserver {
         final ResponseModel response = iReq.getResponse();
         
         // Parse the requirement out of the response body
-        //final GameModel game = GameModel.fromJson(response.getBody());       
+        // final GameModel game = GameModel.fromJson(response.getBody());
     }
     
     /**
-     * Takes an action if the response results in an error.
-     * Specifically, outputs that the request failed.
+     * Takes an action if the response results in an error. Specifically,
+     * outputs that the request failed.
      * 
      * @param iReq
-     *        IRequest
+     *            IRequest
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest)
      */
@@ -55,13 +56,13 @@ public class AddGameRequestObserver implements RequestObserver {
     }
     
     /**
-     * Takes an action if the response fails.
-     * Specifically, outputs that the request failed.
+     * Takes an action if the response fails. Specifically, outputs that the
+     * request failed.
      * 
      * @param iReq
-     *        IRequest
+     *            IRequest
      * @param exception
-     *        Exception
+     *            Exception
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest,
      *      Exception)
@@ -80,7 +81,7 @@ public class AddGameRequestObserver implements RequestObserver {
     
     /**
      * @param controller
-     *        the controller to set
+     *            the controller to set
      */
     public void setController(AddGameController controller) {
         this.controller = controller;

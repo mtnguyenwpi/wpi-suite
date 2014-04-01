@@ -76,7 +76,7 @@ public class GameRequirementModel extends AbstractModel {
     
     /**
      * @param parentId
-     *        the parentId to set
+     *            the parentId to set
      */
     public void setParentId(int parentId) {
         this.parentId = parentId;
@@ -124,8 +124,7 @@ public class GameRequirementModel extends AbstractModel {
         int count = estimates.size();
         if (estimates.size() % 2 == 1) {
             return estimates.get(count / 2).getEstimate();
-        }
-        else {
+        } else {
             return (estimates.get(count / 2).getEstimate() + estimates.get(
                     count / 2 - 1).getEstimate()) / 2;
         }

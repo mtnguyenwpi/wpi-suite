@@ -6,7 +6,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.EditGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
 public class ViewController {
@@ -20,12 +20,17 @@ public class ViewController {
     }
     
     public void addNewGameTab() {
-        final EditGamePanel editGame = new EditGamePanel();
+        final NewGamePanel editGame = new NewGamePanel();
         mainView.addTab("New Game", editGame);
         mainView.setSelectedComponent(editGame);
         
         mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
                 new ClosableTabComponent(mainView) {
+                    /**
+                     * 
+                     */
+                    private static final long serialVersionUID = 7088866301855075603L;
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         cancelNewGame(editGame);
@@ -34,23 +39,23 @@ public class ViewController {
         
     }
     
-    public void saveNewGame(EditGamePanel e) {
+    public void saveNewGame(NewGamePanel e) {
         GameModel newGame = new GameModel(e.getName(), e.getDescription(),
                 e.getRequirements(), e.getEndDate(), e.getGameType(),
                 GameStatus.PENDING);
-        
-        AddGameController adder = new AddGameController();
-        adder.addGame(newGame);
-        
+
         EmailController email = new EmailController();
         email.send();
+        
+        AddGameController.getInstance().addGame(newGame);
     }
     
-    public void cancelNewGame(EditGamePanel e) {
-        //int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?");
-        //if(result == JOptionPane.OK_OPTION) {
+    public void cancelNewGame(NewGamePanel e) {
+        // int result = JOptionPane.showConfirmDialog(e,
+        // "Are you sure you want to cancel this game?");
+        // if(result == JOptionPane.OK_OPTION) {
         mainView.removeTabAt(mainView.indexOfComponent(e));
-        //}
+        // }
     }
     
 }

@@ -5,6 +5,12 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.util.Date;
+
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+@SuppressWarnings("rawtypes")
 /**
  * 
  * @author Lukas
@@ -14,13 +20,65 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
     /**
      * 
      */
-    private static final long serialVersionUID = -2620634004622077214L;
+    private static final long serialVersionUID = 4601624442206350512L;
     
     /**
      * Creates new form GameDescription
      */
     public NewGameDescriptionPanel() {
         initComponents();
+        
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            private void validate() {
+                isNameValid = (nameField.getText() != null && !nameField
+                        .getText().isEmpty());
+                nameError.setVisible(!isNameValid);
+                parent.check();
+            }
+        });
+        
+        descriptionField.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    private void validate() {
+                        
+                        isDescriptionValid = (descriptionField.getText() != null && !descriptionField
+                                .getText().isEmpty());
+                        descriptionError.setVisible(!isDescriptionValid);
+                        parent.check();
+                    }
+                });
     }
     
     /**
@@ -43,10 +101,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         comboMonth = new javax.swing.JComboBox();
         comboDay = new javax.swing.JComboBox();
         comboYear = new javax.swing.JComboBox();
-        notifyEmail = new javax.swing.JCheckBox();
-        notifySMS = new javax.swing.JCheckBox();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        distributed = new javax.swing.JRadioButton();
+        live = new javax.swing.JRadioButton();
+        nameError = new javax.swing.JLabel();
+        descriptionError = new javax.swing.JLabel();
         
         nameLabel.setText("Name:");
         
@@ -67,15 +125,19 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         comboYear.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
                 "2014", "2015", "2016", "2017", "2018", "2019", "2020" }));
         
-        notifyEmail.setText("Notify by Email");
+        gameType.add(distributed);
+        distributed.setSelected(true);
+        distributed.setText("Distributed Game");
         
-        notifySMS.setText("Notify by SMS");
+        gameType.add(live);
+        live.setText("Live Game");
         
-        gameType.add(jRadioButton1);
-        jRadioButton1.setText("Distributed Game");
+        nameError.setForeground(new java.awt.Color(255, 0, 0));
+        nameError.setText("Required field!");
         
-        gameType.add(jRadioButton2);
-        jRadioButton2.setText("Live Game");
+        descriptionError.setForeground(new java.awt.Color(255, 0, 0));
+        descriptionError.setText("Required field!");
+        descriptionError.setFocusable(false);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
@@ -88,10 +150,10 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                         layout.createParallelGroup(
                                                 javax.swing.GroupLayout.Alignment.LEADING,
                                                 false)
-                                                .addComponent(jScrollPane1)
                                                 .addComponent(
-                                                        nameField,
-                                                        javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        jScrollPane1,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        408, Short.MAX_VALUE)
                                                 .addGroup(
                                                         layout.createSequentialGroup()
                                                                 .addGroup(
@@ -100,24 +162,27 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                                                                 .addComponent(
                                                                                         selectDeadline)
                                                                                 .addComponent(
-                                                                                        jRadioButton1)
+                                                                                        distributed)
                                                                                 .addComponent(
-                                                                                        jRadioButton2))
+                                                                                        live))
+                                                                .addGap(62, 62,
+                                                                        62))
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        nameLabel)
                                                                 .addPreferredGap(
-                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                        146,
-                                                                        Short.MAX_VALUE)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(
-                                                                                        notifyEmail)
-                                                                                .addComponent(
-                                                                                        notifySMS))
-                                                                .addGap(58, 58,
-                                                                        58))
-                                                .addComponent(nameLabel)
-                                                .addComponent(descriptionLabel)
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        nameError))
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        descriptionLabel)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        descriptionError))
                                                 .addGroup(
                                                         layout.createSequentialGroup()
                                                                 .addComponent(
@@ -138,7 +203,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                                                         comboYear,
                                                                         javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(nameField))
                                 .addContainerGap(
                                         javax.swing.GroupLayout.DEFAULT_SIZE,
                                         Short.MAX_VALUE)));
@@ -147,7 +213,11 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(nameLabel)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(nameLabel)
+                                                .addComponent(nameError))
                                 .addPreferredGap(
                                         javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(nameField,
@@ -156,76 +226,82 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(
                                         javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(descriptionLabel)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(descriptionLabel)
+                                                .addComponent(descriptionError))
                                 .addPreferredGap(
                                         javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1,
                                         javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        100, Short.MAX_VALUE)
+                                        109, Short.MAX_VALUE)
+                                .addComponent(distributed)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(live)
+                                .addGap(26, 26, 26)
+                                .addComponent(selectDeadline)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(
                                         layout.createParallelGroup(
-                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGap(75, 75,
-                                                                        75)
-                                                                .addComponent(
-                                                                        selectDeadline)
-                                                                .addPreferredGap(
-                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(
-                                                                                        comboMonth,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(
-                                                                                        comboDay,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(
-                                                                                        comboYear,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(
-                                                                                        notifyEmail)
-                                                                                .addComponent(
-                                                                                        jRadioButton1))
-                                                                .addPreferredGap(
-                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(
-                                                                                        notifySMS)
-                                                                                .addComponent(
-                                                                                        jRadioButton2))))
+                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(
+                                                        comboMonth,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(
+                                                        comboDay,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(
+                                                        comboYear,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(24, 24, 24)));
     }// </editor-fold>//GEN-END:initComponents
+    
+    public Date getDate() {
+        // Calendar c = new GregorianCalendar();
+        // c.set((Integer)comboYear.getSelectedItem(),
+        // (Integer)comboMonth.getSelectedItem(),
+        // (Integer)comboDay.getSelectedItem());
+        // return c.getTime();
+        return new Date();
+    }
+    
+    public boolean validateForm() {
+        boolean valid = isNameValid && isDescriptionValid;
+        return valid;
+    }
+    
+    public void setEditGamePanel(NewGamePanel p) {
+        parent = p;
+    }
+    
+    private boolean isNameValid = false;
+    private boolean isDescriptionValid = false;
+    
+    private NewGamePanel parent;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox comboDay;
     private javax.swing.JComboBox comboMonth;
     private javax.swing.JComboBox comboYear;
-    private javax.swing.JTextPane descriptionField;
+    private javax.swing.JLabel descriptionError;
+    public javax.swing.JTextPane descriptionField;
     private javax.swing.JLabel descriptionLabel;
-    private javax.swing.ButtonGroup gameType;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    public javax.swing.JRadioButton distributed;
+    public javax.swing.ButtonGroup gameType;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nameField;
+    public javax.swing.JRadioButton live;
+    private javax.swing.JLabel nameError;
+    public javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JCheckBox notifyEmail;
-    private javax.swing.JCheckBox notifySMS;
-    private javax.swing.JCheckBox selectDeadline;
+    public javax.swing.JCheckBox selectDeadline;
     // End of variables declaration//GEN-END:variables
 }

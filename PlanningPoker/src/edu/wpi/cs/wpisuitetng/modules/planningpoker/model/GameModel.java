@@ -16,11 +16,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  */
 public class GameModel extends AbstractModel {
     
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = -2777122181981150898L;
-    
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete");
         
@@ -132,7 +127,7 @@ public class GameModel extends AbstractModel {
      * changed
      * 
      * @param slo
-     *        The SimpleListObsrever to add
+     *            The SimpleListObsrever to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -238,6 +233,10 @@ public class GameModel extends AbstractModel {
     
     public int getID() {
         return id;
+    }
+    
+    public GameStatus getStatus() {
+        return status;
     }
     
     
