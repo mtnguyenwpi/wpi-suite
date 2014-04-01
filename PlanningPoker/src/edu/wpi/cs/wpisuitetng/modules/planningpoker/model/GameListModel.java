@@ -147,6 +147,10 @@ public class GameListModel extends AbstractListModel<GameModel> {
         return games.get(index);
     }
     
+    /**
+     * 
+     * @return the simplelistobservers for the list of games
+     */
     public ArrayList<SimpleListObserver> getObservers(){
         return observers;
     }
