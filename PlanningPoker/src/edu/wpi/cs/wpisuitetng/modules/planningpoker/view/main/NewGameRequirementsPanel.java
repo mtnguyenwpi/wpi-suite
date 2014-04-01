@@ -5,9 +5,13 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -71,6 +75,11 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         requirementsTable
                 .setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         requirementsTable.getTableHeader().setReorderingAllowed(false);
+        
+        SelectionTableHeadRenderer addAllSelect = new SelectionTableHeadRenderer();
+        addAllSelect.setText("Add");
+        requirementsTable.getColumnModel().getColumn(0).setHeaderRenderer(addAllSelect);
+        
         jScrollPane1.setViewportView(requirementsTable);
         if (requirementsTable.getColumnModel().getColumnCount() > 0) {
             requirementsTable.getColumnModel().getColumn(0).setMinWidth(40);
@@ -178,4 +187,15 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable requirementsTable;
     // End of variables declaration//GEN-END:variables
+    
+    private class SelectionTableHeadRenderer extends JCheckBox implements TableCellRenderer {
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
+			return this;
+		}
+    	
+    }
 }
