@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
- *    TODO: Contributors' names
+ * TODO: Contributors' names
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
@@ -45,18 +45,19 @@ public class CommonButtons extends ToolbarGroupView {
         super(""); // not sure if this is needed
         
         newGameButton = new JButton("<html>Create<br/>Game</html>");
-
-		newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
+        
+        newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
+        
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);
         // Adding functionality to new game button, not sure if this is where
         // this should go --nfbrown
-        newGameButton.addActionListener(new ActionListener(){
-        	@Override
-        	public void actionPerformed(ActionEvent e){
-        		PlanningPoker.getViewController().addNewGameTab();
-        	}
+        newGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlanningPoker.getViewController().addNewGameTab();
+            }
         });
         
         newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
