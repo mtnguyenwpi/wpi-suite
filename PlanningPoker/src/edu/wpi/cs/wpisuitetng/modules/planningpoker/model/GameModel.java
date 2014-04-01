@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Represents a planning poker game
@@ -37,13 +36,12 @@ public class GameModel extends AbstractModel {
         LIVE, DISTRIBUTED
     };
     
-    private ArrayList<Estimate> estimateList;
     private ArrayList<SimpleListObserver> observers;
     
     private int id;
     private String name;
     private String description;
-    private Requirement[] requirements;
+    private ArrayList<GameRequirementModel> requirements;
     private Date endDate;
     private GameType type;
     private GameStatus status;
@@ -56,7 +54,6 @@ public class GameModel extends AbstractModel {
         endDate = null;
         type = null;
         status = null;
-        estimateList = null;
         observers = null;
     }
     
@@ -70,7 +67,6 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(int id, String name, String description,
-            Requirement[] requirements, Date end, GameType type,
             GameStatus status) {
         this.id = id;
         this.name = name;
@@ -79,7 +75,6 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        estimateList = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -93,17 +88,15 @@ public class GameModel extends AbstractModel {
      * @param estimates
      */
     public GameModel(String name, String description,
-            Requirement[] requirements, Date end, GameType type,
-            GameStatus status, ArrayList<Estimate> estimates) {
+            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
+            GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         endDate = end;
         this.type = type;
-        this.status = status;
-        estimateList = estimates;
-        
+        this.status = status; 
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -148,38 +141,23 @@ public class GameModel extends AbstractModel {
      * @param user
      * @param estoimate
      */
-    public void addEstimate(Estimate e) {
-        estimateList.add(e);
+    public void addEstimate(Estimate e, int reqIndex) {
+        requirements.get(reqIndex).addEstimate(e);
         updated();
-    }
-    
-    
-    /**
-     * Removes a user's estimate from the list. Doesn't do anything if
-     * the estimate is not in the list
-     * 
-     * @param user
-     *        the user to remove
-     */
-    public void removeEstimate(Estimate e) {
-        if (estimateList.contains(e)) {
-            estimateList.remove(e);
-            updated();
-        }
     }
     
     /**
      * @return an array containing all of the estimates
      */
-    public ArrayList<Estimate> getEstimates() {
-        return estimateList;
+    public ArrayList<Estimate> getEstimates(int reqIndex) {
+        return requirements.get(reqIndex).getEstimates();
     }
     
     /**
      * 
      * @return The Requirement for this game
      */
-    public Requirement[] getRequirements() {
+    public ArrayList<GameRequirementModel> getRequirements() {
         return requirements;
     }
     
@@ -217,49 +195,12 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * Computes the numerical average of all of the estimates
-     * 
-     * @return the mean (average)
-     */
-    public float getEstimateMean() {
-        float mean = 0;
-        for (Estimate e : estimateList) {
-            mean += e.getEstimate() / (estimateList.size());
-        }
-        return mean;
-    }
-    
-    /**
-     * Computes the median of all of the estimates
-     * 
-     * @return the median
-     */
-    public float getEstimateMedian() {
-        int count = estimateList.size();
-        if (estimateList.size() % 2 == 1) {
-            return estimateList.get(count / 2).getEstimate();
-        }
-        else {
-            return (estimateList.get(count / 2).getEstimate() + estimateList
-                    .get(count / 2 - 1).getEstimate()) / 2;
-        }
-    }
-    
-    /**
      * Notifies all observers when that the list has changed
      */
     private void updated() {
         for (SimpleListObserver observer : observers) {
             observer.listUpdated();
         }
-    }
-    
-    public int getSize() {
-        return estimateList.size();
-    }
-    
-    public Estimate getElementAt(int index) {
-        return estimateList.get(index);
     }
     
     @Override
@@ -296,11 +237,9 @@ public class GameModel extends AbstractModel {
         return parser.fromJson(json, GameModel[].class);
     }
     
-    
     public int getID() {
         return id;
     }
-    
     
     public void copyFrom(GameModel g) {
         id = g.id;
@@ -310,7 +249,6 @@ public class GameModel extends AbstractModel {
         endDate = g.endDate;
         type = g.type;
         status = g.status;
-        estimateList = g.estimateList;
         observers = g.observers;
     }
     
