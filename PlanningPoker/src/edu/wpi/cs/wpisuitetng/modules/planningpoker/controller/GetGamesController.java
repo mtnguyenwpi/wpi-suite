@@ -84,12 +84,12 @@ public class GetGamesController implements ActionListener {
         
         // Make sure the response was not null
         if (games != null) {
-            if (games[0].getID() != -1) {
+            //if (games[0].getID() != -1) {
                 // add the games to the local model
                 for (GameModel singleGame : games) {
                     GameListModel.getInstance().addGame(singleGame);
                 }
-            }
+           // }
         }
     }
 }
