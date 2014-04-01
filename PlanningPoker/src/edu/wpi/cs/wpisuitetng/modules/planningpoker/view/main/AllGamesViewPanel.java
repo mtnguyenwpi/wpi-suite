@@ -1,13 +1,16 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import java.util.Date;
+import java.awt.CardLayout;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.JPanel;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,27 +33,36 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
      */
     public AllGamesViewPanel() {
         initComponents();
-        gamesListPanel1.getGamesTable().getSelectionModel()
-                .addListSelectionListener(new ListSelectionListener() {
-                    
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        int selected = gamesListPanel1.getGamesTable()
-                                .getSelectionModel().getMinSelectionIndex();
-                        selectGame(selected);
-                    }
-                });
-        gamesListPanel1.getGameList().addGame(
-                new GameModel(1, "test game", "test description", null, new Date(),
-                        null, GameStatus.PENDING));
-        gamesListPanel1.getGameList().addGame(
-                new GameModel(2, "test game2", "test description2", null, new Date(),
-                        null, GameStatus.COMPLETE));
+        final JTree tree = gameTree.getTree();
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
+                        .getLastSelectedPathComponent();
+                
+                if (node == null) { return; }
+                
+                Object nodeInfo = node.getUserObject();
+                if (nodeInfo instanceof GameModel) {
+                    setGameOrReqView(true);
+                }
+                else if (nodeInfo instanceof GameRequirementModel) {
+                    setGameOrReqView(false);
+                }
+            }
+        });
     }
     
-    private void selectGame(int index) {
-        requirementsPanel1.setGame(gamesListPanel1.getGameList().getElementAt(
-                index));
+    private void setGameOrReqView(boolean is_game) {
+        if (is_game) {
+            ((CardLayout) selectedItemPanel.getLayout()).show(
+                    selectedItemPanel, "game");
+        }
+        else {
+            ((CardLayout) selectedItemPanel.getLayout()).show(
+                    selectedItemPanel, "req");
+        }
     }
     
     /**
@@ -62,32 +74,13 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
+    // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         
         jSplitPane3 = new javax.swing.JSplitPane();
-        gamesListPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GamesListPanel(
-                new GameListModel());
-        jSplitPane4 = new javax.swing.JSplitPane();
-        requirementsPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.RequirementsPanel();
-        jPanel1 = new javax.swing.JPanel();
-        votePanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel();
-        detailPanel1 = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DetailPanel();
         
         jSplitPane3.setDividerLocation(190);
-        jSplitPane3.setLeftComponent(gamesListPanel1);
-        
-        jSplitPane4.setDividerLocation(250);
-        jSplitPane4.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        jSplitPane4.setTopComponent(requirementsPanel1);
-        
-        jPanel1.setLayout(new java.awt.CardLayout());
-        jPanel1.add(votePanel1, "card2");
-        jPanel1.add(detailPanel1, "card3");
-        
-        jSplitPane4.setRightComponent(jPanel1);
-        
-        jSplitPane3.setRightComponent(jSplitPane4);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
@@ -105,15 +98,24 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                         .addComponent(jSplitPane3,
                                 javax.swing.GroupLayout.DEFAULT_SIZE, 394,
                                 Short.MAX_VALUE).addContainerGap()));
+        
+        gameTree = new GamesListPanel();
+        jSplitPane3.setLeftComponent(gameTree);
+        
+        selectedItemPanel = new JPanel();
+        jSplitPane3.setRightComponent(selectedItemPanel);
+        selectedItemPanel.setLayout(new CardLayout(0, 0));
+        
+        gamePanel = new GameDescriptionPanel();
+        selectedItemPanel.add(gamePanel, "game");
+        
+        requirementPanel = new RequirementDescriptionPanel();
+        selectedItemPanel.add(requirementPanel, "req");
     }// </editor-fold>//GEN-END:initComponents
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.DetailPanel detailPanel1;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GamesListPanel gamesListPanel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSplitPane jSplitPane3;
-    private javax.swing.JSplitPane jSplitPane4;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.RequirementsPanel requirementsPanel1;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.VotePanel votePanel1;
-    // End of variables declaration//GEN-END:variables
+    private GamesListPanel gameTree;
+    private JPanel selectedItemPanel;
+    private GameDescriptionPanel gamePanel;
+    private RequirementDescriptionPanel requirementPanel;
 }

@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (c) 2013 -- WPI Suite
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
- *    TODO: Contributors' names
+ * TODO: Contributors' names
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.toolbar;
@@ -42,8 +42,8 @@ public class AdminButtons extends ToolbarGroupView {
     public AdminButtons() {
         super("");
         
-        endGameButton = new JButton("<html>End<br/>Estimation</html>"); 
-		endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
+        endGameButton = new JButton("<html>End<br/>Estimation</html>");
+        endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         setPreferredWidth(350);
