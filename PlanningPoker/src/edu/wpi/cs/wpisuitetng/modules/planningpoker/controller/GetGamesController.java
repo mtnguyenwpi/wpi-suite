@@ -56,7 +56,7 @@ public class GetGamesController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Send a request to the core to save this game
         final Request request = Network.getInstance().makeRequest(
-                "planningpokermanager/planningpoker", HttpMethod.GET); // GET == read
+                "planningpoker/game", HttpMethod.GET); // GET == read
         request.addObserver(observer); // add an observer to process the response
         request.send(); // send the request
     }
@@ -66,7 +66,7 @@ public class GetGamesController implements ActionListener {
      */
     public void retrieveGames() {
         final Request request = Network.getInstance().makeRequest(
-                "planningpokermanager/planningpoker", HttpMethod.GET); // GET == read
+                "planningpoker/game", HttpMethod.GET); // GET == read
         request.addObserver(observer); // add an observer to process the response
         request.send(); // send the request
     }

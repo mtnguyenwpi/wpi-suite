@@ -24,10 +24,10 @@
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="gameDescription1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="gameDescription" min="-2" pref="428" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="gameRequirements1" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="gameRequirements" pref="498" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -36,11 +36,11 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="gameRequirements1" max="32767" attributes="0"/>
+                      <Component id="gameRequirements" max="32767" attributes="0"/>
                       <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="gameDescription1" max="32767" attributes="0"/>
+                      <Component id="gameDescription" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -56,17 +56,29 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="saveButton">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/edu/wpi/cs/wpisuitetng/modules/planningpoker/view/main/save-icon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/edu/wpi/cs/wpisuitetng/modules/planningpoker/view/main/delete-icon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel" name="gameRequirements1">
+    <Component class="edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel" name="gameRequirements">
     </Component>
-    <Component class="edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel" name="gameDescription1">
+    <Component class="edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel" name="gameDescription">
     </Component>
   </SubComponents>
 </Form>
