@@ -27,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  */
 public class EmailController {
+    private static EmailController instance;
     
     private UserRequestObserver observer;
     private User[] users;
@@ -35,7 +36,7 @@ public class EmailController {
     private String password = "team9ftw"; // GMail password
     private String body;
     private String subject;
-    private String to;
+    private String to = "team9wpi@gmail.com";
     
     /**
      * Creates a new EmailController class
@@ -45,15 +46,29 @@ public class EmailController {
                 + " has created a new Planning Poker game. Please open Janeway and make your estimates!";
         subject = "A planning poker game is about to begin";
         observer = new UserRequestObserver(this);
-        requestUsers();
-        parseEmails();
+        //requestUsers();
+    }
+    
+    /**
+     * 
+     * @return the instance of the EmailController or creates one if it does
+     *         not exist.
+     */
+    public static EmailController getInstance() {
+        if (EmailController.instance == null) {
+            EmailController.instance = new EmailController();
+        }
+        
+        return EmailController.instance;
     }
     
     /**
      * Sends an email to all users that are not the creator of the game
      */
-    public void send() {
+    public void sendEmails() {
         
+        //System.err.println("Email addresses: " + this.to);  
+                
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -71,21 +86,19 @@ public class EmailController {
         try {
             
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("team9wpi@gmail.com"));
+            message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
             message.setSubject(subject);
             message.setText(body);
             
-            Transport.send(message);
-            
-            System.out.println("Done");
-            
+            Transport.send(message);            
         }
         catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
+    
     
     /**
      * Requests query of all users related to the project
@@ -99,11 +112,14 @@ public class EmailController {
     
     /**
      * Sets the users list to the users received by the network
-     * @param users The list of users received by UserRequestController
+     * 
+     * @param users
+     *        The list of users received by UserRequestController
      */
     public void receivedUsers(User[] users) {
         if (users != null) {
             this.users = users;
+            //parseEmails();
         }
         else {
             // TODO: error handling
@@ -121,13 +137,13 @@ public class EmailController {
             if (users[i].getEmail() != null
                     && !users[i].getUsername().equals(
                             ConfigManager.getConfig().getUserName())) {
-                s += users[i].getEmail() + ",";
+                s += users[i].getEmail() + ", ";
             }
         }
         if (users[i].getEmail() != null) {
             s += users[i].getEmail();
         }
-        to = s;
+        this.to = s;
     }
     
 }

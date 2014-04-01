@@ -145,6 +145,7 @@ public class NewGamePanel extends JPanel {
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
         PlanningPoker.getViewController().saveNewGame(this);
+        EmailController.getInstance().sendEmails();
     }// GEN-LAST:event_saveButtonActionPerformed
     
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed

@@ -43,9 +43,6 @@ public class ViewController {
         GameModel newGame = new GameModel(e.getName(), e.getDescription(),
                 e.getRequirements(), e.getEndDate(), e.getGameType(),
                 GameStatus.PENDING);
-
-        EmailController email = new EmailController();
-        email.send();
         
         AddGameController.getInstance().addGame(newGame);
     }
