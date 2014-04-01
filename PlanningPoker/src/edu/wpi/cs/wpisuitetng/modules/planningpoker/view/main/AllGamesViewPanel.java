@@ -42,10 +42,10 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 });
         gamesListPanel1.getGameList().addGame(
                 new GameModel(1, "test game", "test description", null, new Date(),
-                        null, GameStatus.PENDING));
+                        null, GameStatus.PENDING, null));
         gamesListPanel1.getGameList().addGame(
                 new GameModel(2, "test game2", "test description2", null, new Date(),
-                        null, GameStatus.COMPLETE));
+                        null, GameStatus.COMPLETE, null));
     }
     
     private void selectGame(int index) {
