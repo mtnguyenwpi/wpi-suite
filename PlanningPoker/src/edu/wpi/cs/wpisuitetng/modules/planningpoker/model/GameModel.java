@@ -41,6 +41,9 @@ public class GameModel extends AbstractModel {
     private GameType type;
     private GameStatus status;
     
+    /**
+     * Default constructor creates instance with invalid id and null fields
+     */
     public GameModel() {
         id = -1;
         name = null;
@@ -52,10 +55,12 @@ public class GameModel extends AbstractModel {
         observers = null;
     }
     
-    
     /**
      * Constructor
      * 
+     * @param id
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type
@@ -77,11 +82,12 @@ public class GameModel extends AbstractModel {
     /**
      * Constructor
      * 
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type
      * @param status
-     * @param estimates
      */
     public GameModel(String name, String description,
             ArrayList<GameRequirementModel> requirements, Date end,
@@ -93,12 +99,10 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        
         observers = new ArrayList<SimpleListObserver>();
     }
     
     /**
-     * 
      * @return the name of this game
      */
     public String getName() {
@@ -109,7 +113,6 @@ public class GameModel extends AbstractModel {
         this.id = id;
     }
     
-    
     /**
      * 
      * @return the name of this game
@@ -118,13 +121,12 @@ public class GameModel extends AbstractModel {
         return description;
     }
     
-    
     /**
      * Add a SimpleListObserver that is notified when the list of estimates is
      * changed
      * 
      * @param slo
-     *            The SimpleListObsrever to add
+     *        The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -136,13 +138,12 @@ public class GameModel extends AbstractModel {
      * Add a user's estimate to the list
      * 
      * @param user
-     * @param estoimate
+     * @param estimate
      */
     public void addEstimate(Estimate e, int reqIndex) {
         requirements.get(reqIndex).addEstimate(e);
         updated();
     }
-    
     
     /**
      * @return an array containing all of the estimates
@@ -152,15 +153,13 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * 
-     * @return The Requirement for this game
+     * @return The Requirements for this game
      */
     public ArrayList<GameRequirementModel> getRequirements() {
         return requirements;
     }
     
     /**
-     * 
      * @return The end time for this game
      */
     public Date getEndTime() {
@@ -180,11 +179,17 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
+     *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
+    /**
+     * If the current time is past the end date of the game, set the game as ended.
+     * 
+     * @return whether the game has ended
+     */
     public boolean isEnded() {
         if ((endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
@@ -227,6 +232,10 @@ public class GameModel extends AbstractModel {
         return parser.fromJson(json, GameModel.class);
     }
     
+    public static GameModel[] fromJSONArray(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, GameModel[].class);
+    }
     
     public int getID() {
         return id;
@@ -235,7 +244,6 @@ public class GameModel extends AbstractModel {
     public GameStatus getStatus() {
         return status;
     }
-    
     
     public void copyFrom(GameModel g) {
         id = g.id;
@@ -248,6 +256,14 @@ public class GameModel extends AbstractModel {
         observers = g.observers;
     }
     
+    /**
+     * 
+     * @return the simplelistobservers for the list of games
+     */
+    public ArrayList<SimpleListObserver> getObservers(){
+        return observers;
+    }
+        
     @Override
     public String toString() {
         return getName();

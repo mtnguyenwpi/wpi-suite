@@ -121,7 +121,8 @@ public class GameEntityManager implements EntityManager<GameModel> {
         try {
             GameModels = db.retrieve(GameModel.class, "id", intId,
                     s.getProject()).toArray(new GameModel[0]);
-        } catch (WPISuiteException e) {
+        }
+        catch (WPISuiteException e) {
             e.printStackTrace();
         }
         if (GameModels.length < 1 || GameModels[0] == null) {
