@@ -129,7 +129,7 @@ public class GameRequirementsPanel extends javax.swing.JPanel {
         System.out.println("added requirement " + r.toString());
         DefaultTableModel model = (DefaultTableModel) requirementsTable
                 .getModel();
-        model.addRow(new Object[] { false, r.getName().toString(),
+        model.addRow(new Object[] { false, r,
                 r.getDescription().toString(), r.getType().toString() });
         requirementsTable.setModel(model);
         validateForm();
@@ -141,7 +141,7 @@ public class GameRequirementsPanel extends javax.swing.JPanel {
                 .getModel();
         ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for (int i = 0; i < model.getRowCount(); i++) {
-            requirements.set(i, (GameRequirementModel) model.getValueAt(i, 1));
+            requirements.add((GameRequirementModel) model.getValueAt(i, 1));
             System.out.println("found " + requirements.get(i).toString()
                     + " in table");
         }
