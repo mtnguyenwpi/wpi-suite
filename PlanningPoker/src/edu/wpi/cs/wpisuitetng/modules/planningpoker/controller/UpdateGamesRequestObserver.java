@@ -12,15 +12,15 @@ public class UpdateGamesRequestObserver implements RequestObserver {
      * Constructs the observer given an AddGamesController
      * 
      * @param controller
-     *        the controller used to add games
+     *            the controller used to add games
      */
     public UpdateGamesRequestObserver(UpdateGamesController controller) {
         this.controller = controller;
     }
     
     /**
-     * Parse the game that was received from the server then pass them to
-     * the controller.
+     * Parse the game that was received from the server then pass them to the
+     * controller.
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
@@ -30,15 +30,15 @@ public class UpdateGamesRequestObserver implements RequestObserver {
         final ResponseModel response = iReq.getResponse();
         
         // Parse the game out of the response body
-        // final GameModel game = GameModel.fromJson(response.getBody());       
+        // final GameModel game = GameModel.fromJson(response.getBody());
     }
     
     /**
-     * Takes an action if the response results in an error.
-     * Specifically, outputs that the request failed.
+     * Takes an action if the response results in an error. Specifically,
+     * outputs that the request failed.
      * 
      * @param iReq
-     *        IRequest
+     *            IRequest
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest)
      */
@@ -49,13 +49,13 @@ public class UpdateGamesRequestObserver implements RequestObserver {
     }
     
     /**
-     * Takes an action if the response fails.
-     * Specifically, outputs that the request failed.
+     * Takes an action if the response fails. Specifically, outputs that the
+     * request failed.
      * 
      * @param iReq
-     *        IRequest
+     *            IRequest
      * @param exception
-     *        Exception
+     *            Exception
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest,
      *      Exception)

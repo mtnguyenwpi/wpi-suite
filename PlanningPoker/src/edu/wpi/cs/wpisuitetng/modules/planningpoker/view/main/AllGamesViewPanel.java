@@ -41,28 +41,24 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) { return; }
+                if (node == null) {
+                    return;
+                }
                 
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
-                    setGameOrReqView(true);
-                }
-                else if (nodeInfo instanceof GameRequirementModel) {
-                    setGameOrReqView(false);
+                    ((CardLayout) selectedItemPanel.getLayout()).show(
+                            selectedItemPanel, "game");
+                    gamePanel.setGame((GameModel) nodeInfo);
+                } else if (nodeInfo instanceof GameRequirementModel) {
+                    ((CardLayout) selectedItemPanel.getLayout()).show(
+                            selectedItemPanel, "req");
+                    requirementPanel.getVotePanel().setRequirement(
+                            (GameRequirementModel) nodeInfo);
+                    requirementPanel.showPanel((GameRequirementModel) nodeInfo);
                 }
             }
         });
-    }
-    
-    private void setGameOrReqView(boolean is_game) {
-        if (is_game) {
-            ((CardLayout) selectedItemPanel.getLayout()).show(
-                    selectedItemPanel, "game");
-        }
-        else {
-            ((CardLayout) selectedItemPanel.getLayout()).show(
-                    selectedItemPanel, "req");
-        }
     }
     
     /**
@@ -106,7 +102,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         jSplitPane3.setRightComponent(selectedItemPanel);
         selectedItemPanel.setLayout(new CardLayout(0, 0));
         
-        gamePanel = new GameDescriptionPanel();
+        gamePanel = new GamePanel();
         selectedItemPanel.add(gamePanel, "game");
         
         requirementPanel = new RequirementDescriptionPanel();
@@ -116,6 +112,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private javax.swing.JSplitPane jSplitPane3;
     private GamesListPanel gameTree;
     private JPanel selectedItemPanel;
-    private GameDescriptionPanel gamePanel;
+    private GamePanel gamePanel;
     private RequirementDescriptionPanel requirementPanel;
 }

@@ -26,6 +26,11 @@ public class ViewController {
         
         mainView.setTabComponentAt(mainView.indexOfComponent(editGame),
                 new ClosableTabComponent(mainView) {
+                    /**
+                     * 
+                     */
+                    private static final long serialVersionUID = 7088866301855075603L;
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         cancelNewGame(editGame);
@@ -43,10 +48,11 @@ public class ViewController {
     }
     
     public void cancelNewGame(EditGamePanel e) {
-        //int result = JOptionPane.showConfirmDialog(e, "Are you sure you want to cancel this game?");
-        //if(result == JOptionPane.OK_OPTION) {
+        // int result = JOptionPane.showConfirmDialog(e,
+        // "Are you sure you want to cancel this game?");
+        // if(result == JOptionPane.OK_OPTION) {
         mainView.removeTabAt(mainView.indexOfComponent(e));
-        //}
+        // }
     }
     
 }
