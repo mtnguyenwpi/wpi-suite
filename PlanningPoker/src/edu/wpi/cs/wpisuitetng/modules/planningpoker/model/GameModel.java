@@ -70,8 +70,8 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(int id, String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, Date end,
+            GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -92,8 +92,8 @@ public class GameModel extends AbstractModel {
      * @param estimates
      */
     public GameModel(String name, String description,
-            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
-            GameStatus status) {
+            ArrayList<GameRequirementModel> requirements, Date end,
+            GameType type, GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
@@ -200,7 +200,6 @@ public class GameModel extends AbstractModel {
         return (status == GameStatus.COMPLETE);
     }
     
-    
     /**
      * Notifies all observers when that the list has changed
      */
@@ -209,17 +208,14 @@ public class GameModel extends AbstractModel {
             observer.listUpdated();
         }
     }
-
     
     @Override
     public void save() {
-        // TODO Auto-generated method stub
         
     }
     
     @Override
     public void delete() {
-        // TODO Auto-generated method stub
         
     }
     
@@ -230,7 +226,6 @@ public class GameModel extends AbstractModel {
     
     @Override
     public Boolean identify(Object o) {
-        // TODO Auto-generated method stub
         return null;
     }
     
@@ -255,6 +250,11 @@ public class GameModel extends AbstractModel {
         type = g.type;
         status = g.status;
         observers = g.observers;
+    }
+    
+    @Override
+    public String toString() {
+        return getName();
     }
     
 }
