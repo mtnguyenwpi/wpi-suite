@@ -29,26 +29,18 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     public CompletedRequirementPanel(GameRequirementModel r) {
         req = r;
         //setup tablemodel (using autogenerted netbeans code)
-        tableModel = new javax.swing.table.DefaultTableModel(new String[][] {
-        
-        }, new String[] { "User", "Vote" }) {
-            /**
+        tableModel = new javax.swing.table.DefaultTableModel() {
+            
+            /*
+             * (non-Javadoc)
              * 
+             * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
              */
-            private static final long serialVersionUID = -7096581768469572698L;
-            Class[] types = new Class[] { java.lang.Object.class,
-                    java.lang.Double.class };
-            boolean[] canEdit = new boolean[] { false, false };
-            
             @Override
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+            public boolean isCellEditable(int row, int column) {
+                return false;
             }
             
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
         };
         initComponents();
         initData();
@@ -160,17 +152,16 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void initData() {
+        tableModel.addColumn("User");
+        tableModel.addColumn("Estimate");
         for (Estimate e : req.getEstimates()) {
             String row[] = new String[2];
             row[0] = e.getUser().getName();
-            Float f = new Float(e.getEstimate());
-            row[1] = f.toString();
+            row[1] = String.format("%.1f", e.getEstimate());
             tableModel.addRow(row);
         }
-        Float mean = new Float(req.getEstimateMean());
-        meanValueLabel.setText(mean.toString());
-        Float median = new Float(req.getEstimateMedian());
-        medianValueLabel.setText(median.toString());
+        meanValueLabel.setText(String.format("%.2f", req.getEstimateMean()));
+        medianValueLabel.setText(String.format("%.2f", req.getEstimateMedian()));
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
