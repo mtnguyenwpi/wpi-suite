@@ -67,6 +67,7 @@ public class GameModel extends AbstractModel {
      * @param status
      */
     public GameModel(int id, String name, String description,
+            ArrayList<GameRequirementModel> requirements, Date end, GameType type,
             GameStatus status) {
         this.id = id;
         this.name = name;
