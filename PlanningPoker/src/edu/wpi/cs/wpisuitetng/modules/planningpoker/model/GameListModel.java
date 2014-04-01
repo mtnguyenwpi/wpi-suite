@@ -51,19 +51,17 @@ public class GameListModel extends AbstractListModel<GameModel> {
     public GameListModel() {
         games = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
-        gameRetrievalController = GetGamesController.getInstance();
         final int timerDelay = 15000; //milliseconds
         ActionListener checkDB = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    gameRetrievalController.retrieveGames();
+                	 GetGamesController.getInstance().retrieveGames();
                     autoRefresh.setDelay(timerDelay);
                 }
                 catch (NullPointerException err) {
                     autoRefresh.setDelay(autoRefresh.getDelay() + 15000);
                 };
-                updated();
             }
         };
         autoRefresh = new Timer(timerDelay, checkDB);
