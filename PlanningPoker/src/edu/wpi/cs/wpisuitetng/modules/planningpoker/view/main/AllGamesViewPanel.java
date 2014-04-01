@@ -102,7 +102,7 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
         jSplitPane3.setRightComponent(selectedItemPanel);
         selectedItemPanel.setLayout(new CardLayout(0, 0));
         
-        gamePanel = new GamePanel();
+        gamePanel = new GameDescriptionPanel();
         selectedItemPanel.add(gamePanel, "game");
         
         requirementPanel = new RequirementDescriptionPanel();
@@ -112,6 +112,6 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
     private javax.swing.JSplitPane jSplitPane3;
     private GamesListPanel gameTree;
     private JPanel selectedItemPanel;
-    private GamePanel gamePanel;
+    private GameDescriptionPanel gamePanel;
     private RequirementDescriptionPanel requirementPanel;
 }

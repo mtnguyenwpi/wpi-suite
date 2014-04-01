@@ -19,7 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
  * 
  * @author Lukas
  */
-public class EditGamePanel extends JPanel {
+public class NewGamePanel extends JPanel {
     
     /**
      * 
@@ -29,7 +29,7 @@ public class EditGamePanel extends JPanel {
     /**
      * Creates new form EditGame
      */
-    public EditGamePanel() {
+    public NewGamePanel() {
         
         initComponents();
         
@@ -58,8 +58,8 @@ public class EditGamePanel extends JPanel {
         
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        gameRequirements = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel();
-        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel();
+        gameRequirements = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel();
+        gameDescription = new edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel();
         
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -183,8 +183,8 @@ public class EditGamePanel extends JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameDescriptionPanel gameDescription;
-    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.GameRequirementsPanel gameRequirements;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameDescriptionPanel gameDescription;
+    private edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGameRequirementsPanel gameRequirements;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

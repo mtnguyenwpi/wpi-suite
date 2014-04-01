@@ -15,7 +15,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
  * 
  * @author Lukas
  */
-public class GameRequirementsPanel extends javax.swing.JPanel {
+public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
     /**
      * 
@@ -25,7 +25,7 @@ public class GameRequirementsPanel extends javax.swing.JPanel {
     /**
      * Creates new form GameRequirements
      */
-    public GameRequirementsPanel() {
+    public NewGameRequirementsPanel() {
         initComponents();
     }
     
@@ -159,7 +159,7 @@ public class GameRequirementsPanel extends javax.swing.JPanel {
         return requirements;
     }
     
-    public void setEditGamePanel(EditGamePanel p) {
+    public void setEditGamePanel(NewGamePanel p) {
         parent = p;
     }
     
@@ -169,7 +169,7 @@ public class GameRequirementsPanel extends javax.swing.JPanel {
         return hasRequirement;
     }
     
-    private EditGamePanel parent;
+    private NewGamePanel parent;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

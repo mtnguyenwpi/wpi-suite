@@ -6,7 +6,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.EditGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.NewGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ClosableTabComponent;
 
 public class ViewController {
@@ -20,7 +20,7 @@ public class ViewController {
     }
     
     public void addNewGameTab() {
-        final EditGamePanel editGame = new EditGamePanel();
+        final NewGamePanel editGame = new NewGamePanel();
         mainView.addTab("New Game", editGame);
         mainView.setSelectedComponent(editGame);
         
@@ -39,7 +39,7 @@ public class ViewController {
         
     }
     
-    public void saveNewGame(EditGamePanel e) {
+    public void saveNewGame(NewGamePanel e) {
         GameModel newGame = new GameModel(e.getName(), e.getDescription(),
                 e.getRequirements(), e.getEndDate(), e.getGameType(),
                 GameStatus.PENDING);
@@ -47,7 +47,7 @@ public class ViewController {
         AddGameController.getInstance().addGame(newGame);
     }
     
-    public void cancelNewGame(EditGamePanel e) {
+    public void cancelNewGame(NewGamePanel e) {
         // int result = JOptionPane.showConfirmDialog(e,
         // "Are you sure you want to cancel this game?");
         // if(result == JOptionPane.OK_OPTION) {
