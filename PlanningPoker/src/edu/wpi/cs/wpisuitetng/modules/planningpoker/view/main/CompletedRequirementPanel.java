@@ -161,7 +161,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
             tableModel.addRow(row);
         }
         meanValueLabel.setText(String.format("%.2f", req.getEstimateMean()));
-        medianValueLabel.setText(String.format("%.2f", req.getEstimateMedian()));
+        medianValueLabel
+                .setText(String.format("%.2f", req.getEstimateMedian()));
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -129,7 +129,7 @@ public class GameModel extends AbstractModel {
      * changed
      * 
      * @param slo
-     *            The SimpleListObsrever to add
+     *        The SimpleListObsrever to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
