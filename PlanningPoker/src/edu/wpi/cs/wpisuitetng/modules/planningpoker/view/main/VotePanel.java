@@ -8,8 +8,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +28,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
 
 /**
  * 
@@ -64,8 +68,19 @@ public class VotePanel extends javax.swing.JPanel {
         deck.add("10");
         
         estimateCardsPanel.removeAll();
-        for (String estimate : deck) {
-            JButton estimate_card = new JButton();
+        for (final String estimate : deck) {
+        	
+            final JButton estimate_card = new JButton(){
+            	@Override
+            	public void paint(Graphics g){
+            		g.drawImage(ImageLoader.getImage(isEnabled()?"card.png":"cardback.png"), 0, 0, getWidth(), getHeight(), null);
+            		g.setFont(new Font(g.getFont().getFontName(), Font.BOLD, 20));
+            		Rectangle2D r = g.getFontMetrics().getStringBounds(estimate, g);
+            		if(isEnabled())g.drawString(estimate, (int)(getWidth()/2-r.getWidth()/2), (int)(getHeight()/2 + r.getHeight()/2));
+            		//super.paint(g);
+            	}
+            };
+            
             // TODO: set card background image
             
             estimate_card.setText(estimate);
@@ -87,7 +102,7 @@ public class VotePanel extends javax.swing.JPanel {
     private void selectEstimateCard(JButton selected_card_button) {
         // TODO: submit estimate based on selected card
         for (Component c : estimateCardsPanel.getComponents()) {
-            ((JButton) c).setEnabled(false);
+            if(selected_card_button != c)((JButton) c).setEnabled(false);
         }
     }
     
