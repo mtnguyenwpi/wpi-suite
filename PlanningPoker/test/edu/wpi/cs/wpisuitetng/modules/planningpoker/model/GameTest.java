@@ -24,7 +24,8 @@ public class GameTest {
     	ArrayList<User> users = new ArrayList<User>();
     	User kevin = new User("Kevin", "kpmartin", "password", 1);
     	users.add(kevin);
-        GameModel testgame = new GameModel(1, "Test Game", "something", null, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
+    	ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
+        GameModel testgame = new GameModel(1, "Test Game", "something", requirements, new Date(System.currentTimeMillis() - 100000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
         assertTrue(testgame.isEnded());
     }
     
@@ -33,7 +34,8 @@ public class GameTest {
     	ArrayList<User> users = new ArrayList<User>();
     	User kevin = new User("Kevin", "kpmartin", "password", 1);
     	users.add(kevin);
-        GameModel testgame = new GameModel(2, "Test Game", "something", null, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
+    	ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
+        GameModel testgame = new GameModel(2, "Test Game", "something", requirements, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
         assertFalse(testgame.isEnded());
     }
     
@@ -46,16 +48,21 @@ public class GameTest {
     	GameModel testgame = new GameModel(3, "Test Game", "something", requirements, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
     	assertFalse(testgame.isEnded());
     }
-    
+   
     @Test
-    public void TestAllUsersVoted() {
-    	ArrayList<User> users = new ArrayList<User>();
+    public void TestAllVoted(){
     	User kevin = new User("Kevin", "kpmartin", "password", 1);
+    	ArrayList<User> users = new ArrayList<User>();
     	users.add(kevin);
     	Estimate estimate1 = new Estimate(kevin, 5);
+    	ArrayList<Estimate> estimates = new ArrayList<Estimate>();
+    	estimates.add(estimate1);
+    	GameRequirementModel testRequirement = new GameRequirementModel( 1, "Test Requirement", "something", "type?", estimates);
     	ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
-    	requirements.get(0).addEstimate(estimate1);
-    	GameModel testgame = new GameModel(3, "Test Game", "something", requirements, new Date(System.currentTimeMillis() + 100000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
-    	assertFalse(testgame.isEnded());
+    	requirements.add(testRequirement);
+    	GameModel testgame = new GameModel(3, "Test Game", "soemthing", requirements, new Date(System.currentTimeMillis() + 10000000), GameType.DISTRIBUTED, GameStatus.PENDING, users);
+    	assertTrue(testRequirement.allVoted(testgame));
+    	assertTrue(testgame.isEnded());
+    	
     }
 }
