@@ -95,7 +95,7 @@ public class GameModel extends AbstractModel {
      * @param estimates
      * @param userList list of users in the game
      */
-    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<Estimate> estimates, ArrayList<User> userList) {
+    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
         id = -1;
         this.name = name;
         this.description = description;
