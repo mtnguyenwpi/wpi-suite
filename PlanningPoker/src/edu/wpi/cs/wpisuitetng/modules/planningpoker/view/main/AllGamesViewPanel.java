@@ -41,16 +41,13 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
                         .getLastSelectedPathComponent();
                 
-                if (node == null) {
-                    return;
-                }
+                if (node == null) { return; }
                 
                 Object nodeInfo = node.getUserObject();
                 if (nodeInfo instanceof GameModel) {
                     ((CardLayout) selectedItemPanel.getLayout()).show(
                             selectedItemPanel, "game");
-                    GameModel game = (GameModel) nodeInfo;
-                    
+                    GameModel game = (GameModel) nodeInfo;                    
                     gamePanel.setGame(game);
                 } else if (nodeInfo instanceof GameRequirementModel) {
                     ((CardLayout) selectedItemPanel.getLayout()).show(
