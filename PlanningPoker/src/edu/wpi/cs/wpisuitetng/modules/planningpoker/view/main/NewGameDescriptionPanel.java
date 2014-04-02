@@ -286,7 +286,8 @@ public class NewGameDescriptionPanel extends javax.swing.JPanel {
         
         if (selectDeadline.isSelected()) {
             return date.getTime();
-        } else {
+        }
+        else {
             return null;
         }
         

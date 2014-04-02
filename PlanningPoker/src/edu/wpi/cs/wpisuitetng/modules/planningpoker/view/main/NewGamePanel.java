@@ -5,39 +5,30 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.awt.CardLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -49,6 +40,7 @@ public class NewGamePanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = 6206697919180272913L;
+    
     // TODO: New requirement panel needs to be scrollable vertically
     /**
      * Creates new form EditGame
@@ -60,9 +52,12 @@ public class NewGamePanel extends JPanel {
         gameDescription.setEditGamePanel(this);
         newGameRequirementsPanel.setEditGamePanel(this);
         
-        newGameRequirementsPanel.addRequirement(new GameRequirementModel(0, "Test Requirement 1", "The cow", "User story"));
-        newGameRequirementsPanel.addRequirement(new GameRequirementModel(1, "Test Requirement 2", "Elepahnt", "User story"));
-        newGameRequirementsPanel.addRequirement(new GameRequirementModel(2, "Test Requirement 3", "queso", "User story"));
+        newGameRequirementsPanel.addRequirement(new GameRequirementModel(0,
+                "Test Requirement 1", "The cow", "User story"));
+        newGameRequirementsPanel.addRequirement(new GameRequirementModel(1,
+                "Test Requirement 2", "Elepahnt", "User story"));
+        newGameRequirementsPanel.addRequirement(new GameRequirementModel(2,
+                "Test Requirement 3", "queso", "User story"));
     }
     
     /**
@@ -100,36 +95,62 @@ public class NewGamePanel extends JPanel {
         newGameRequirementsCard = new JPanel();
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-//<<<<<<< HEAD
-            layout.createParallelGroup(Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(saveButton)
-                            .addGap(16)
-                            .addComponent(cancelButton))
-                        .addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addGap(18)
-                            .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(saveButton)
-                                .addComponent(cancelButton)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(12)
-                            .addComponent(newGameRequirementsCard, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)))
-                    .addContainerGap())
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addContainerGap()
+                                                                .addComponent(
+                                                                        saveButton)
+                                                                .addGap(16)
+                                                                .addComponent(
+                                                                        cancelButton))
+                                                .addComponent(
+                                                        gameDescription,
+                                                        GroupLayout.PREFERRED_SIZE,
+                                                        428,
+                                                        GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(newGameRequirementsCard,
+                                        GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE).addContainerGap()));
+        layout.setVerticalGroup(layout
+                .createParallelGroup(Alignment.TRAILING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        gameDescription,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        290,
+                                                                        Short.MAX_VALUE)
+                                                                .addGap(18)
+                                                                .addGroup(
+                                                                        layout.createParallelGroup(
+                                                                                Alignment.BASELINE)
+                                                                                .addComponent(
+                                                                                        saveButton)
+                                                                                .addComponent(
+                                                                                        cancelButton)))
+                                                .addGroup(
+                                                        layout.createSequentialGroup()
+                                                                .addGap(12)
+                                                                .addComponent(
+                                                                        newGameRequirementsCard,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        322,
+                                                                        Short.MAX_VALUE)))
+                                .addContainerGap()));
         newGameRequirementsCard.setLayout(new CardLayout(0, 0));
         
         newGameRequirementsPanel = new NewGameRequirementsPanel();
@@ -138,10 +159,14 @@ public class NewGamePanel extends JPanel {
         newRequirementPanel = new JPanel();
         newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
         GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
-        gbl_newRequirementPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl_newRequirementPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl_newRequirementPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_newRequirementPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_newRequirementPanel.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0 };
+        gbl_newRequirementPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0 };
+        gbl_newRequirementPanel.columnWeights = new double[] { 1.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gbl_newRequirementPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
+                1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         newRequirementPanel.setLayout(gbl_newRequirementPanel);
         
         nameLabel = new JLabel("Name:");
@@ -173,9 +198,13 @@ public class NewGamePanel extends JPanel {
         
         saveNewReqButton = new JButton("Save Requirement");
         saveNewReqButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO: get new ID incremented off of existing requirements
-                newGameRequirementsPanel.addRequirement(new GameRequirementModel(0, newReqName.getText(), newReqDesc.getText(), (String)newReqType.getSelectedItem()));
+                newGameRequirementsPanel
+                        .addRequirement(new GameRequirementModel(0, newReqName
+                                .getText(), newReqDesc.getText(),
+                                (String) newReqType.getSelectedItem()));
                 newReqName.setText("");
                 newReqDesc.setText("");
                 newReqType.setSelectedIndex(0);
@@ -203,7 +232,9 @@ public class NewGamePanel extends JPanel {
         newRequirementPanel.add(typeLabel, gbc_typeLabel);
         
         newReqType = new JComboBox<String>();
-        newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {"Epic", "Theme", "User story", "Non-functional dependency", "Scenario"}));
+        newReqType.setModel(new DefaultComboBoxModel<String>(new String[] {
+                "Epic", "Theme", "User story", "Non-functional dependency",
+                "Scenario" }));
         GridBagConstraints gbc_newReqType = new GridBagConstraints();
         gbc_newReqType.insets = new Insets(0, 0, 5, 5);
         gbc_newReqType.fill = GridBagConstraints.HORIZONTAL;
@@ -218,6 +249,7 @@ public class NewGamePanel extends JPanel {
         
         cancelNewReqButton = new JButton("Return to List");
         cancelNewReqButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 showPanel("reqlistpanel");
             }
@@ -227,7 +259,7 @@ public class NewGamePanel extends JPanel {
         gbc_cancelNewReqButton.gridx = 7;
         gbc_cancelNewReqButton.gridy = 11;
         newRequirementPanel.add(cancelNewReqButton, gbc_cancelNewReqButton);
-
+        
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
@@ -240,7 +272,8 @@ public class NewGamePanel extends JPanel {
     }// GEN-LAST:event_cancelButtonActionPerformed
     
     protected void showPanel(String panel) {
-        ((CardLayout) newGameRequirementsCard.getLayout()).show(newGameRequirementsCard, panel);
+        ((CardLayout) newGameRequirementsCard.getLayout()).show(
+                newGameRequirementsCard, panel);
     }
     
     @Override
@@ -255,7 +288,8 @@ public class NewGamePanel extends JPanel {
     public GameType getGameType() {
         if (gameDescription.distributed.isSelected()) {
             return GameType.DISTRIBUTED;
-        } else {
+        }
+        else {
             return GameType.LIVE;
         }
     }
@@ -270,7 +304,8 @@ public class NewGamePanel extends JPanel {
     
     public void check() {
         saveButton
-                .setEnabled((gameDescription.validateForm() && newGameRequirementsPanel.validateForm()));
+                .setEnabled((gameDescription.validateForm() && newGameRequirementsPanel
+                        .validateForm()));
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
