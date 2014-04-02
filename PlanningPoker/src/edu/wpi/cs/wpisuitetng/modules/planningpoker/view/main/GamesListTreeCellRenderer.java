@@ -34,15 +34,10 @@ public class GamesListTreeCellRenderer extends DefaultTreeCellRenderer {
             
             GameModel game = (GameModel) node.getUserObject();
             
-            switch (game.getStatus()) {
-                case COMPLETE:
-                    icon = new ImageIcon(
-                            ImageLoader.getImage("GameCompleted.png"));
-                    break;
-                case PENDING:
-                    icon = new ImageIcon(
-                            ImageLoader.getImage("GameInProgress.png"));
-                    break;
+            if (game.isEnded()) {
+                icon = new ImageIcon(ImageLoader.getImage("GameCompleted.png"));
+            } else {
+                icon = new ImageIcon(ImageLoader.getImage("GameInProgress.png"));
             }
             
             if (icon != null) {
