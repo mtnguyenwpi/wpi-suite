@@ -12,7 +12,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import javax.swing.JTabbedPane;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main.AllGamesViewPanel;
 
 /**
@@ -33,7 +36,26 @@ public class MainView extends JTabbedPane {
         
         addTab("Games", null, mainPanel, null);
         
+        addAncestorListener(new AncestorListener() {
+            
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                GetGamesController.getInstance().retrieveGames();
+            }
+            
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+                // Do Nothing
+                
+            }
+            
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+                // Do Nothing
+                
+            }
+            
+        });
+        
     }
-    
-    
 }
