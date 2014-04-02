@@ -4,6 +4,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.google.gson.Gson;
 
@@ -39,6 +40,7 @@ public class GameRequirementModel extends AbstractModel {
         this.description = description;
         this.type = type;
         this.estimates = estimates;
+        Collections.sort(this.estimates);
     }
     
     /**
@@ -74,7 +76,7 @@ public class GameRequirementModel extends AbstractModel {
     
     /**
      * @param parentId
-     *        the parentId to set
+     *            the parentId to set
      */
     public void setParentId(int parentId) {
         this.parentId = parentId;
@@ -110,6 +112,7 @@ public class GameRequirementModel extends AbstractModel {
     
     public void addEstimate(Estimate e) {
         estimates.add(e);
+        Collections.sort(estimates);
     }
     
     /**
@@ -121,8 +124,7 @@ public class GameRequirementModel extends AbstractModel {
         int count = estimates.size();
         if (estimates.size() % 2 == 1) {
             return estimates.get(count / 2).getEstimate();
-        }
-        else {
+        } else {
             return (estimates.get(count / 2).getEstimate() + estimates.get(
                     count / 2 - 1).getEstimate()) / 2;
         }
@@ -159,7 +161,6 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public void delete() {
-        // TODO Auto-generated method stub  
     }
     
     /*
@@ -169,7 +170,6 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public Boolean identify(Object arg0) {
-        // TODO Auto-generated method stub
         return null;
     }
     
@@ -180,7 +180,6 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public void save() {
-        // TODO Auto-generated method stub
         
     }
     
@@ -192,6 +191,11 @@ public class GameRequirementModel extends AbstractModel {
     @Override
     public String toJSON() {
         return new Gson().toJson(this, Requirement.class);
+    }
+    
+    @Override
+    public String toString() {
+        return getName();
     }
     
 }

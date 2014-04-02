@@ -3,6 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -20,25 +21,25 @@ public class GetGamesRequestObserver implements RequestObserver {
      * Constructs the observer given a GetGamesController
      * 
      * @param controller
-     *        the controller used to retrieve games
+     *            the controller used to retrieve games
      */
     public GetGamesRequestObserver(GetGamesController controller) {
         this.controller = controller;
     }
     
     /**
-     * Parse the games out of the response body and pass them to the
-     * controller
+     * Parse the games out of the response body and pass them to the controller
      * 
      * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {
         // Convert the JSON array of games to a Games object array
-        // GameModel[] games = GameModel.fromJsonArray(iReq.getResponse().getBody());
+        GameModel games[] = GameModel.fromJSONArray(iReq.getResponse()
+                .getBody());
         
         // Pass these Games to the controller
-        // controller.receivedGames(games);
+        controller.receivedGames(games);
     }
     
     /**
@@ -58,7 +59,7 @@ public class GetGamesRequestObserver implements RequestObserver {
     @Override
     public void fail(IRequest iReq, Exception exception) {
         // TODO: Needs to be updated with a GameModel indicating an error
-        // GameModel[] errorGames = { new GameModel(6, "Error", "error desc") };
-        // controller.receivedGames(errorGames);
+        GameModel[] errorGames = { new GameModel() };
+        controller.receivedGames(errorGames);
     }
 }

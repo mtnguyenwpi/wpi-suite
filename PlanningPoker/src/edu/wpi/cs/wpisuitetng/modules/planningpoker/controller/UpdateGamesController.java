@@ -27,8 +27,7 @@ public class UpdateGamesController {
     /**
      * 
      * @return the instance of the UpdateGamesController or creates one if it
-     *         does not
-     *         exist.
+     *         does not exist.
      */
     public static UpdateGamesController getInstance() {
         if (UpdateGamesController.instance == null) {
@@ -42,13 +41,15 @@ public class UpdateGamesController {
      * This method updates a game on the server.
      * 
      * @param newGame
-     *        is the game to be updated on the server.
+     *            is the game to be updated on the server.
      */
     public void updateGame(GameListModel newGame) {
         Request request = Network.getInstance().makeRequest(
-                "planningpokermanager/planningpoker", HttpMethod.POST); // POST == update
-        // request.setBody(newGame.toJSON()); // put the new game in the body of the request
-        request.addObserver(observer); // add an observer to process the response
+                "planningpoker/game", HttpMethod.POST); // POST == update
+        // request.setBody(newGame.toJSON()); // put the new game in the body of
+        // the request
+        request.addObserver(observer); // add an observer to process the
+                                       // response
         request.send();
     }
 }

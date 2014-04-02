@@ -17,11 +17,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserve
  */
 public class GameModel extends AbstractModel {
     
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = -2777122181981150898L;
-    
     public static enum GameStatus {
         PENDING("Pending"), COMPLETE("Complete");
         
@@ -48,6 +43,9 @@ public class GameModel extends AbstractModel {
     private GameType type;
     private GameStatus status;
     
+    /**
+     * Default constructor creates instance with invalid id and null fields
+     */
     public GameModel() {
         id = -1;
         name = null;
@@ -60,9 +58,12 @@ public class GameModel extends AbstractModel {
         userList = null;
     }
     
-    
     /**
      * Constructor
+     * 
+     * @param id
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type
@@ -85,6 +86,8 @@ public class GameModel extends AbstractModel {
     /**
      * Constructor
      * 
+     * @param name
+     * @param description
      * @param requirements
      * @param end
      * @param type
@@ -106,7 +109,6 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * 
      * @return the name of this game
      */
     public String getName() {
@@ -117,7 +119,6 @@ public class GameModel extends AbstractModel {
         this.id = id;
     }
     
-    
     /**
      * 
      * @return the name of this game
@@ -126,13 +127,12 @@ public class GameModel extends AbstractModel {
         return description;
     }
     
-    
     /**
      * Add a SimpleListObserver that is notified when the list of estimates is
      * changed
      * 
      * @param slo
-     *        The SimpleListObsrever to add
+     *        The SimpleListObserver to add
      */
     public void addListListener(SimpleListObserver slo) {
         if (!observers.contains(slo)) {
@@ -157,15 +157,13 @@ public class GameModel extends AbstractModel {
     }
     
     /**
-     * 
-     * @return The Requirement for this game
+     * @return The Requirements for this game
      */
     public ArrayList<GameRequirementModel> getRequirements() {
         return requirements;
     }
     
     /**
-     * 
      * @return The end time for this game
      */
     public Date getEndTime() {
@@ -185,6 +183,7 @@ public class GameModel extends AbstractModel {
      * Manually set the game to ended
      * 
      * @param fin
+     *        whether or not the game should be ended
      */
     public void setEnded(boolean fin) {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
@@ -216,7 +215,6 @@ public class GameModel extends AbstractModel {
         return (status == GameStatus.COMPLETE);
     }
     
-    
     /**
      * Notifies all observers when that the list has changed
      */
@@ -225,17 +223,14 @@ public class GameModel extends AbstractModel {
             observer.listUpdated();
         }
     }
-
     
     @Override
     public void save() {
-        // TODO Auto-generated method stub
         
     }
     
     @Override
     public void delete() {
-        // TODO Auto-generated method stub
         
     }
     
@@ -246,7 +241,6 @@ public class GameModel extends AbstractModel {
     
     @Override
     public Boolean identify(Object o) {
-        // TODO Auto-generated method stub
         return null;
     }
     
@@ -256,11 +250,18 @@ public class GameModel extends AbstractModel {
         return parser.fromJson(json, GameModel.class);
     }
     
+    public static GameModel[] fromJSONArray(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, GameModel[].class);
+    }
     
     public int getID() {
         return id;
     }
     
+    public GameStatus getStatus() {
+        return status;
+    }
     
     public void copyFrom(GameModel g) {
         id = g.id;
@@ -272,6 +273,19 @@ public class GameModel extends AbstractModel {
         status = g.status;
         observers = g.observers;
         userList = g.userList;
+    }
+    
+    /**
+     * 
+     * @return the simplelistobservers for the list of games
+     */
+    public ArrayList<SimpleListObserver> getObservers(){
+        return observers;
+    }
+        
+    @Override
+    public String toString() {
+        return getName();
     }
     
 }

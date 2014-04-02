@@ -5,18 +5,28 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
  * 
  * @author Sonaxaton
  */
 public class GamesListPanel extends javax.swing.JPanel {
+    
+    // TODO: organize games into completed and uncompleted folders
     
     /**
      *
@@ -26,42 +36,70 @@ public class GamesListPanel extends javax.swing.JPanel {
     /**
      * Creates new form GamesListPanel
      */
-    public GamesListPanel(GameListModel gameList) {
+    public GamesListPanel() {
         initComponents();
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
+        gameTree.setCellRenderer(new GamesListTreeCellRenderer());
         
-        this.gameList = gameList;
-        gameList.addListListener(new SimpleListObserver() {
+        GameListModel.getInstance().addListListener(new SimpleListObserver() {
             
             @Override
             public void listUpdated() {
-                updateTable(GamesListPanel.this.gameList);
+                gameTree.setModel(new DefaultTreeModel(
+                        new DefaultMutableTreeNode() {
+                            private static final long serialVersionUID = 8933074607488306596L;
+                            
+                            {
+                                for (GameModel gm : GameListModel.getInstance()
+                                        .getGames()) {
+                                    DefaultMutableTreeNode game_node = new DefaultMutableTreeNode();
+                                    game_node.setUserObject(gm);
+                                    
+                                    if (gm.getRequirements() != null) {
+                                        for (GameRequirementModel r : gm
+                                                .getRequirements()) {
+                                            DefaultMutableTreeNode req_node = new DefaultMutableTreeNode();
+                                            req_node.setUserObject(r);
+                                            
+                                            game_node.add(req_node);
+                                        }
+                                    }
+                                    add(game_node);
+                                }
+                            }
+                        }));
             }
         });
+        
+        ArrayList<Estimate> estimates = new ArrayList<>();
+        ArrayList<GameRequirementModel> reqs = new ArrayList<>();
+        estimates.add(new Estimate(null, 0.5f));
+        estimates.add(new Estimate(null, 1f));
+        estimates.add(new Estimate(null, 2f));
+        estimates.add(new Estimate(null, 5f));
+        estimates.add(new Estimate(null, 10f));
+        reqs.add(new GameRequirementModel(367432, "Requirement 1",
+                "THis is required!", "its type", estimates));
+        GameListModel.getInstance().addGame(
+                new GameModel(23, "Test Game", "This game is a test", reqs,
+                        new Date(), GameType.LIVE, GameStatus.PENDING));
+        reqs = new ArrayList<>();
+        reqs.add(new GameRequirementModel(15, "Requirement A",
+                "THis is required!", "user story", estimates));
+        estimates = new ArrayList<>();
+        estimates.add(new Estimate(null, 1f));
+        estimates.add(new Estimate(null, 7f));
+        estimates.add(new Estimate(null, 8f));
+        estimates.add(new Estimate(null, 15f));
+        reqs.add(new GameRequirementModel(51, "Requirement B",
+                "THis is definitely required!", "doofus story", estimates));
+        GameListModel.getInstance().addGame(
+                new GameModel(25, "Test Game 2", "This game is also a test",
+                        reqs, new Date(), GameType.DISTRIBUTED,
+                        GameStatus.COMPLETE));
     }
     
-    private GameListModel gameList;
-    
-    public GameListModel getGameList() {
-        return gameList;
-    }
-    
-    public void setGameList(GameListModel gameList) {
-        this.gameList = gameList;
-    }
-    
-    public JTable getGamesTable() {
-        return jTable1;
-    }
-    
-    private void updateTable(GameListModel gameList) {
-        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-        for (int i = m.getRowCount() - 1; i >= 0; i--) {
-            m.removeRow(i);
-        }
-        for (GameModel g : gameList.getGames()) {
-            m.addRow(new Object[] { g.isEnded(), g.getName() });
-        }
+    public JTree getTree() {
+        return gameTree;
     }
     
     /**
@@ -69,61 +107,33 @@ public class GamesListPanel extends javax.swing.JPanel {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        gameTree = new javax.swing.JTree();
+        gameTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode()));
+        gameTree.setRootVisible(false);
         
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                
-                }, new String[] { "", "Game" }) {
-            /**
-             * 
-             */
-            private static final long serialVersionUID = 3706659002343757832L;
-            Class[] types = new Class[] { java.lang.Object.class,
-                    java.lang.String.class };
-            boolean[] canEdit = new boolean[] { false, false };
-            
-            @Override
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-            
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(30);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(100);
-        }
+        jScrollPane2.setViewportView(gameTree);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-                jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465,
+                jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465,
                 Short.MAX_VALUE));
         layout.setVerticalGroup(layout.createParallelGroup(
                 javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-                jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320,
+                jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 320,
                 Short.MAX_VALUE));
     }// </editor-fold>//GEN-END:initComponents
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTree gameTree;
     // End of variables declaration//GEN-END:variables
 }
