@@ -1,7 +1,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -24,11 +28,20 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+
+    
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
-        // TODO: set vote results table values
+        
+        DefaultTableModel model = (DefaultTableModel)voteResultTable.getModel();
+        while(model.getRowCount() > 0)model.removeRow(0);
+        ArrayList<Estimate> reqs = req.getEstimates();
+        for(Estimate e:reqs){
+        	model.addRow(new Object[]{e.getUser().getName(), e.getEstimate()});
+        }
+        
     }
     
     /**
@@ -72,6 +85,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         voteResultTable.getColumnModel().getColumn(1).setResizable(false);
         voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         tableScrollPane.setViewportView(voteResultTable);
+        
+
         
         meanValueLabel.setText("XYZ");
         

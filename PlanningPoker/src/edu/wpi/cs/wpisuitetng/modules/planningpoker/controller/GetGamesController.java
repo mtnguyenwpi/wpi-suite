@@ -5,9 +5,16 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -90,5 +97,38 @@ public class GetGamesController implements ActionListener {
                 }
            // }
         }
+
+		// test completed game
+		ArrayList<GameRequirementModel> testReqs = new ArrayList<GameRequirementModel>() {
+			{
+				add(new GameRequirementModel(0, "Test Requirement 1",
+						"The cow", "User story"));
+				add(new GameRequirementModel(1, "Test Requirement 2",
+						"Elepahnt", "User story"));
+				add(new GameRequirementModel(2, "Test Requirement 3", "queso",
+						"User story"));
+			}
+		};
+        GameModel testGame = new GameModel(90, "Test Complete Game", "Our test", testReqs, new Date(), GameType.DISTRIBUTED, GameStatus.COMPLETE);
+        User a = new User("User A", "AAA", "Yes", 0);
+        User b = new User("User B", "BBB", "Yes", 0);
+        User c = new User("Elephant", "EEE", "Yes", 0);
+        User d = new User("Cheese", "CCC", "Yes", 0);
+        testGame.addEstimate(new Estimate(b, 32), 0);
+        testGame.addEstimate(new Estimate(c, 45), 0);
+        testGame.addEstimate(new Estimate(a, 31), 0);
+
+        testGame.addEstimate(new Estimate(c, 3), 1);
+        testGame.addEstimate(new Estimate(b, 2), 1);
+        testGame.addEstimate(new Estimate(a, 99), 2);
+        testGame.addEstimate(new Estimate(d, 8), 1);     
+
+        testGame.addEstimate(new Estimate(a, 3), 2);
+        testGame.addEstimate(new Estimate(b, 2), 2);
+        testGame.addEstimate(new Estimate(c, 99), 2);
+        testGame.addEstimate(new Estimate(d, 8), 2);        
+        
+        GameListModel.getInstance().addGame(testGame);
+        
     }
 }
