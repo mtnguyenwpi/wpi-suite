@@ -1,23 +1,15 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
-import javax.swing.Timer;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
 
 /**
  * Stores a list of games and their statuses
  * 
-<<<<<<< HEAD
  * @author Akshay, Andrew
-=======
- * @author Akshay
->>>>>>> team9dev
  * 
  */
 public class GameListModel extends AbstractListModel<GameModel> {
@@ -40,8 +32,6 @@ public class GameListModel extends AbstractListModel<GameModel> {
     
     private ArrayList<GameModel> games;
     private ArrayList<SimpleListObserver> observers;
-    private GetGamesController gameRetrievalController;
-    private Timer autoRefresh;
     
     /**
      * Constructor that initializes list of games, list of observers, a
@@ -51,21 +41,6 @@ public class GameListModel extends AbstractListModel<GameModel> {
     public GameListModel() {
         games = new ArrayList<>();
         observers = new ArrayList<SimpleListObserver>();
-        final int timerDelay = 15000; //milliseconds
-        ActionListener checkDB = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                	 GetGamesController.getInstance().retrieveGames();
-                    autoRefresh.setDelay(timerDelay);
-                }
-                catch (NullPointerException err) {
-                    autoRefresh.setDelay(autoRefresh.getDelay() + 15000);
-                };
-            }
-        };
-        autoRefresh = new Timer(timerDelay, checkDB);
-        autoRefresh.start();
     }
     
     /**
