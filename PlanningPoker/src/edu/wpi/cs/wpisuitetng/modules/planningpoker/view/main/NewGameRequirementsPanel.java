@@ -78,6 +78,12 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         }
         
         addButton.setText("Create Requirement");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parent.showPanel("newreqpanel");
+            }
+        });
         
         countError.setForeground(new java.awt.Color(255, 0, 0));
         countError.setText("At least one requirement is needed!");
@@ -164,6 +170,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
     public void setEditGamePanel(NewGamePanel p) {
         parent = p;
+        System.out.println("Parent set");
     }
     
     public boolean validateForm() {
@@ -179,6 +186,6 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel countError;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable requirementsTable;
+    protected javax.swing.JTable requirementsTable;
     // End of variables declaration//GEN-END:variables
 }
