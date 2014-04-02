@@ -2,7 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import javax.swing.table.DefaultTableModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
 /**
@@ -17,38 +17,18 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
     private static final long serialVersionUID = -7702704328142908459L;
     
     /**
-     * the requirement who's details are being displayed
-     */
-    private GameRequirementModel req;
-    
-    private DefaultTableModel tableModel;
-    
-    /**
      * Creates new form DetailPanel
      */
-    public CompletedRequirementPanel(GameRequirementModel r) {
-        req = r;
+    public CompletedRequirementPanel() {
         // setup tablemodel (using autogenerted netbeans code)
-        tableModel = new javax.swing.table.DefaultTableModel() {
-            
-            /**
-             * 
-             */
-            private static final long serialVersionUID = 766575328559324615L;
-            
-            /*
-             * (non-Javadoc)
-             * 
-             * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
-             */
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-            
-        };
         initComponents();
-        initData();
+    }
+    
+    public void setRequirement(GameModel parent_game, GameRequirementModel req) {
+        meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
+        medianValueLabel
+                .setText(String.format("%1.1f", req.getEstimateMedian()));
+        // TODO: set vote results table values
     }
     
     /**
@@ -58,6 +38,7 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     // <editor-fold defaultstate="collapsed"
     // desc="Generated Code">//GEN-BEGIN:initComponents
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void initComponents() {
         
         jSeparator1 = new javax.swing.JSeparator();
@@ -74,7 +55,22 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         
         tableScrollPane.setBackground(new java.awt.Color(153, 0, 102));
         
-        voteResultTable.setModel(tableModel);
+        voteResultTable.setModel(new DefaultTableModel(new Object[][] { { null,
+                null }, }, new String[] { "User", "Estimate" }) {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -8613174878148410098L;
+            Class[] columnTypes = new Class[] { String.class, String.class };
+            
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return columnTypes[columnIndex];
+            }
+        });
+        voteResultTable.getColumnModel().getColumn(0).setPreferredWidth(253);
+        voteResultTable.getColumnModel().getColumn(1).setResizable(false);
+        voteResultTable.getColumnModel().getColumn(1).setPreferredWidth(50);
         tableScrollPane.setViewportView(voteResultTable);
         
         meanValueLabel.setText("XYZ");
@@ -154,20 +150,6 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
                                                 .addComponent(medianValueLabel))
                                 .addGap(13, 13, 13)));
     }// </editor-fold>//GEN-END:initComponents
-    
-    private void initData() {
-        tableModel.addColumn("User");
-        tableModel.addColumn("Estimate");
-        for (Estimate e : req.getEstimates()) {
-            String row[] = new String[2];
-            row[0] = e.getUser().getName();
-            row[1] = String.format("%.1f", e.getEstimate());
-            tableModel.addRow(row);
-        }
-        meanValueLabel.setText(String.format("%.2f", req.getEstimateMean()));
-        medianValueLabel
-                .setText(String.format("%.2f", req.getEstimateMedian()));
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
