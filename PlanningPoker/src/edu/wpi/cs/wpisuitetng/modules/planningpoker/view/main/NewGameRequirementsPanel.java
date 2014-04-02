@@ -77,7 +77,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
             requirementsTable.getColumnModel().getColumn(0).setMaxWidth(40);
         }
         
-        addButton.setText("Add Requirement");
+        addButton.setText("Create Requirement");
         
         countError.setForeground(new java.awt.Color(255, 0, 0));
         countError.setText("At least one requirement is needed!");
@@ -152,6 +152,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 .getModel();
         ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for (int i = 0; i < model.getRowCount(); i++) {
+            if ( ! (Boolean) model.getValueAt(i, 0) ) {
+                continue;
+            }
             requirements.add((GameRequirementModel) model.getValueAt(i, 1));
             System.out.println("found " + requirements.get(i).toString()
                     + " in table");
