@@ -100,7 +100,13 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
             requirementsTable.getColumnModel().getColumn(0).setMaxWidth(60);
         }
         
-        addButton.setText("Add Requirement");
+        addButton.setText("Create Requirement");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parent.showPanel("newreqpanel");
+            }
+        });
         
         countError.setForeground(new java.awt.Color(255, 0, 0));
         countError.setText("At least one requirement is needed!");
@@ -153,6 +159,9 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 .getModel();
         ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for (int i = 0; i < model.getRowCount(); i++) {
+            if ( ! (Boolean) model.getValueAt(i, 0) ) {
+                continue;
+            }
             requirements.add((GameRequirementModel) model.getValueAt(i, 1));
             System.out.println("found " + requirements.get(i).toString()
                     + " in table");
@@ -162,6 +171,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
     public void setEditGamePanel(NewGamePanel p) {
         parent = p;
+        System.out.println("Parent set");
     }
     
     public boolean validateForm() {
@@ -177,7 +187,7 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     private javax.swing.JButton addButton;
     private javax.swing.JLabel countError;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable requirementsTable;
+    protected javax.swing.JTable requirementsTable;
     // End of variables declaration//GEN-END:variables
     
     private class SelectionTableHeadRenderer extends JCheckBox implements TableCellRenderer, MouseListener {
