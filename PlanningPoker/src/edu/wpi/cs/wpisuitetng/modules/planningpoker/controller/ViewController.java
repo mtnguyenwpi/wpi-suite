@@ -49,7 +49,6 @@ public class ViewController {
         	@Override
         	public void run(){
         		AddGameController.getInstance().addGame(newGame);
-        		GetGamesController.getInstance().retrieveGames();
         	}
         }.start();
         
