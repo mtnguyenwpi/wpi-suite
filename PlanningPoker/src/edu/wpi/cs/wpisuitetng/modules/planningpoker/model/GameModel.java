@@ -39,7 +39,6 @@ public class GameModel extends AbstractModel {
     
     private ArrayList<SimpleListObserver> observers;
     private ArrayList<User> userList;
-    private ArrayList<ArrayList<Estimate>> estimates;
     
     private int id;
     private String name;
@@ -58,6 +57,7 @@ public class GameModel extends AbstractModel {
         type = null;
         status = null;
         observers = null;
+        userList = null;
     }
     
     
@@ -78,12 +78,7 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         this.userList = userList;
-        ArrayList<Estimate> innerList;
-        
-        for(int i = 0; i < requirements.size(); i++){
-        	innerList = requirements.get(i).getEstimates();
-        	this.estimates.add(innerList);
-        }
+      
    		observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -106,12 +101,7 @@ public class GameModel extends AbstractModel {
         this.type = type;
         this.status = status;
         this.userList = userList;
-        ArrayList<Estimate> innerList;
         
-        for(int i = 0; i < requirements.size(); i++){
-        	innerList = requirements.get(i).getEstimates();
-        	this.estimates.add(innerList);
-        }
         observers = new ArrayList<SimpleListObserver>();
     }
     
@@ -200,24 +190,24 @@ public class GameModel extends AbstractModel {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
-    /**
-     * Determines if all users have voted
-     * @return boolean
-     */
-    public boolean allVoted(){
-    	for(int i = 0; i < estimates.size(); i++){
-    		if(estimates.get(i).size() == userList.size()){
-    			return true;
-    		}
-    		else return false;
-    	}
-		return false;
-    }
+   public ArrayList<User> getUserList(){
+	   return userList;
+   }
+   
+   public boolean checkVoted(){
+	   for(int i = 0; i < requirements.size(); i++){
+		   if(requirements.get(i).allVoted(this) == false){
+			   return false;
+		   }
+		   else return true;
+	   }
+	return false;
+   }
     /**
      * Determines if the game should be ended, and ends the game
      */
     public boolean isEnded() {
-        if (allVoted() == true){
+        if (checkVoted() == true){
         	setEnded(true);
         }
     	else if((endDate.before(new Date(System.currentTimeMillis())))){
@@ -281,7 +271,6 @@ public class GameModel extends AbstractModel {
         type = g.type;
         status = g.status;
         observers = g.observers;
-        estimates = g.estimates;
         userList = g.userList;
     }
     
