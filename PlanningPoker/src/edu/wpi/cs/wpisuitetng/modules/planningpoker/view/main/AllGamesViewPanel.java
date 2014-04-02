@@ -49,13 +49,19 @@ public class AllGamesViewPanel extends javax.swing.JPanel {
                 if (nodeInfo instanceof GameModel) {
                     ((CardLayout) selectedItemPanel.getLayout()).show(
                             selectedItemPanel, "game");
-                    gamePanel.setGame((GameModel) nodeInfo);
+                    GameModel game = (GameModel) nodeInfo;
+                    
+                    gamePanel.setGame(game);
                 } else if (nodeInfo instanceof GameRequirementModel) {
                     ((CardLayout) selectedItemPanel.getLayout()).show(
                             selectedItemPanel, "req");
-                    requirementPanel.getVotePanel().setRequirement(
-                            (GameRequirementModel) nodeInfo);
-                    requirementPanel.showPanel((GameRequirementModel) nodeInfo);
+                    GameRequirementModel req = (GameRequirementModel) nodeInfo;
+                    GameModel parent_game = (GameModel) ((DefaultMutableTreeNode) (node
+                            .getParent())).getUserObject();
+                    
+                    requirementPanel.getVotePanel().setRequirement(parent_game,
+                            req);
+                    requirementPanel.showPanel(req);
                 }
             }
         });

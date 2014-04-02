@@ -11,6 +11,16 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 
 /**
@@ -33,16 +43,12 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    private GameModel game;
-    
-    public GameModel getGame() {
-        return game;
-    }
-    
     public void setGame(GameModel game) {
-        this.game = game;
-        nameField.setText(game.getName());
-        descriptionPane.setText(game.getDescription());
+        setGameName(game.getName());
+        setDescriptionText(game.getDescription());
+        // DefaultListModel<String> listModel = new DefaultListModel<>();
+        // listModel.addElement(element);
+        // getParticipantsList().setModel(listModel);
     }
     
     /**
@@ -56,103 +62,158 @@ public class GameDescriptionPanel extends javax.swing.JPanel {
     private void initComponents() {
         
         nameLabel = new javax.swing.JLabel();
-        nameField = new javax.swing.JTextField();
-        descriptionLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        descriptionPane = new javax.swing.JTextPane();
-        typeLabel = new javax.swing.JLabel();
-        type = new javax.swing.JLabel();
-        
-        nameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         nameLabel.setText("Name:");
         
-        nameField.setEditable(false);
-        nameField.setBackground(new java.awt.Color(255, 255, 255));
+        gameName = new JLabel("");
         
-        descriptionLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        descriptionLabel.setText("Description:");
+        JLabel lblParticipants = new JLabel("Participants:");
         
-        descriptionPane.setEditable(false);
-        jScrollPane1.setViewportView(descriptionPane);
+        JScrollPane scrollPane = new JScrollPane();
         
-        typeLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        typeLabel.setText("Type: ");
-        typeLabel.setToolTipText("");
+        JLabel lblProgress = new JLabel("Requirement Progress:");
         
-        type.setText("User Story");
+        progressBar = new JProgressBar();
+        
+        progressLabel = new JLabel("0/0");
+        
+        JLabel lblDescription = new JLabel("Description:");
+        
+        JScrollPane scrollPane_1 = new JScrollPane();
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        setLayout(layout);
         layout.setHorizontalGroup(layout
-                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .createParallelGroup(Alignment.LEADING)
                 .addGroup(
+                        Alignment.TRAILING,
                         layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(
                                         layout.createParallelGroup(
-                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                Alignment.TRAILING)
                                                 .addComponent(
-                                                        jScrollPane1,
-                                                        javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(nameField)
+                                                        scrollPane_1,
+                                                        Alignment.LEADING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        430, Short.MAX_VALUE)
                                                 .addGroup(
+                                                        Alignment.LEADING,
                                                         layout.createSequentialGroup()
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(
-                                                                                        nameLabel)
-                                                                                .addComponent(
-                                                                                        descriptionLabel)
-                                                                                .addGroup(
-                                                                                        layout.createSequentialGroup()
-                                                                                                .addComponent(
-                                                                                                        typeLabel)
-                                                                                                .addPreferredGap(
-                                                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(
-                                                                                                        type)))
-                                                                .addGap(0,
-                                                                        343,
-                                                                        Short.MAX_VALUE)))
+                                                                .addComponent(
+                                                                        nameLabel)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        gameName))
+                                                .addComponent(
+                                                        scrollPane,
+                                                        Alignment.LEADING,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        430, Short.MAX_VALUE)
+                                                .addComponent(lblParticipants,
+                                                        Alignment.LEADING)
+                                                .addGroup(
+                                                        Alignment.LEADING,
+                                                        layout.createSequentialGroup()
+                                                                .addComponent(
+                                                                        lblProgress)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        progressBar,
+                                                                        GroupLayout.PREFERRED_SIZE,
+                                                                        GroupLayout.DEFAULT_SIZE,
+                                                                        GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        ComponentPlacement.RELATED)
+                                                                .addComponent(
+                                                                        progressLabel))
+                                                .addComponent(lblDescription,
+                                                        Alignment.LEADING))
                                 .addContainerGap()));
         layout.setVerticalGroup(layout
-                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(nameLabel)
-                                .addPreferredGap(
-                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameField,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(
-                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(descriptionLabel)
-                                .addPreferredGap(
-                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        165, Short.MAX_VALUE)
-                                .addPreferredGap(
-                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(
                                         layout.createParallelGroup(
-                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(typeLabel)
-                                                .addComponent(type))
-                                .addContainerGap()));
+                                                Alignment.BASELINE)
+                                                .addComponent(nameLabel)
+                                                .addComponent(gameName))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(lblDescription)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane_1,
+                                        GroupLayout.DEFAULT_SIZE, 59,
+                                        Short.MAX_VALUE)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(lblParticipants)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane,
+                                        GroupLayout.PREFERRED_SIZE, 77,
+                                        GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.LEADING)
+                                                .addComponent(lblProgress)
+                                                .addComponent(
+                                                        progressBar,
+                                                        GroupLayout.PREFERRED_SIZE,
+                                                        GroupLayout.DEFAULT_SIZE,
+                                                        GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(progressLabel))
+                                .addGap(62)));
+        
+        descriptionText = new JTextPane();
+        scrollPane_1.setViewportView(descriptionText);
+        
+        participantsList = new JList<String>();
+        participantsList.setModel(new DefaultListModel<String>());
+        scrollPane.setViewportView(participantsList);
+        setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JTextPane descriptionPane;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JLabel type;
-    private javax.swing.JLabel typeLabel;
-    // End of variables declaration//GEN-END:variables
+    private JLabel gameName;
+    private JTextPane descriptionText;
+    private JList<String> participantsList;
+    private JProgressBar progressBar;
+    private JLabel progressLabel;
+    
+    protected String getGameName() {
+        return gameName.getText();
+    }
+    
+    protected void setGameName(String text) {
+        gameName.setText(text);
+    }
+    
+    protected String getDescriptionText() {
+        return descriptionText.getText();
+    }
+    
+    protected void setDescriptionText(String text_1) {
+        descriptionText.setText(text_1);
+    }
+    
+    protected int getProgressBarValue() {
+        return progressBar.getValue();
+    }
+    
+    protected void setProgressBarValue(int value) {
+        progressBar.setValue(value);
+    }
+    
+    protected String getProgressLabelText() {
+        return progressLabel.getText();
+    }
+    
+    protected void setProgressLabelText(String text_2) {
+        progressLabel.setText(text_2);
+    }
+    
+    protected JList<String> getParticipantsList() {
+        return participantsList;
+    }
 }
