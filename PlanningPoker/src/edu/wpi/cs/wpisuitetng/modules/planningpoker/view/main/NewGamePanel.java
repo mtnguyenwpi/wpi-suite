@@ -15,6 +15,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EmailController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 /**
  * 
@@ -82,65 +85,35 @@ public class NewGamePanel extends JPanel {
         cancelButton.setIcon(ImageLoader.getIcon("Delete.png"));
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        layout.setHorizontalGroup(
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(saveButton)
+        					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        					.addComponent(cancelButton))
+        				.addComponent(gameDescription, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE))
+        			.addGap(18)
+        			.addComponent(gameRequirements, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(gameRequirements, GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+        					.addGap(21))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(gameDescription, GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(saveButton)
+        						.addComponent(cancelButton))))
+        			.addContainerGap())
+        );
         setLayout(layout);
-        layout.setHorizontalGroup(layout
-                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(
-                                                                        saveButton)
-                                                                .addGap(16, 16,
-                                                                        16)
-                                                                .addComponent(
-                                                                        cancelButton))
-                                                .addComponent(
-                                                        gameDescription,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        428,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(gameRequirements,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        498, Short.MAX_VALUE)));
-        layout.setVerticalGroup(layout
-                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                                .addGroup(
-                                        layout.createParallelGroup(
-                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        gameRequirements,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        Short.MAX_VALUE)
-                                                                .addGap(21, 21,
-                                                                        21))
-                                                .addGroup(
-                                                        layout.createSequentialGroup()
-                                                                .addComponent(
-                                                                        gameDescription,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        Short.MAX_VALUE)
-                                                                .addGap(18, 18,
-                                                                        18)
-                                                                .addGroup(
-                                                                        layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(
-                                                                                        saveButton)
-                                                                                .addComponent(
-                                                                                        cancelButton))))
-                                .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveButtonActionPerformed
