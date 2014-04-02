@@ -81,7 +81,7 @@ public class GamesListPanel extends javax.swing.JPanel {
                 "THis is required!", "its type", estimates));
         GameListModel.getInstance().addGame(
                 new GameModel(23, "Test Game", "This game is a test", reqs,
-                        new Date(), GameType.LIVE, GameStatus.PENDING));
+                        new Date(), GameType.LIVE, GameStatus.PENDING, null));
         reqs = new ArrayList<>();
         reqs.add(new GameRequirementModel(15, "Requirement A",
                 "THis is required!", "user story", estimates));
@@ -95,7 +95,7 @@ public class GamesListPanel extends javax.swing.JPanel {
         GameListModel.getInstance().addGame(
                 new GameModel(25, "Test Game 2", "This game is also a test",
                         reqs, new Date(), GameType.DISTRIBUTED,
-                        GameStatus.COMPLETE));
+                        GameStatus.COMPLETE, null));
     }
     
     public JTree getTree() {
