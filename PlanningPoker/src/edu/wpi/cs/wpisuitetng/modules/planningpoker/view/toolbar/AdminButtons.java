@@ -40,9 +40,10 @@ public class AdminButtons extends ToolbarGroupView {
         
         endGameButton = new JButton("<html>End<br/>Estimation</html>");
         endGameButton.setIcon(ImageLoader.getIcon("EndGame.png"));
+        endGameButton.setEnabled(false);        //disables button because it hasn't been implemented
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(350);
+        setPreferredWidth(175);
         
         endGameButton.setHorizontalAlignment(SwingConstants.CENTER);
         

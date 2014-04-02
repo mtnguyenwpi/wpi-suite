@@ -14,6 +14,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ImageLoader;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -98,6 +101,7 @@ public class NewGamePanel extends JPanel {
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         layout.setHorizontalGroup(
+//<<<<<<< HEAD
             layout.createParallelGroup(Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -223,6 +227,7 @@ public class NewGamePanel extends JPanel {
         gbc_cancelNewReqButton.gridx = 7;
         gbc_cancelNewReqButton.gridy = 11;
         newRequirementPanel.add(cancelNewReqButton, gbc_cancelNewReqButton);
+
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     

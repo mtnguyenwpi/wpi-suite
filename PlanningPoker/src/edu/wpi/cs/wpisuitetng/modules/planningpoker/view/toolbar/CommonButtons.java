@@ -47,7 +47,7 @@ public class CommonButtons extends ToolbarGroupView {
         newGameButton.setIcon(ImageLoader.getIcon("NewGame.png"));
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(350);
+        setPreferredWidth(175);
         // Adding functionality to new game button, not sure if this is where
         // this should go --nfbrown
         newGameButton.addActionListener(new ActionListener() {
