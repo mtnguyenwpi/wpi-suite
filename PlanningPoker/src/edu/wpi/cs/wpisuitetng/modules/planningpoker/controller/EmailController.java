@@ -46,7 +46,7 @@ public class EmailController {
                 + " has created a new Planning Poker game. Please open Janeway and make your estimates!";
         subject = "A planning poker game is about to begin";
         observer = new UserRequestObserver(this);
-        //requestUsers();
+        requestUsers();
     }
     
     /**

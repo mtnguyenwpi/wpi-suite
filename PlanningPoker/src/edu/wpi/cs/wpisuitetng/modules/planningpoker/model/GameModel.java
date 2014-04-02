@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.SimpleListObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UserRequestObserver;
 
 /**
  * Represents a planning poker game
@@ -33,7 +35,7 @@ public class GameModel extends AbstractModel {
     };
     
     private ArrayList<SimpleListObserver> observers;
-    private ArrayList<User> userList;
+    private User[] userList;
     
     private int id;
     private String name;
@@ -42,6 +44,7 @@ public class GameModel extends AbstractModel {
     private Date endDate;
     private GameType type;
     private GameStatus status;
+    private UserController userController;
     
     /**
      * Default constructor creates instance with invalid id and null fields
@@ -56,6 +59,7 @@ public class GameModel extends AbstractModel {
         status = null;
         observers = null;
         userList = null;
+        userController = new UserController();
     }
     
     /**
@@ -70,7 +74,7 @@ public class GameModel extends AbstractModel {
      * @param status
      * @param userList list of users in the game
      */
-    public GameModel(int id, String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
+    public GameModel(int id, String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -78,9 +82,11 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        this.userList = userList;
-      
+        userController = new UserController();
+              
    		observers = new ArrayList<SimpleListObserver>();
+   		        
+        this.userList = userController.getUsers();
     }
     
     /**
@@ -95,7 +101,7 @@ public class GameModel extends AbstractModel {
      * @param estimates
      * @param userList list of users in the game
      */
-    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status, ArrayList<User> userList) {
+    public GameModel(String name, String description, ArrayList<GameRequirementModel> requirements, Date end, GameType type, GameStatus status) {
         id = -1;
         this.name = name;
         this.description = description;
@@ -103,9 +109,12 @@ public class GameModel extends AbstractModel {
         endDate = end;
         this.type = type;
         this.status = status;
-        this.userList = userList;
+       
+        userController = new UserController();
         
         observers = new ArrayList<SimpleListObserver>();
+        
+        this.userList = userController.getUsers();
     }
     
     /**
@@ -189,7 +198,7 @@ public class GameModel extends AbstractModel {
         status = fin ? GameStatus.COMPLETE : GameStatus.PENDING;
     }
     
-   public ArrayList<User> getUserList(){
+   public User[] getUserList(){
 	   return userList;
    }
    

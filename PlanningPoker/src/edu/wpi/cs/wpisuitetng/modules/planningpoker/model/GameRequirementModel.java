@@ -148,7 +148,7 @@ public class GameRequirementModel extends AbstractModel {
      * @return boolean
      */
     public boolean allVoted(GameModel g){
-    	if(estimates.size() == g.getUserList().size()){
+    	if(estimates.size() == g.getUserList().length){
     		return true;
     	}
     	else return false;

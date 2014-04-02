@@ -43,7 +43,7 @@ public class ViewController {
     public void saveNewGame(NewGamePanel e) {
         final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
                 e.getRequirements(), e.getEndDate(), e.getGameType(),
-                GameStatus.PENDING, null);
+                GameStatus.PENDING);
         
         new Thread(){
         	@Override
