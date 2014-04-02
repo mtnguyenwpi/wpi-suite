@@ -12,14 +12,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
 
 /**
  * 
@@ -83,15 +83,16 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         
         addAllSelect = new SelectionTableHeadRenderer();
         addAllSelect.setText("Add");
-        addAllSelect.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("action in header");
-				setAllSelected(addAllSelect.isSelected());			
-				
-			}
-		});
-        requirementsTable.getColumnModel().getColumn(0).setHeaderRenderer(addAllSelect);
+        addAllSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("action in header");
+                setAllSelected(addAllSelect.isSelected());
+                
+            }
+        });
+        requirementsTable.getColumnModel().getColumn(0)
+                .setHeaderRenderer(addAllSelect);
         requirementsTable.getTableHeader().addMouseListener(addAllSelect);
         
         jScrollPane1.setViewportView(requirementsTable);
@@ -112,35 +113,38 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
         countError.setText("At least one requirement is needed!");
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        layout.setHorizontalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(addButton)
-        			.addGap(18)
-        			.addComponent(countError)
-        			.addContainerGap(135, Short.MAX_VALUE))
-        		.addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-        	layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(layout.createSequentialGroup()
-        			.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-        			.addGap(11)
-        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(addButton)
-        				.addComponent(countError))
-        			.addContainerGap())
-        );
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup().addContainerGap()
+                                .addComponent(addButton).addGap(18)
+                                .addComponent(countError)
+                                .addContainerGap(135, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, Alignment.TRAILING,
+                        GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE));
+        layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addComponent(jScrollPane1,
+                                        GroupLayout.DEFAULT_SIZE, 255,
+                                        Short.MAX_VALUE)
+                                .addGap(11)
+                                .addGroup(
+                                        layout.createParallelGroup(
+                                                Alignment.BASELINE)
+                                                .addComponent(addButton)
+                                                .addComponent(countError))
+                                .addContainerGap()));
         setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void setAllSelected(boolean select){
-    	DefaultTableModel model  = (DefaultTableModel) requirementsTable.getModel();
-    	for(int i = 0; i < model.getRowCount(); i++){
-    		model.setValueAt(select, i, 0);
-    	}
-    	requirementsTable.setModel(model);
+    private void setAllSelected(boolean select) {
+        DefaultTableModel model = (DefaultTableModel) requirementsTable
+                .getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            model.setValueAt(select, i, 0);
+        }
+        requirementsTable.setModel(model);
     }
     
     public void addRequirement(GameRequirementModel r) {
@@ -159,12 +163,10 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
                 .getModel();
         ArrayList<GameRequirementModel> requirements = new ArrayList<GameRequirementModel>();
         for (int i = 0; i < model.getRowCount(); i++) {
-            if ( ! (Boolean) model.getValueAt(i, 0) ) {
+            if (!(Boolean) model.getValueAt(i, 0)) {
                 continue;
             }
             requirements.add((GameRequirementModel) model.getValueAt(i, 1));
-            System.out.println("found " + requirements.get(i).toString()
-                    + " in table");
         }
         return requirements;
     }
@@ -188,50 +190,57 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel countError;
     private javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JTable requirementsTable;
+    
     // End of variables declaration//GEN-END:variables
     
-    private class SelectionTableHeadRenderer extends JCheckBox implements TableCellRenderer, MouseListener {
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
-			return this;
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			System.out.println(e);
-			if(requirementsTable.getColumnModel().getColumnIndexAtX(e.getX()) == 0){			
-				
-				doClick();
-				requirementsTable.getTableHeader().repaint();
-			}
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-    	
+    private class SelectionTableHeadRenderer extends JCheckBox implements
+            TableCellRenderer, MouseListener {
+        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 2375539707024199617L;
+        
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected, boolean hasFocus, int row,
+                int column) {
+            return this;
+        }
+        
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println(e);
+            if (requirementsTable.getColumnModel().getColumnIndexAtX(e.getX()) == 0) {
+                
+                doClick();
+                requirementsTable.getTableHeader().repaint();
+            }
+        }
+        
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
     }
 }
