@@ -82,8 +82,7 @@ public class EmailController {
             
             for (User u : users) {
                 if (u.getEmail() != null) {
-                    message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse(u.getEmail()));
+                    message.setRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
                     message.setText("Dear " + u.getName() + ",\n" + body);
                     Transport.send(message);
                 }
