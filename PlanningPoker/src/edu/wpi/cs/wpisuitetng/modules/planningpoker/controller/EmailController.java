@@ -82,14 +82,17 @@ public class EmailController {
             
             for (User u : users) {
                 if (u.getEmail() != null) {
-                    message.setRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
-                    message.setText("Dear " + u.getName() + ",\n" + body);
-                    Transport.send(message);
+                    if (!u.getUsername().equals(ConfigManager.getConfig().getUserName())) {
+                        message.setRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
+                        message.setText("Dear " + u.getName() + ",\n" + body);
+                        Transport.send(message);
+                    }
                 }
             }
         }
         catch (MessagingException e) {
             System.err.println("Email notifications failed to send");
+            e.printStackTrace();
         }
     }
     
