@@ -24,36 +24,41 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author nfbrown, szhou, dcwethern
  * 
  */
-public class EmailController {    
+public class EmailController {
     private UserRequestObserver observer;
     private User[] users;
     
-    private String username = "team9wpi@gmail.com";  // GMail user name (just the part before "@gmail.com")
+    private String from = "team9wpi@gmail.com";  // GMail user name (just the part before "@gmail.com")
     private String password = "team9ftw"; // GMail password
+    private String subject = "A planning poker game is about to begin";
     private String body;
-    private String subject;
-    private String to;
     
     /**
      * Creates a new EmailController class
      */
     public EmailController() {
-        body = ConfigManager.getConfig().getUserName()
-                + " has created a new Planning Poker game. Please open Janeway and make your estimates!";
-        subject = "A planning poker game is about to begin";
-        observer = new UserRequestObserver(this);
+        this.observer = new UserRequestObserver(this);
     }
     
     public void sendNotifications() {
         requestUsers();
     }
     
+    private void setBody() {
+        String username = ConfigManager.getConfig().getUserName();
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                this.body = u.getName()
+                        + " has created a new Planning Poker game. Please make your estimates!";
+                break;
+            }
+        }
+    }
+    
     /**
      * Sends an email to all users that are not the creator of the game
      */
     private void sendEmails() {
-        System.out.println("Email addresses: " + this.to);  
-                
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -64,22 +69,29 @@ public class EmailController {
                 new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(from, password);
                     }
                 });
+        
+        setBody();
+        
+        Message message = new MimeMessage(session);
+        try {
+            message.setFrom(new InternetAddress(this.from));
+            message.setSubject(this.subject);
             
-            Message message = new MimeMessage(session);   
-            try {
-                message.setFrom(new InternetAddress(username));
-                message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(this.to));
-                message.setSubject(subject);
-                message.setText(body);
-                
-                Transport.send(message);
-            } catch (MessagingException e) {
-                System.err.println("Email notifications failed to send");
+            for (User u : users) {
+                if (u.getEmail() != null) {
+                    message.setRecipients(Message.RecipientType.TO,
+                            InternetAddress.parse(u.getEmail()));
+                    message.setText("Dear " + u.getName() + ",\n" + body);
+                    Transport.send(message);
+                }
             }
+        }
+        catch (MessagingException e) {
+            System.err.println("Email notifications failed to send");
+        }
     }
     
     
@@ -102,8 +114,6 @@ public class EmailController {
     public void receivedUsers(User[] users) {
         if (users != null) {
             this.users = users;
-            System.out.printf("Received %d users\n", users.length);
-            parseEmailAddresses();
             sendEmails();
         }
         else {
@@ -111,24 +121,5 @@ public class EmailController {
         }
     }
     
-    /**
-     * Sets the "to" field for the notification email with
-     * the email addresses of all users that are not the creator of the game
-     */
-    private void parseEmailAddresses() {
-        String s = "";
-        int i;
-        for (i = 0; i < users.length - 1; i++) {
-            if (users[i].getEmail() != null
-                    && !users[i].getUsername().equals(
-                            ConfigManager.getConfig().getUserName())) {
-                s += users[i].getEmail() + ",";
-            }
-        }
-        if (users[i].getEmail() != null) {
-            s += users[i].getEmail();
-        }
-        this.to = s;
-    }
     
 }
