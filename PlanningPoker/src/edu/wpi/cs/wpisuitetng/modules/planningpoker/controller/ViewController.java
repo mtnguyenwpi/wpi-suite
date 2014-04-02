@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameListModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
@@ -40,11 +41,20 @@ public class ViewController {
     }
     
     public void saveNewGame(NewGamePanel e) {
-        GameModel newGame = new GameModel(e.getName(), e.getDescription(),
+        final GameModel newGame = new GameModel(e.getName(), e.getDescription(),
                 e.getRequirements(), e.getEndDate(), e.getGameType(),
                 GameStatus.PENDING);
         
-        AddGameController.getInstance().addGame(newGame);
+        new Thread(){
+        	@Override
+        	public void run(){
+        		AddGameController.getInstance().addGame(newGame);
+        		GetGamesController.getInstance().retrieveGames();
+        	}
+        }.start();
+        
+        mainView.removeTabAt(mainView.indexOfComponent(e));
+        
     }
     
     public void cancelNewGame(NewGamePanel e) {
