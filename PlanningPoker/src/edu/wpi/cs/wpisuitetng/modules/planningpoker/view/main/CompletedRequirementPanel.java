@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import javax.swing.table.DefaultTableModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -16,6 +17,8 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
      */
     private static final long serialVersionUID = -7702704328142908459L;
     
+    private DefaultTableModel tableModel;
+    
     /**
      * Creates new form DetailPanel
      */
@@ -28,7 +31,36 @@ public class CompletedRequirementPanel extends javax.swing.JPanel {
         meanValueLabel.setText(String.format("%1.1f", req.getEstimateMean()));
         medianValueLabel
                 .setText(String.format("%1.1f", req.getEstimateMedian()));
-        // TODO: set vote results table values
+        
+        tableModel = new javax.swing.table.DefaultTableModel() {
+            
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 766575328559324615L;
+            
+            /*
+             * (non-Javadoc)
+             * 
+             * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
+             */
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+            
+        };
+        
+        tableModel.addColumn("User");
+        tableModel.addColumn("Estimate");
+        for (Estimate e : req.getEstimates()) {
+            String row[] = new String[2];
+            row[0] = e.getUser().getName();
+            row[1] = String.format("%.1f", e.getEstimate());
+            tableModel.addRow(row);
+        }
+        voteResultTable.setModel(tableModel);
+        
     }
     
     /**
