@@ -16,6 +16,10 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -37,6 +41,14 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
      */
     public NewGameRequirementsPanel() {
         initComponents();
+        requirementsTable.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				validateForm();
+				parent.check();
+			}
+          });
     }
     
     /**
@@ -173,11 +185,19 @@ public class NewGameRequirementsPanel extends javax.swing.JPanel {
     
     public void setEditGamePanel(NewGamePanel p) {
         parent = p;
-        System.out.println("Parent set");
     }
     
     public boolean validateForm() {
-        boolean hasRequirement = requirementsTable.getRowCount() > 0;
+        boolean hasRequirement = false;
+        
+        // make sure at least one requirement is checked
+        for(int i = 0; i < requirementsTable.getRowCount(); i++){
+        	if((Boolean) requirementsTable.getValueAt(i, 0)){
+        		hasRequirement = true;
+        		break;
+        	}
+        }
+        
         countError.setVisible(!hasRequirement);
         return hasRequirement;
     }
