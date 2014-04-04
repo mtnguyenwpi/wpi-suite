@@ -1,6 +1,7 @@
 package edu.wpi.cs.team9.planningpoker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -39,6 +40,7 @@ public class LoginActivity extends Activity {
 			if (response.getStatusCode() == 200) {
 				LoginController.projectSelectSuccessful(response);
 				Log.d(TAG, "Project Select Success!");
+				startActivity(new Intent(getBaseContext(), GameListActivity.class));
 				setError("");
 				
 				prefs.edit()

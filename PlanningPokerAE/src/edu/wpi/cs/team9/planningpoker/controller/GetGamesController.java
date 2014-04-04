@@ -1,5 +1,10 @@
 package edu.wpi.cs.team9.planningpoker.controller;
 
+import java.util.Date;
+
+import com.google.gson.Gson;
+
+import android.util.Log;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -8,6 +13,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 public class GetGamesController implements RequestObserver {
+	
+	private static final String TAG = GetGamesController.class.getSimpleName();
 	
 	private static GetGamesObserver observer;	
 	private static GetGamesController instance;
@@ -40,9 +47,15 @@ public class GetGamesController implements RequestObserver {
 
 	@Override
 	public void responseSuccess(IRequest iReq) {
+		Log.d(TAG, iReq.getResponse().getBody());
         // Convert the JSON array of games to a Games object array
         GameModel games[] = GameModel.fromJSONArray(iReq.getResponse()
                 .getBody());
+        
+        for(GameModel game:games){
+        	Log.d(TAG, game.getEndTime().toString());
+        	Log.d(TAG, new Gson().toJson(game.getEndTime()));
+        }
         
         // Pass these Games to the controller
         observer.receivedGames(games);
