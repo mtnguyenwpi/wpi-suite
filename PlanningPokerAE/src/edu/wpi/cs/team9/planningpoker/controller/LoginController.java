@@ -1,7 +1,6 @@
-package edu.wpi.cs.team9.planningpoker;
+package edu.wpi.cs.team9.planningpoker.controller;
 
 import java.util.List;
-
 
 import android.util.Base64;
 import android.util.Log;
