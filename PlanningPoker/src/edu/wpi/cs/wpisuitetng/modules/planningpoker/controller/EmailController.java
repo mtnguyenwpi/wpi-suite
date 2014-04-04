@@ -28,8 +28,8 @@ public class EmailController {
     private UserRequestObserver observer;
     private User[] users;
     
-    private String from = "team9wpi@gmail.com";  // GMail user name (just the part before "@gmail.com")
-    private String password = "team9ftw"; // GMail password
+    private String from = "team9wpi@gmail.com";     // GMail user name
+    private String password = "team9ftw";           // GMail password
     private String subject = "A planning poker game is about to begin";
     private String body;
     
