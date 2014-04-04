@@ -1,14 +1,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+
+import org.apache.commons.mail.*;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -28,6 +26,7 @@ public class EmailController {
     private UserRequestObserver observer;
     private User[] users;
     
+    private String username = "team9wpi";
     private String from = "team9wpi@gmail.com";     // GMail user name
     private String password = "team9ftw";           // GMail password
     private String subject = "A planning poker game is about to begin";
@@ -57,8 +56,11 @@ public class EmailController {
     
     /**
      * Sends an email to all users that are not the creator of the game
+     * @throws EmailException 
+     * @throws AddressException 
      */
     private void sendEmails() {
+        /*
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -92,6 +94,32 @@ public class EmailController {
         }
         catch (MessagingException e) {
             System.err.println("Email notifications failed to send");
+            e.printStackTrace();
+        }
+        */
+        
+        Email email = new SimpleEmail();
+        email.setHostName("smtp.gmail.com");
+        email.setSmtpPort(587);
+        email.setAuthenticator(new DefaultAuthenticator(username, password));
+        email.setSSLOnConnect(true);
+        try {
+            email.setSubject("A new Planning Poker game has begun!");
+            for (User u : users) {
+                if (u.getEmail() != null) {
+                    ArrayList<InternetAddress> to = new ArrayList<InternetAddress>();
+                    to.add(new InternetAddress(u.getEmail()));
+                    email.setTo(to);
+                    email.setMsg("Dear " + u.getName() + ",\n" + body);
+                    email.send();
+                }
+            }
+        } catch (EmailException e) {
+            System.err.println("Email failed to send");
+            e.printStackTrace();
+        }
+        catch (AddressException e) {
+            System.err.println("Email failed to send");
             e.printStackTrace();
         }
     }
