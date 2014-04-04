@@ -191,7 +191,7 @@ public class GameModel extends AbstractModel {
      * @return whether the game has ended
      */
     public boolean isEnded() {
-        if ((endDate.before(new Date(System.currentTimeMillis())))) {
+        if (endDate != null && (endDate.before(new Date(System.currentTimeMillis())))) {
             setEnded(true);
         }
         return (status == GameStatus.COMPLETE);
