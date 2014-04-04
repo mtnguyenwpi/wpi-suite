@@ -23,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameRequirementModel;
 
@@ -40,14 +42,22 @@ public class VotePanel extends javax.swing.JPanel {
      */
     private static final long serialVersionUID = 6053116033835102214L;
     
+    private GameModel parent_game;
+    private GameRequirementModel req;
+    
     /**
      * Creates new form VotePanel
      */
     public VotePanel() {
         initComponents();
+        parent_game = null;
+        req = null;
     }
     
     public void setRequirement(GameModel parent_game, GameRequirementModel req) {
+        this.parent_game = parent_game;
+        this.req = req;
+        
         reqDescriptionTextArea.setText(req.getDescription());
         setRequirementName(req.getName());
         setRequirementType(req.getType());
@@ -66,7 +76,6 @@ public class VotePanel extends javax.swing.JPanel {
         estimateCardsPanel.removeAll();
         for (String estimate : deck) {
             JButton estimate_card = new JButton();
-            // TODO: set card background image
             
             estimate_card.setText(estimate);
             estimate_card.setPreferredSize(new Dimension(80, 120));
@@ -86,6 +95,14 @@ public class VotePanel extends javax.swing.JPanel {
     
     private void selectEstimateCard(JButton selected_card_button) {
         // TODO: submit estimate based on selected card
+        
+        req.addEstimate(new Estimate(null, Float.parseFloat(selected_card_button.getText())));
+        new Thread() {
+            public void run() {
+                UpdateGamesController.getInstance().updateGame(parent_game);
+            }
+        }.start();
+        
         for (Component c : estimateCardsPanel.getComponents()) {
             ((JButton) c).setEnabled(false);
         }
