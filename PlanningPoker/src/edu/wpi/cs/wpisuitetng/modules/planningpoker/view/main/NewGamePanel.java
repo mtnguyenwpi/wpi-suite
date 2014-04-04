@@ -107,6 +107,7 @@ public class NewGamePanel extends JPanel {
             }
         });
         
+        check();
         checkNewRequirement();
     }
     
