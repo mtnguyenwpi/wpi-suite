@@ -6,6 +6,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.main;
 
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -54,32 +55,59 @@ public class NewGamePanel extends JPanel {
         gameDescription.setEditGamePanel(this);
         newGameRequirementsPanel.setEditGamePanel(this);
         
-        newReqName.getDocument().addDocumentListener(
-                new DocumentListener() {
-                    
-                    @Override
-                    public void removeUpdate(DocumentEvent e) {
-                        validate();
-                    }
-                    
-                    @Override
-                    public void insertUpdate(DocumentEvent e) {
-                        validate();
-                    }
-                    
-                    @Override
-                    public void changedUpdate(DocumentEvent e) {
-                        validate();
-                    }
-                    
-                    private void validate() {
-                        
-                        newReqNameValid = (newReqName.getText() != null && !newReqName
-                                .getText().isEmpty());
-                        //descriptionError.setVisible(!newReqNameValid);
-                        check();
-                    }
-                });
+        newReqName.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            private void validate() {
+                
+                newReqNameValid = (newReqName.getText() != null && !newReqName
+                        .getText().isEmpty());
+                newReqNameError.setVisible(!newReqNameValid);
+                checkNewRequirement();
+            }
+        });
+        
+        newReqDesc.getDocument().addDocumentListener(new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validate();
+            }
+            
+            private void validate() {
+                
+                newReqDescValid = (newReqDesc.getText() != null && !newReqDesc
+                        .getText().isEmpty());
+                newReqDescError.setVisible(!newReqDescValid);
+                checkNewRequirement();
+            }
+        });
+        
+        checkNewRequirement();
     }
     
     /**
@@ -181,11 +209,11 @@ public class NewGamePanel extends JPanel {
         newRequirementPanel = new JPanel();
         newGameRequirementsCard.add(newRequirementPanel, "newreqpanel");
         GridBagLayout gbl_newRequirementPanel = new GridBagLayout();
-        gbl_newRequirementPanel.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0 };
+        gbl_newRequirementPanel.columnWidths = new int[] { 99, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0 };
         gbl_newRequirementPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0 };
-        gbl_newRequirementPanel.columnWeights = new double[] { 1.0, 0.0, 0.0,
+        gbl_newRequirementPanel.columnWeights = new double[] { 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         gbl_newRequirementPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
                 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
@@ -193,12 +221,21 @@ public class NewGamePanel extends JPanel {
         
         nameLabel = new JLabel("Name:");
         GridBagConstraints gbc_nameLabel = new GridBagConstraints();
-        gbc_nameLabel.gridwidth = 3;
         gbc_nameLabel.anchor = GridBagConstraints.WEST;
         gbc_nameLabel.insets = new Insets(0, 0, 5, 5);
         gbc_nameLabel.gridx = 0;
         gbc_nameLabel.gridy = 0;
         newRequirementPanel.add(nameLabel, gbc_nameLabel);
+        
+        newReqNameError = new JLabel("Required field!");
+        newReqNameError.setFont(new Font("Dialog", Font.BOLD, 12));
+        newReqNameError.setForeground(new java.awt.Color(255, 0, 0));
+        GridBagConstraints gbc_newReqNameError = new GridBagConstraints();
+        gbc_newReqNameError.anchor = GridBagConstraints.WEST;
+        gbc_newReqNameError.insets = new Insets(0, 0, 5, 5);
+        gbc_newReqNameError.gridx = 1;
+        gbc_newReqNameError.gridy = 0;
+        newRequirementPanel.add(newReqNameError, gbc_newReqNameError);
         
         newReqName = new JTextField();
         GridBagConstraints gbc_newReqName = new GridBagConstraints();
@@ -234,6 +271,15 @@ public class NewGamePanel extends JPanel {
             }
         });
         
+        newReqDescError = new JLabel("Required field!");
+        newReqDescError.setForeground(new java.awt.Color(255, 0, 0));
+        GridBagConstraints gbc_newReqDescError = new GridBagConstraints();
+        gbc_newReqDescError.anchor = GridBagConstraints.WEST;
+        gbc_newReqDescError.insets = new Insets(0, 0, 5, 5);
+        gbc_newReqDescError.gridx = 1;
+        gbc_newReqDescError.gridy = 3;
+        newRequirementPanel.add(newReqDescError, gbc_newReqDescError);
+        
         newReqDesc = new JTextArea();
         newReqDesc.setLineWrap(true);
         GridBagConstraints gbc_newReqDesc = new GridBagConstraints();
@@ -258,12 +304,14 @@ public class NewGamePanel extends JPanel {
                 "Epic", "Theme", "User story", "Non-functional dependency",
                 "Scenario" }));
         GridBagConstraints gbc_newReqType = new GridBagConstraints();
+        gbc_newReqType.gridwidth = 2;
+        gbc_newReqType.anchor = GridBagConstraints.WEST;
         gbc_newReqType.insets = new Insets(0, 0, 5, 5);
-        gbc_newReqType.fill = GridBagConstraints.HORIZONTAL;
         gbc_newReqType.gridx = 0;
         gbc_newReqType.gridy = 10;
         newRequirementPanel.add(newReqType, gbc_newReqType);
         GridBagConstraints gbc_saveNewReqButton = new GridBagConstraints();
+        gbc_saveNewReqButton.gridwidth = 2;
         gbc_saveNewReqButton.insets = new Insets(0, 0, 0, 5);
         gbc_saveNewReqButton.gridx = 0;
         gbc_saveNewReqButton.gridy = 11;
@@ -324,10 +372,20 @@ public class NewGamePanel extends JPanel {
         return newGameRequirementsPanel.getRequirementsFromTable();
     }
     
+    /**
+     * Checks if game description panel and requirements are properly entered
+     */
     public void check() {
         saveButton
                 .setEnabled((gameDescription.validateForm() && newGameRequirementsPanel
                         .validateForm()));
+    }
+    
+    /**
+     * Checks that name and description for new requirement are properly entered
+     */
+    public void checkNewRequirement() {
+        saveNewReqButton.setEnabled(newReqNameValid && newReqDescValid);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -345,6 +403,8 @@ public class NewGamePanel extends JPanel {
     private JButton saveNewReqButton;
     private JButton cancelNewReqButton;
     private JTextArea newReqDesc;
-    private Boolean newReqDescValid;
-    private Boolean newReqNameValid;
+    private Boolean newReqNameValid = false;
+    private Boolean newReqDescValid = false;
+    private JLabel newReqNameError;
+    private JLabel newReqDescError;
 }
