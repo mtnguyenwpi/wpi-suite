@@ -24,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel.GameType;
@@ -52,12 +54,32 @@ public class NewGamePanel extends JPanel {
         gameDescription.setEditGamePanel(this);
         newGameRequirementsPanel.setEditGamePanel(this);
         
-        newGameRequirementsPanel.addRequirement(new GameRequirementModel(0,
-                "Test Requirement 1", "The cow", "User story"));
-        newGameRequirementsPanel.addRequirement(new GameRequirementModel(1,
-                "Test Requirement 2", "Elepahnt", "User story"));
-        newGameRequirementsPanel.addRequirement(new GameRequirementModel(2,
-                "Test Requirement 3", "queso", "User story"));
+        newReqName.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        validate();
+                    }
+                    
+                    private void validate() {
+                        
+                        newReqNameValid = (newReqName.getText() != null && !newReqName
+                                .getText().isEmpty());
+                        //descriptionError.setVisible(!newReqNameValid);
+                        check();
+                    }
+                });
     }
     
     /**
@@ -323,4 +345,6 @@ public class NewGamePanel extends JPanel {
     private JButton saveNewReqButton;
     private JButton cancelNewReqButton;
     private JTextArea newReqDesc;
+    private Boolean newReqDescValid;
+    private Boolean newReqNameValid;
 }
