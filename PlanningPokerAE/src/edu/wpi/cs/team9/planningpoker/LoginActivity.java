@@ -173,7 +173,6 @@ public class LoginActivity extends Activity {
 			}
 		});
 		
-		
 	}
 	
 	private void setError(final String error){
@@ -184,6 +183,8 @@ public class LoginActivity extends Activity {
 			}
 		});
 	}
+	
+	
 	
 	private void hideProgress(){
 		runOnUiThread(new Runnable() {			

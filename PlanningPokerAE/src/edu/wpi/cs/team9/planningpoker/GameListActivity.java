@@ -1,16 +1,19 @@
 package edu.wpi.cs.team9.planningpoker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
 import edu.wpi.cs.team9.planningpoker.model.GameModel;
+import edu.wpi.cs.team9.planningpoker.model.GameRequirementModel;
 import edu.wpi.cs.team9.planningpoker.view.GameListAdapter;
 
 public class GameListActivity extends Activity implements GetGamesObserver {
@@ -29,6 +32,18 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		gameListView = (ExpandableListView) findViewById(R.id.gameList);
 		adapter = new GameListAdapter(this);
 		gameListView.setAdapter(adapter);
+		
+		gameListView.setOnChildClickListener(new OnChildClickListener() {			
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				Intent intent = new Intent(getBaseContext(), VoteActivity.class);
+				String reqJson = ((GameRequirementModel)adapter.getChild(groupPosition, childPosition)).toJSON();			
+				intent.putExtra("req", reqJson);
+				startActivity(intent);
+				return true;
+			}
+		});
 
 		setProgressBarIndeterminateVisibility(true);
 		GetGamesController.getInstance().setObserver(this);

@@ -181,7 +181,7 @@ public class GameRequirementModel extends AbstractModel {
      */
     @Override
     public String toJSON() {
-        return null;
+        return new Gson().toJson(this, GameRequirementModel.class);
     }
     
     @Override
