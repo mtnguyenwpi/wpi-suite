@@ -347,7 +347,6 @@ public class NewGamePanel extends JPanel {
                 newGameRequirementsCard, panel);
     }
     
-    @Override
     public String getName() {
         return gameDescription.nameField.getText();
     }
@@ -371,6 +370,10 @@ public class NewGamePanel extends JPanel {
     
     public ArrayList<GameRequirementModel> getRequirements() {
         return newGameRequirementsPanel.getRequirementsFromTable();
+    }
+    
+    public NewGameDescriptionPanel getGameDescription() {
+        return gameDescription;
     }
     
     /**
