@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGamesController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Estimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.GameModel;
@@ -42,6 +43,7 @@ public class VotePanel extends javax.swing.JPanel {
      */
     private static final long serialVersionUID = 6053116033835102214L;
     
+    private User current_user;
     private GameModel parent_game;
     private GameRequirementModel req;
     
@@ -54,7 +56,8 @@ public class VotePanel extends javax.swing.JPanel {
         req = null;
     }
     
-    public void setRequirement(GameModel parent_game, GameRequirementModel req) {
+    public void setRequirement(User current_user, GameModel parent_game, GameRequirementModel req) {
+        this.current_user = current_user;
         this.parent_game = parent_game;
         this.req = req;
         
@@ -63,6 +66,15 @@ public class VotePanel extends javax.swing.JPanel {
         setRequirementType(req.getType());
         setEndDate(parent_game.getEndTime());
         // setRequirementProgress();
+        
+        boolean already_voted = false;
+        
+        for (Estimate e : req.getEstimates()) {
+            if (e.getUser().equals(current_user)) {
+                already_voted = true;
+                break;
+            }
+        }
         
         
         ArrayList<String> deck = new ArrayList<>();
@@ -86,6 +98,7 @@ public class VotePanel extends javax.swing.JPanel {
                     selectEstimateCard((JButton) e.getSource());
                 }
             });
+            estimate_card.setEnabled(!already_voted);
             
             estimateCardsPanel.add(estimate_card);
         }
@@ -94,8 +107,6 @@ public class VotePanel extends javax.swing.JPanel {
     }
     
     private void selectEstimateCard(JButton selected_card_button) {
-        // TODO: submit estimate based on selected card
-        
         req.addEstimate(new Estimate(null, Float.parseFloat(selected_card_button.getText())));
         new Thread() {
             public void run() {
