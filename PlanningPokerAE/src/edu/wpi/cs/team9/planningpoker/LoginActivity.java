@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,8 +48,10 @@ public class LoginActivity extends Activity {
 					.putString("project", projectText.getText().toString())
 				.commit();
 			} else {
+				
 				setError(String.format("Error %d: %s", response.getStatusCode(), response.getStatusMessage()));
 				Log.e(TAG, "Project Select Failed " + response.getStatusCode());
+				
 			}
 		}
 		
@@ -61,13 +64,19 @@ public class LoginActivity extends Activity {
 			} else {
 				setError(String.format("Error %d: %s", response.getStatusCode(), response.getStatusMessage()));
 				Log.e(TAG, "Project Select Failed " + response.getStatusCode());			
-			}			
+			}
+
+
+			hideProgress();
 		}
 		
 		@Override
 		public void fail(IRequest iReq, Exception exception) {
 			setError("Unable to complete request: "+exception.getMessage());
 			Log.e(TAG, exception.getMessage());			
+
+
+			hideProgress();
 		}
 	};
 	
@@ -90,6 +99,9 @@ public class LoginActivity extends Activity {
 				setError(String.format("Error %d: %s", response.getStatusCode(), response.getStatusMessage()));
 				Log.e(TAG, "Login Failed " + response.getStatusCode()); 
 			}
+
+
+			hideProgress();
 		}
 		
 		@Override
@@ -103,6 +115,9 @@ public class LoginActivity extends Activity {
 				setError(String.format("Error %d: %s", response.getStatusCode(), response.getStatusMessage()));
 				Log.e(TAG, "Login Failed " + response.getStatusCode());
 			}
+
+
+			hideProgress();
 			
 		}
 		
@@ -110,6 +125,9 @@ public class LoginActivity extends Activity {
 		public void fail(IRequest iReq, Exception exception) {
 			setError("Unable to complete request: "+exception.getMessage());
 			Log.e(TAG, exception.getMessage());	
+
+
+			hideProgress();
 		}
 	};
 	
@@ -118,6 +136,9 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		setContentView(R.layout.activity_login);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -139,6 +160,7 @@ public class LoginActivity extends Activity {
 		loginButton.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				setProgressBarIndeterminateVisibility(true);
 				Log.d(TAG, "User: "+usernameText.getText().toString());
 				Log.d(TAG, "Pass: "+passwordText.getText().toString());
 				Log.d(TAG, "Proj: "+projectText.getText().toString());
@@ -159,6 +181,15 @@ public class LoginActivity extends Activity {
 			@Override
 			public void run() {
 				errorView.setText(error);				
+			}
+		});
+	}
+	
+	private void hideProgress(){
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				setProgressBarIndeterminateVisibility(false);				
 			}
 		});
 	}

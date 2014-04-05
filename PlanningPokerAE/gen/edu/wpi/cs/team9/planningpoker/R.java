@@ -27,8 +27,8 @@ public final class R {
         public static final int ic_status_pending=0x7f020003;
     }
     public static final class id {
-        public static final int action_refresh=0x7f08000a;
-        public static final int action_settings=0x7f080009;
+        public static final int action_refresh=0x7f08000b;
+        public static final int action_settings=0x7f08000a;
         public static final int error=0x7f080007;
         public static final int gameList=0x7f080000;
         public static final int login=0x7f080006;
@@ -37,12 +37,14 @@ public final class R {
         public static final int projectField=0x7f080004;
         public static final int serverField=0x7f080005;
         public static final int status=0x7f080008;
+        public static final int text1=0x7f080009;
         public static final int usernameField=0x7f080002;
     }
     public static final class layout {
         public static final int activity_game_list=0x7f030000;
         public static final int activity_login=0x7f030001;
         public static final int game_list_item=0x7f030002;
+        public static final int game_list_requirement_item=0x7f030003;
     }
     public static final class menu {
         public static final int game_list=0x7f070000;

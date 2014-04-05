@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController;
 import edu.wpi.cs.team9.planningpoker.controller.GetGamesController.GetGamesObserver;
@@ -16,7 +17,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 
 	private static final String TAG = GameListActivity.class.getSimpleName();
 
-	private ListView gameListView;
+	private ExpandableListView gameListView;
 	private GameListAdapter adapter;
 
 	@Override
@@ -25,7 +26,7 @@ public class GameListActivity extends Activity implements GetGamesObserver {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_game_list);
 
-		gameListView = (ListView) findViewById(R.id.gameList);
+		gameListView = (ExpandableListView) findViewById(R.id.gameList);
 		adapter = new GameListAdapter(this);
 		gameListView.setAdapter(adapter);
 
