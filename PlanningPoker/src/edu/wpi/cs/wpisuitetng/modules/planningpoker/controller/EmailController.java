@@ -33,10 +33,17 @@ public class EmailController {
         this.observer = new UserRequestObserver(this);
     }
     
+    /**
+     * Gets all users, then sends email notifications to all users with email
+     * addresses on file
+     */
     public void sendNotifications() {
         requestUsers();
     }
     
+    /**
+     * Sets the body of the email
+     */
     private void setBody() {
         String username = ConfigManager.getConfig().getUserName();
         for (User u : users) {
@@ -49,7 +56,7 @@ public class EmailController {
     }
     
     /**
-     * Sends an email to all users that are not the creator of the game
+     * Sends an email to all users
      * 
      * @throws EmailException
      * @throws AddressException
@@ -63,7 +70,8 @@ public class EmailController {
                     Email email = new SimpleEmail();
                     email.setHostName("smtp.gmail.com");
                     email.setSmtpPort(587);
-                    email.setAuthenticator(new DefaultAuthenticator(username, password));
+                    email.setAuthenticator(new DefaultAuthenticator(username,
+                            password));
                     email.setSSLOnConnect(true);
                     email.addTo(u.getEmail());
                     email.setSubject(subject);
@@ -72,7 +80,8 @@ public class EmailController {
                     email.send();
                 }
             }
-        } catch (EmailException e) {
+        }
+        catch (EmailException e) {
             System.err.println("Email failed to send");
             e.printStackTrace();
         }
